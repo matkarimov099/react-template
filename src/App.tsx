@@ -1,14 +1,24 @@
+import { Toaster } from '@/components/ui/sonner.tsx';
+import { Spinner } from '@/components/ui/spinner.tsx';
 import { useMediaQuery } from '@/hooks/use-media-query.ts';
+import { router } from '@/router/routers.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { RouterProvider } from 'react-router';
-import { Toaster } from '@/components/ui/sonner.tsx';
-import { router } from '@/router/routers.tsx';
-import { Spinner } from '@/components/ui/spinner.tsx';
-
-const queryClient = new QueryClient();
 
 function App() {
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						staleTime: 60 * 1000, // 1 minute
+						retry: 1,
+						refetchOnWindowFocus: false,
+					},
+				},
+			}),
+	);
 	const [loading, setLoading] = useState<boolean>(true);
 	const isMobile = useMediaQuery('(max-width: 767px)');
 	useEffect(() => {

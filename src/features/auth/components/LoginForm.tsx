@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { useLogin } from '../hooks/use-auth';
 import { type LoginSchema, loginSchema } from '../validations/auth.schema';
+import { ChevronRightIcon } from 'lucide-react';
 
 export const LoginForm = () => {
 	const { mutate: login, isPending } = useLogin();
@@ -76,6 +77,7 @@ export const LoginForm = () => {
 										</FormLabel>
 										<FormControl>
 											<PhoneInput
+												inputClassName="dark:border-neutral-600 text-neutral-400 dark:text-white"
 												className="text-neutral-400 dark:text-white"
 												inputSize="xl"
 												defaultCountry="UZ"
@@ -120,10 +122,11 @@ export const LoginForm = () => {
 							/>
 						</div>
 						<Button
+							rightIcon={<ChevronRightIcon />}
 							loading={isPending}
 							type="submit"
 							size="xl"
-							className="cursor-pointer group/btn relative block px-6 py-2 bg-black text-white rounded-lg font-bold transform hover:-translate-y-0.5 transition duration-400"
+							className="cursor-pointer group/btn relative block px-6 py-2 bg-black text-white dark:hover:bg-black rounded-lg font-bold transform hover:-translate-y-0.5 transition duration-300"
 						>
 							Kirish
 							<BottomGradient />

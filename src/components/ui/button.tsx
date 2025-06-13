@@ -1,43 +1,61 @@
-import { Slot, Slottable } from '@radix-ui/react-slot';
-import type { VariantProps } from 'class-variance-authority';
-
 import { buttonVariants } from '@/components/ui/button-variants';
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
-import { type ButtonHTMLAttributes, forwardRef } from 'react';
+import { Slot, Slottable } from '@radix-ui/react-slot';
+import type { VariantProps } from 'class-variance-authority';
+import * as React from 'react';
+import { Spinner } from './spinner';
 
 export interface ButtonProps
-	extends ButtonHTMLAttributes<HTMLButtonElement>,
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {
 	asChild?: boolean;
+	rightIcon?: React.ReactNode;
+	leftIcon?: React.ReactNode;
+	hideIcon?: boolean;
+	isVisible?: boolean;
 	loading?: boolean;
-	cond?: boolean;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			className,
-			loading = false,
 			variant,
 			size,
 			asChild = false,
-			cond = true,
+			rightIcon,
+			leftIcon,
+			hideIcon = false,
+			isVisible = true,
+			loading = false,
 			...props
 		},
 		ref,
 	) => {
 		const Comp = asChild ? Slot : 'button';
 		return (
-			cond && (
+			isVisible && (
 				<Comp
 					className={cn(buttonVariants({ variant, size, className }))}
 					ref={ref}
-					disabled={loading || props.disabled}
 					{...props}
+					disabled={loading || props.disabled}
 				>
-					{loading && <Loader2 className={cn('mr-2 h-4 w-4 animate-spin')} />}
-					<Slottable>{props.children}</Slottable>
+					{loading ? (
+						<div className="flex items-center justify-center">
+							<Spinner className="!size-8" />
+						</div>
+					) : (
+						<div className="flex items-center justify-center gap-2">
+							{!hideIcon && leftIcon && (
+								<span className="flex items-center">{leftIcon}</span>
+							)}
+							<Slottable>{props.children}</Slottable>
+							{!hideIcon && rightIcon && (
+								<span className="flex items-center">{rightIcon}</span>
+							)}
+						</div>
+					)}
 				</Comp>
 			)
 		);

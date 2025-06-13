@@ -7,7 +7,7 @@ import { ThemeProvider } from '@/provider/theme-provider.tsx';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
 	<StrictMode>
-		<ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+		<ThemeProvider defaultTheme="system" storageKey="ui-theme">
 			<PageTitleProvider>
 				<App />
 			</PageTitleProvider>
