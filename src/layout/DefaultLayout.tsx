@@ -68,7 +68,9 @@ export const DefaultLayout = () => {
 								exit={{ opacity: 0, y: -10 }}
 								transition={{ duration: 0.2 }}
 							>
-								<Outlet />
+								<main className="bg-card rounded-lg p-6 shadow-sm">
+									<Outlet />
+								</main>
 							</motion.div>
 						</AnimatePresence>
 					</Suspense>
