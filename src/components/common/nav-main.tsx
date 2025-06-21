@@ -1,5 +1,3 @@
-'use client';
-
 import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import {
 	Collapsible,

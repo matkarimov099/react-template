@@ -1,5 +1,3 @@
-'use client';
-
 import type { ColumnSizingState } from '@tanstack/react-table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
