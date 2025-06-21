@@ -1,8 +1,9 @@
-'use client';
 import { LampContainer } from '@/components/custom/lamp-container.tsx';
+import { useI18n } from '@/hooks/use-i18n.ts';
 import { motion } from 'motion/react';
 
 export function NotAccess() {
+	const { t } = useI18n();
 	return (
 		<LampContainer>
 			<motion.h1
@@ -15,7 +16,7 @@ export function NotAccess() {
 				}}
 				className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
 			>
-				403 - Sizga ruxsat berilmagan
+				403 - {t('errors.notAccess')}
 			</motion.h1>
 		</LampContainer>
 	);

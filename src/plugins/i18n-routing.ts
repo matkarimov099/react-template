@@ -1,4 +1,4 @@
-import type { Locale } from '@/context/i18n-context';
+import type { Locale } from '@/context/i18n-context.ts';
 
 export const SUPPORTED_LOCALES: Locale[] = ['uz', 'ru', 'en'];
 export const DEFAULT_LOCALE: Locale = 'uz';
@@ -6,22 +6,22 @@ export const DEFAULT_LOCALE: Locale = 'uz';
 export function getLocaleFromPath(pathname: string): Locale {
 	const segments = pathname.split('/').filter(Boolean);
 	const firstSegment = segments[0] as Locale;
-	
+
 	if (SUPPORTED_LOCALES.includes(firstSegment)) {
 		return firstSegment;
 	}
-	
+
 	return DEFAULT_LOCALE;
 }
 
 export function removeLocaleFromPath(pathname: string): string {
 	const segments = pathname.split('/').filter(Boolean);
 	const firstSegment = segments[0] as Locale;
-	
+
 	if (SUPPORTED_LOCALES.includes(firstSegment)) {
 		return `/${segments.slice(1).join('/')}`;
 	}
-	
+
 	return pathname;
 }
 
