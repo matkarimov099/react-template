@@ -1,121 +1,121 @@
 {
-  "common": {
-    "loading": "Yuklanmoqda...",
-    "error": "Xatolik",
-    "success": "Muvaffaqiyat",
-    "cancel": "Bekor qilish",
-    "save": "Saqlash",
-    "edit": "Tahrirlash",
-    "delete": "O'chirish",
-    "search": "Qidirish",
-    "filter": "Filtrlash",
-    "export": "Eksport",
-    "import": "Import",
-    "back": "Orqaga",
-    "next": "Keyingi",
-    "previous": "Oldingi",
-    "submit": "Yuborish",
-    "reset": "Tozalash",
-    "close": "Yopish"
-  },
-  "navigation": {
-    "menu": "MENYU",
-    "dashboard": "Boshqaruv paneli",
-    "reports": "Hisobotlar",
-    "users": "Foydalanuvchilar",
-    "calendar": "Kalendar",
-    "documents": "Hujjatlar",
-    "settings": "Sozlamalar",
-    "help": "Yordam",
-    "projects": "Loyihalar",
-    "ecommerce": "Elektron tijorat",
-    "social": "Ijtimoiy ilova",
-    "security": "Xavfsizlik ilovasi",
-    "logout": "Chiqish",
-    "profile": "Profil",
-    "account": "Hisob",
-    "billing": "To'lovlar",
-    "notifications": "Bildirishnomalar",
-    "upgrade": "Pro versiyaga o'tish"
-  },
-  "auth": {
-    "login": "Kirish",
-    "register": "Ro'yxatdan o'tish",
-    "forgotPassword": "Parolni unutdingizmi?",
-    "rememberMe": "Meni eslab qol",
-    "dontHaveAccount": "Hisobingiz yo'qmi?",
-    "alreadyHaveAccount": "Hisobingiz bormi?",
-    "signIn": "Kirish",
-    "signUp": "Ro'yxatdan o'tish",
-    "phone": "Telefon",
-    "password": "Parol",
-    "confirmPassword": "Parolni tasdiqlash",
-    "firstName": "Ism",
-    "lastName": "Familiya",
-    "loginTitle": "Kirish",
-    "registerTitle": "Hisob yaratish"
-  },
-  "users": {
-    "title": "Foydalanuvchilar ro'yxati",
-    "name": "Ism",
-    "email": "Email",
-    "phone": "Telefon",
-    "age": "Yosh",
-    "createdAt": "Yaratilgan sana",
-    "expenseCount": "Xarajatlar soni",
-    "totalExpenses": "Jami xarajatlar",
-    "actions": "Amallar",
-    "addUser": "Foydalanuvchi qo'shish",
-    "editUser": "Foydalanuvchini tahrirlash",
-    "deleteUser": "Foydalanuvchini o'chirish",
-    "searchUsers": "Foydalanuvchilarni qidirish...",
-    "noUsersFound": "Foydalanuvchilar topilmadi",
-    "userCreated": "Foydalanuvchi muvaffaqiyatli yaratildi",
-    "userUpdated": "Foydalanuvchi muvaffaqiyatli yangilandi",
-    "userDeleted": "Foydalanuvchi muvaffaqiyatli o'chirildi"
-  },
-  "pages": {
-    "reports": {
-      "title": "Hisobotlar",
-      "description": "Bu yerda hisobotlarni ko'ring va yarating."
-    },
-    "calendar": {
-      "title": "Kalendar",
-      "description": "Tadbirlar va jadvallarni ko'ring va boshqaring."
-    },
-    "documents": {
-      "title": "Hujjatlar",
-      "description": "Hujjatlaringizni ko'ring va boshqaring."
-    },
-    "settings": {
-      "title": "Sozlamalar",
-      "description": "Ilova sozlamalarini o'zgartiring."
-    },
-    "help": {
-      "title": "Yordam va qo'llab-quvvatlash",
-      "description": "Ilovadan foydalanish bo'yicha yordam va qo'llab-quvvatlash oling."
-    },
-    "projects": {
-      "ecommerce": {
-        "title": "Elektron tijorat loyihasi",
-        "description": "Elektron tijorat loyihangiz tafsilotlarini ko'ring va boshqaring."
-      },
-      "social": {
-        "title": "Ijtimoiy ilova loyihasi",
-        "description": "Ijtimoiy ilova loyihangiz tafsilotlarini ko'ring va boshqaring."
-      },
-      "security": {
-        "title": "Xavfsizlik ilovasi loyihasi",
-        "description": "Xavfsizlik ilovasi loyihangiz tafsilotlarini ko'ring va boshqaring."
-      }
-    }
-  },
-  "errors": {
-    "notFound": "Sahifa topilmadi",
-    "notFoundDescription": "Siz qidirayotgan sahifa mavjud emas.",
-    "noAccess": "Kirish rad etildi",
-    "noAccessDescription": "Sizda bu sahifaga kirish huquqi yo'q.",
-    "goHome": "Bosh sahifaga o'tish",
-    "tryAgain": "Qayta urinish"
-  }
+	"common": {
+		"loading": "Yuklanmoqda...",
+		"error": "Xatolik",
+		"success": "Muvaffaqiyat",
+		"cancel": "Bekor qilish",
+		"save": "Saqlash",
+		"edit": "Tahrirlash",
+		"delete": "O'chirish",
+		"search": "Qidirish",
+		"filter": "Filtrlash",
+		"export": "Eksport",
+		"import": "Import",
+		"back": "Orqaga",
+		"next": "Keyingi",
+		"previous": "Oldingi",
+		"submit": "Yuborish",
+		"reset": "Tozalash",
+		"close": "Yopish"
+	},
+	"navigation": {
+		"menu": "MENYU",
+		"dashboard": "Boshqaruv paneli",
+		"reports": "Hisobotlar",
+		"users": "Foydalanuvchilar",
+		"calendar": "Kalendar",
+		"documents": "Hujjatlar",
+		"settings": "Sozlamalar",
+		"help": "Yordam",
+		"projects": "Loyihalar",
+		"ecommerce": "Elektron tijorat",
+		"social": "Ijtimoiy ilova",
+		"security": "Xavfsizlik ilovasi",
+		"logout": "Chiqish",
+		"profile": "Profil",
+		"account": "Hisob",
+		"billing": "To'lovlar",
+		"notifications": "Bildirishnomalar",
+		"upgrade": "Pro versiyaga o'tish"
+	},
+	"auth": {
+		"login": "Kirish",
+		"register": "Ro'yxatdan o'tish",
+		"forgotPassword": "Parolni unutdingizmi?",
+		"rememberMe": "Meni eslab qol",
+		"dontHaveAccount": "Hisobingiz yo'qmi?",
+		"alreadyHaveAccount": "Hisobingiz bormi?",
+		"signIn": "Kirish",
+		"signUp": "Ro'yxatdan o'tish",
+		"phone": "Telefon",
+		"password": "Parol",
+		"confirmPassword": "Parolni tasdiqlash",
+		"firstName": "Ism",
+		"lastName": "Familiya",
+		"loginTitle": "Kirish",
+		"registerTitle": "Hisob yaratish"
+	},
+	"users": {
+		"title": "Foydalanuvchilar ro'yxati",
+		"name": "Ism",
+		"email": "Email",
+		"phone": "Telefon",
+		"age": "Yosh",
+		"createdAt": "Yaratilgan sana",
+		"expenseCount": "Xarajatlar soni",
+		"totalExpenses": "Jami xarajatlar",
+		"actions": "Amallar",
+		"addUser": "Foydalanuvchi qo'shish",
+		"editUser": "Foydalanuvchini tahrirlash",
+		"deleteUser": "Foydalanuvchini o'chirish",
+		"searchUsers": "Foydalanuvchilarni qidirish...",
+		"noUsersFound": "Foydalanuvchilar topilmadi",
+		"userCreated": "Foydalanuvchi muvaffaqiyatli yaratildi",
+		"userUpdated": "Foydalanuvchi muvaffaqiyatli yangilandi",
+		"userDeleted": "Foydalanuvchi muvaffaqiyatli o'chirildi"
+	},
+	"pages": {
+		"reports": {
+			"title": "Hisobotlar",
+			"description": "Bu yerda hisobotlarni ko'ring va yarating."
+		},
+		"calendar": {
+			"title": "Kalendar",
+			"description": "Tadbirlar va jadvallarni ko'ring va boshqaring."
+		},
+		"documents": {
+			"title": "Hujjatlar",
+			"description": "Hujjatlaringizni ko'ring va boshqaring."
+		},
+		"settings": {
+			"title": "Sozlamalar",
+			"description": "Ilova sozlamalarini o'zgartiring."
+		},
+		"help": {
+			"title": "Yordam va qo'llab-quvvatlash",
+			"description": "Ilovadan foydalanish bo'yicha yordam va qo'llab-quvvatlash oling."
+		},
+		"projects": {
+			"ecommerce": {
+				"title": "Elektron tijorat loyihasi",
+				"description": "Elektron tijorat loyihangiz tafsilotlarini ko'ring va boshqaring."
+			},
+			"social": {
+				"title": "Ijtimoiy ilova loyihasi",
+				"description": "Ijtimoiy ilova loyihangiz tafsilotlarini ko'ring va boshqaring."
+			},
+			"security": {
+				"title": "Xavfsizlik ilovasi loyihasi",
+				"description": "Xavfsizlik ilovasi loyihangiz tafsilotlarini ko'ring va boshqaring."
+			}
+		}
+	},
+	"errors": {
+		"notFound": "Sahifa topilmadi",
+		"notFoundDescription": "Siz qidirayotgan sahifa mavjud emas.",
+		"noAccess": "Kirish rad etildi",
+		"noAccessDescription": "Sizda bu sahifaga kirish huquqi yo'q.",
+		"goHome": "Bosh sahifaga o'tish",
+		"tryAgain": "Qayta urinish"
+	}
 }

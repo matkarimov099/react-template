@@ -14,5 +14,3 @@ export function getPreferredLocale(): Locale {
 export function isValidLocale(locale: string): boolean {
 	return SUPPORTED_LOCALES.includes(locale as Locale);
 }
-
-

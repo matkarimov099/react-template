@@ -1,121 +1,121 @@
 {
-  "common": {
-    "loading": "Loading...",
-    "error": "Error",
-    "success": "Success",
-    "cancel": "Cancel",
-    "save": "Save",
-    "edit": "Edit",
-    "delete": "Delete",
-    "search": "Search",
-    "filter": "Filter",
-    "export": "Export",
-    "import": "Import",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "submit": "Submit",
-    "reset": "Reset",
-    "close": "Close"
-  },
-  "navigation": {
-    "menu": "MENU",
-    "dashboard": "Dashboard",
-    "reports": "Reports",
-    "users": "Users",
-    "calendar": "Calendar",
-    "documents": "Documents",
-    "settings": "Settings",
-    "help": "Help",
-    "projects": "Projects",
-    "ecommerce": "E-Commerce",
-    "social": "Social App",
-    "security": "Security App",
-    "logout": "Log out",
-    "profile": "Profile",
-    "account": "Account",
-    "billing": "Billing",
-    "notifications": "Notifications",
-    "upgrade": "Upgrade to Pro"
-  },
-  "auth": {
-    "login": "Login",
-    "register": "Register",
-    "forgotPassword": "Forgot Password?",
-    "rememberMe": "Remember me",
-    "dontHaveAccount": "Don't have an account?",
-    "alreadyHaveAccount": "Already have an account?",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "phone": "Phone",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "loginTitle": "Sign In",
-    "registerTitle": "Create Account"
-  },
-  "users": {
-    "title": "Users List",
-    "name": "Name",
-    "email": "Email",
-    "phone": "Phone",
-    "age": "Age",
-    "createdAt": "Created At",
-    "expenseCount": "Expense Count",
-    "totalExpenses": "Total Expenses",
-    "actions": "Actions",
-    "addUser": "Add User",
-    "editUser": "Edit User",
-    "deleteUser": "Delete User",
-    "searchUsers": "Search users...",
-    "noUsersFound": "No users found",
-    "userCreated": "User created successfully",
-    "userUpdated": "User updated successfully",
-    "userDeleted": "User deleted successfully"
-  },
-  "pages": {
-    "reports": {
-      "title": "Reports",
-      "description": "View and generate reports here."
-    },
-    "calendar": {
-      "title": "Calendar",
-      "description": "View and manage events and schedules."
-    },
-    "documents": {
-      "title": "Documents",
-      "description": "View and manage your documents."
-    },
-    "settings": {
-      "title": "Settings",
-      "description": "Configure your application settings."
-    },
-    "help": {
-      "title": "Help & Support",
-      "description": "Get help and support for using the application."
-    },
-    "projects": {
-      "ecommerce": {
-        "title": "E-Commerce Project",
-        "description": "View and manage your e-commerce project details."
-      },
-      "social": {
-        "title": "Social App Project",
-        "description": "View and manage your social app project details."
-      },
-      "security": {
-        "title": "Security App Project",
-        "description": "View and manage your security app project details."
-      }
-    }
-  },
-  "errors": {
-    "notFound": "Page Not Found",
-    "notFoundDescription": "The page you are looking for does not exist.",
-    "noAccess": "Access Denied",
-    "noAccessDescription": "You don't have permission to access this page.",
-    "goHome": "Go to Home",
-    "tryAgain": "Try Again"
-  }
+	"common": {
+		"loading": "Loading...",
+		"error": "Error",
+		"success": "Success",
+		"cancel": "Cancel",
+		"save": "Save",
+		"edit": "Edit",
+		"delete": "Delete",
+		"search": "Search",
+		"filter": "Filter",
+		"export": "Export",
+		"import": "Import",
+		"back": "Back",
+		"next": "Next",
+		"previous": "Previous",
+		"submit": "Submit",
+		"reset": "Reset",
+		"close": "Close"
+	},
+	"navigation": {
+		"menu": "MENU",
+		"dashboard": "Dashboard",
+		"reports": "Reports",
+		"users": "Users",
+		"calendar": "Calendar",
+		"documents": "Documents",
+		"settings": "Settings",
+		"help": "Help",
+		"projects": "Projects",
+		"ecommerce": "E-Commerce",
+		"social": "Social App",
+		"security": "Security App",
+		"logout": "Log out",
+		"profile": "Profile",
+		"account": "Account",
+		"billing": "Billing",
+		"notifications": "Notifications",
+		"upgrade": "Upgrade to Pro"
+	},
+	"auth": {
+		"login": "Login",
+		"register": "Register",
+		"forgotPassword": "Forgot Password?",
+		"rememberMe": "Remember me",
+		"dontHaveAccount": "Don't have an account?",
+		"alreadyHaveAccount": "Already have an account?",
+		"signIn": "Sign in",
+		"signUp": "Sign up",
+		"phone": "Phone",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"loginTitle": "Sign In",
+		"registerTitle": "Create Account"
+	},
+	"users": {
+		"title": "Users List",
+		"name": "Name",
+		"email": "Email",
+		"phone": "Phone",
+		"age": "Age",
+		"createdAt": "Created At",
+		"expenseCount": "Expense Count",
+		"totalExpenses": "Total Expenses",
+		"actions": "Actions",
+		"addUser": "Add User",
+		"editUser": "Edit User",
+		"deleteUser": "Delete User",
+		"searchUsers": "Search users...",
+		"noUsersFound": "No users found",
+		"userCreated": "User created successfully",
+		"userUpdated": "User updated successfully",
+		"userDeleted": "User deleted successfully"
+	},
+	"pages": {
+		"reports": {
+			"title": "Reports",
+			"description": "View and generate reports here."
+		},
+		"calendar": {
+			"title": "Calendar",
+			"description": "View and manage events and schedules."
+		},
+		"documents": {
+			"title": "Documents",
+			"description": "View and manage your documents."
+		},
+		"settings": {
+			"title": "Settings",
+			"description": "Configure your application settings."
+		},
+		"help": {
+			"title": "Help & Support",
+			"description": "Get help and support for using the application."
+		},
+		"projects": {
+			"ecommerce": {
+				"title": "E-Commerce Project",
+				"description": "View and manage your e-commerce project details."
+			},
+			"social": {
+				"title": "Social App Project",
+				"description": "View and manage your social app project details."
+			},
+			"security": {
+				"title": "Security App Project",
+				"description": "View and manage your security app project details."
+			}
+		}
+	},
+	"errors": {
+		"notFound": "Page Not Found",
+		"notFoundDescription": "The page you are looking for does not exist.",
+		"noAccess": "Access Denied",
+		"noAccessDescription": "You don't have permission to access this page.",
+		"goHome": "Go to Home",
+		"tryAgain": "Try Again"
+	}
 }
