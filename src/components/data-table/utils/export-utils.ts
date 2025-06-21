@@ -1,4 +1,4 @@
-import {toast} from 'sonner';
+import { toast } from 'sonner';
 import ExcelJS from 'exceljs';
 
 // Generic type for exportable data - should have string keys and values that can be converted to string
