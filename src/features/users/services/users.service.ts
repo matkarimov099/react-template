@@ -36,7 +36,7 @@ export async function deleteUser(id: string) {
 
 export async function bulkDeleteUsers(ids: (string | number)[]) {
 	return await axiosClient.post('/users/bulk-delete', {
-		ids: ids.map(id => String(id)),
+		ids: ids.map((id) => String(id)),
 	});
 }
 

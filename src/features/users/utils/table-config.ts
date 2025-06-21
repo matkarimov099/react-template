@@ -18,5 +18,5 @@ export const usersTableConfig: Partial<TableConfig> = {
 	manualPagination: true,
 	manualSorting: true,
 	manualFiltering: true,
-	manualSearching: true
+	manualSearching: true,
 };
