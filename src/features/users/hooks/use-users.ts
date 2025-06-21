@@ -17,6 +17,7 @@ import {
 	deleteUser,
 	getUsers,
 	updateUser,
+	bulkDeleteUsers,
 } from '../services/users.service.ts';
 
 export function useCreateUser() {
@@ -49,6 +50,16 @@ export function useDeleteUser() {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => deleteUser(id),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['users'] }).then();
+		},
+	});
+}
+
+export function useBulkDeleteUsers() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (ids: (string | number)[]) => bulkDeleteUsers(ids),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['users'] }).then();
 		},

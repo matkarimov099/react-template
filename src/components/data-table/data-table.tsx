@@ -23,90 +23,43 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle } from "lucide-react";
 import { DataTableResizer } from "./data-table-resizer";
 import { useTableColumnResize } from "./hooks/use-table-column-resize";
 import { DataTablePagination } from "./pagination";
-import { DataTableToolbar } from "./toolbar";
 import {
   cleanupColumnResizing,
   initializeColumnSizes,
   trackColumnResizing,
 } from "./utils/column-sizing";
-import { createConditionalStateHook } from "./utils/conditional-state";
 import { createKeyboardNavigationHandler } from "./utils/keyboard-navigation";
-import { preprocessSearch } from "./utils/search";
 import { type TableConfig, useTableConfig } from "./utils/table-config";
-import { createSortingState } from "./utils/table-state-handlers";
-
-// Define types for the data fetching function params and result
-interface DataFetchParams {
-  page: number;
-  limit: number;
-  search: string;
-  from_date: string;
-  to_date: string;
-  sort_by: string;
-  sort_order: string;
-}
-
-interface DataFetchResult<TData> {
-  success: boolean;
-  data: TData[];
-  pagination: {
-    page: number;
-    limit: number;
-    total_pages: number;
-    total_items: number;
-  };
-}
+import type { ExportConfig, ToolbarRenderProps } from "./types";
+import { DataTableToolbar } from "@/components/data-table/toolbar.tsx";
 
 // Types for table handlers
-type PaginationUpdater = (prev: { pageIndex: number; pageSize: number }) => {
-  pageIndex: number;
-  pageSize: number;
-};
-type SortingUpdater = (
-  prev: { id: string; desc: boolean }[]
-) => { id: string; desc: boolean }[];
 type ColumnOrderUpdater = (prev: string[]) => string[];
 type RowSelectionUpdater = (
   prev: Record<string, boolean>
 ) => Record<string, boolean>;
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData> {
   // Allow overriding the table configuration
   config?: Partial<TableConfig>;
 
   // Column definitions generator
   getColumns: (
     handleRowDeselection: ((rowId: string) => void) | null | undefined
-  ) => ColumnDef<TData, TValue>[];
+  ) => ColumnDef<TData>[];
 
-  // Data fetching function
-  fetchDataFn:
-    | ((params: DataFetchParams) => Promise<DataFetchResult<TData>>)
-    | ((
-        page: number,
-        pageSize: number,
-        search: string,
-        dateRange: { from_date: string; to_date: string },
-        sortBy: string,
-        sortOrder: string
-      ) => unknown);
+  // Data to display in the table
+  data: TData[];
 
-  // Function to fetch specific items by their IDs
-  fetchByIdsFn?: (ids: number[] | string[]) => Promise<TData[]>;
+  // Total count for pagination
+  totalItems: number;
 
   // Export configuration
-  exportConfig: {
-    entityName: string;
-    columnMapping: Record<string, string>;
-    columnWidths: Array<{ wch: number }>;
-    headers: string[];
-  };
+  exportConfig: ExportConfig;
 
   // ID field in TData for tracking selected items
   idField: keyof TData;
@@ -115,24 +68,51 @@ interface DataTableProps<TData, TValue> {
   pageSizeOptions?: number[];
 
   // Custom toolbar content render function
-  renderToolbarContent?: (props: {
-    selectedRows: TData[];
-    allSelectedIds: (string | number)[];
-    totalSelectedCount: number;
-    resetSelection: () => void;
-  }) => React.ReactNode;
+  renderToolbarContent?: (props: ToolbarRenderProps<TData>) => React.ReactNode;
+
+  // Loading state
+  isLoading?: boolean;
+
+  // Pagination props
+  currentPage?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+
+  // Sorting props
+  sorting?: Array<{ id: string; desc: boolean }>;
+  onSortingChange?: (
+    updaterOrValue:
+      | Array<{ id: string; desc: boolean }>
+      | ((
+          prev: Array<{ id: string; desc: boolean }>
+        ) => Array<{ id: string; desc: boolean }>)
+  ) => void;
+
+  // Search props
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData>({
   config = {},
   getColumns,
-  fetchDataFn,
-  fetchByIdsFn,
+  data,
+  totalItems,
   exportConfig,
   idField = "id" as keyof TData,
   pageSizeOptions,
   renderToolbarContent,
-}: DataTableProps<TData, TValue>) {
+  isLoading = false,
+  currentPage = 1,
+  pageSize = 10,
+  onPageChange,
+  onPageSizeChange,
+  sorting: externalSorting = [],
+  onSortingChange,
+  searchValue: externalSearchValue = "",
+  onSearchChange,
+}: DataTableProps<TData>) {
   // Load table configuration with any overrides
   const tableConfig = useTableConfig(config);
 
@@ -143,45 +123,6 @@ export function DataTable<TData, TValue>({
   const { columnSizing, setColumnSizing, resetColumnSizing } =
     useTableColumnResize(tableId, tableConfig.enableColumnResizing);
 
-  // Create conditional URL state hook based on config
-  const useConditionalUrlState = createConditionalStateHook(
-    tableConfig.enableUrlState
-  );
-
-  // States for API parameters using conditional URL state
-  const [page, setPage] = useConditionalUrlState("page", 1);
-  const [pageSize, setPageSize] = useConditionalUrlState("pageSize", 10);
-  const [search, setSearch] = useConditionalUrlState("search", "");
-  const [dateRange, setDateRange] = useConditionalUrlState<{
-    from_date: string;
-    to_date: string;
-  }>("dateRange", { from_date: "", to_date: "" });
-  const [sortBy, setSortBy] = useConditionalUrlState("sortBy", "created_at");
-  const [sortOrder, setSortOrder] = useConditionalUrlState<"asc" | "desc">(
-    "sortOrder",
-    "desc"
-  );
-  const [columnVisibility, setColumnVisibility] = useConditionalUrlState<
-    Record<string, boolean>
-  >("columnVisibility", {});
-  const [columnFilters, setColumnFilters] = useConditionalUrlState<
-    Array<{ id: string; value: unknown }>
-  >("columnFilters", []);
-
-  // Internal states
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [data, setData] = useState<{
-    data: TData[];
-    pagination: {
-      page: number;
-      limit: number;
-      total_pages: number;
-      total_items: number;
-    };
-  } | null>(null);
-
   // Column order state (managed separately from URL state as it's persisted in localStorage)
   const [columnOrder, setColumnOrder] = useState<string[]>([]);
 
@@ -190,14 +131,69 @@ export function DataTable<TData, TValue>({
     Record<string | number, boolean>
   >({});
 
-  // Convert the sorting from URL to the format TanStack Table expects
-  const sorting = useMemo(
-    () => createSortingState(sortBy, sortOrder),
-    [sortBy, sortOrder]
+  // No sorting from filters - use external sorting if provided, otherwise internal
+  const [sorting, setSorting] =
+    useState<Array<{ id: string; desc: boolean }>>(externalSorting);
+
+  // Global filter state for search
+  const [globalFilter, setGlobalFilter] = useState<string>("");
+
+  // Search state - use external search if manual, otherwise internal
+  const [searchTerm, setSearchTerm] = useState<string>(externalSearchValue);
+
+  // Update internal search when external search changes
+  useEffect(() => {
+    if (tableConfig.manualSearch) {
+      setSearchTerm(externalSearchValue);
+    }
+  }, [externalSearchValue, tableConfig.manualSearch]);
+
+  // Handle search change
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      if (tableConfig.manualSearch && onSearchChange) {
+        // Manual search - call external handler
+        onSearchChange(value);
+      } else {
+        // Internal search - use global filter
+        setGlobalFilter(value);
+      }
+      setSearchTerm(value);
+    },
+    [tableConfig.manualSearch, onSearchChange]
   );
 
-  // Get current data items - memoize to avoid recalculations
-  const dataItems = useMemo(() => data?.data || [], [data?.data]);
+  // Get current search value
+  const currentSearchValue = tableConfig.manualSearch ? searchTerm : globalFilter;
+
+  // Update internal sorting when external sorting changes
+  useEffect(() => {
+    if (tableConfig.manualSorting) {
+      setSorting(externalSorting);
+    }
+  }, [externalSorting, tableConfig.manualSorting]);
+
+  // Handle sorting change
+  const handleSortingChange = useCallback(
+    (
+      updaterOrValue:
+        | Array<{ id: string; desc: boolean }>
+        | ((
+            prev: Array<{ id: string; desc: boolean }>
+          ) => Array<{ id: string; desc: boolean }>)
+    ) => {
+      if (tableConfig.manualSorting && onSortingChange) {
+        onSortingChange(updaterOrValue);
+      } else {
+        // Internal sorting
+        setSorting(updaterOrValue);
+      }
+    },
+    [tableConfig.manualSorting, onSortingChange]
+  );
+
+  // Get current data items - already provided as prop
+  const dataItems = useMemo(() => data || [], [data]);
 
   // PERFORMANCE FIX: Derive rowSelection from selectedItemIds using memoization
   const rowSelection = useMemo(() => {
@@ -303,42 +299,10 @@ export function DataTable<TData, TValue>({
       return [];
     }
 
-    // Get IDs of selected items
-    const selectedIdsArray = Object.keys(selectedItemIds).map((id) =>
-      Number.parseInt(id, 10)
-    );
-
     // Find items from current page that are selected
-    const itemsInCurrentPage = dataItems.filter(
-      (item) => selectedItemIds[String(item[idField])]
-    );
-
-    // Get IDs of items on current page
-    const idsInCurrentPage = itemsInCurrentPage.map(
-      (item) => item[idField] as unknown as number
-    );
-
-    // Find IDs that need to be fetched (not on current page)
-    const idsToFetch = selectedIdsArray.filter(
-      (id) => !idsInCurrentPage.includes(id)
-    );
-
-    // If all selected items are on current page or we can't fetch by IDs
-    if (idsToFetch.length === 0 || !fetchByIdsFn) {
-      return itemsInCurrentPage;
-    }
-
-    try {
-      // Fetch missing items in a single batch
-      const fetchedItems = await fetchByIdsFn(idsToFetch);
-
-      // Combine current page items with fetched items
-      return [...itemsInCurrentPage, ...fetchedItems];
-    } catch (error) {
-      console.error("Error fetching selected items:", error);
-      return itemsInCurrentPage;
-    }
-  }, [dataItems, selectedItemIds, totalSelectedItems, fetchByIdsFn, idField]);
+    // Return current page items (since we don't have fetchByIdsFn anymore)
+    return dataItems.filter((item) => selectedItemIds[String(item[idField])]);
+  }, [dataItems, selectedItemIds, totalSelectedItems, idField]);
 
   // Get all items on current page
   const getAllItems = useCallback((): TData[] => {
@@ -346,96 +310,13 @@ export function DataTable<TData, TValue>({
     return dataItems;
   }, [dataItems]);
 
-  // Fetch data
-  useEffect(() => {
-    // Check if the fetchDataFn is a query hook
-    const isQueryHook = (fetchDataFn as { isQueryHook?: boolean }).isQueryHook;
-
-    if (!isQueryHook) {
-      // Create refs to capture the current sort values at the time of fetching
-      const currentSortBy = sortBy;
-      const currentSortOrder = sortOrder;
-
-      const fetchData = async () => {
-        try {
-          setIsLoading(true);
-
-          const result = await (
-            fetchDataFn as (
-              params: DataFetchParams
-            ) => Promise<DataFetchResult<TData>>
-          )({
-            page,
-            limit: pageSize,
-            search: preprocessSearch(search),
-            from_date: dateRange.from_date,
-            to_date: dateRange.to_date,
-            sort_by: currentSortBy,
-            sort_order: currentSortOrder,
-          });
-          setData(result);
-          setIsError(false);
-          setError(null);
-        } catch (err) {
-          setIsError(true);
-          setError(err instanceof Error ? err : new Error("Unknown error"));
-          console.error("Error fetching data:", err);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      fetchData();
-    }
-  }, [page, pageSize, search, dateRange, sortBy, sortOrder, fetchDataFn]);
-
-  // If fetchDataFn is a React Query hook, call it directly with parameters
-  const queryResult = (fetchDataFn as { isQueryHook?: boolean }).isQueryHook
-    ? (
-        fetchDataFn as (
-          page: number,
-          pageSize: number,
-          search: string,
-          dateRange: { from_date: string; to_date: string },
-          sortBy: string,
-          sortOrder: string
-        ) => {
-          isLoading: boolean;
-          isSuccess: boolean;
-          isError: boolean;
-          data?: DataFetchResult<TData>;
-          error?: Error;
-        }
-      )(page, pageSize, search, dateRange, sortBy, sortOrder)
-    : null;
-
-  // If using React Query, update state based on query result
-  useEffect(() => {
-    if (queryResult) {
-      setIsLoading(queryResult.isLoading);
-      if (queryResult.isSuccess && queryResult.data) {
-        setData(queryResult.data);
-        setIsError(false);
-        setError(null);
-      }
-      if (queryResult.isError) {
-        setIsError(true);
-        setError(
-          queryResult.error instanceof Error
-            ? queryResult.error
-            : new Error("Unknown error")
-        );
-      }
-    }
-  }, [queryResult]);
-
   // Memoized pagination state
   const pagination = useMemo(
     () => ({
-      pageIndex: page - 1,
-      pageSize,
+      pageIndex: currentPage - 1,
+      pageSize: pageSize,
     }),
-    [page, pageSize]
+    [currentPage, pageSize]
   );
 
   // Ref for the table container for keyboard navigation
@@ -449,92 +330,33 @@ export function DataTable<TData, TValue>({
     );
   }, [getColumns, handleRowDeselection, tableConfig.enableRowSelection]);
 
-  // Create event handlers using utility functions
-  const handleSortingChange = useCallback(
-    (updaterOrValue: SortingUpdater | { id: string; desc: boolean }[]) => {
-      // Extract the new sorting state
-      const newSorting =
-        typeof updaterOrValue === "function"
-          ? updaterOrValue(sorting)
-          : updaterOrValue;
-
-      if (newSorting.length > 0) {
-        const columnId = newSorting[0].id;
-        const direction = newSorting[0].desc ? "desc" : "asc";
-        // Use Promise.all for batch updates to ensure they're applied together
-        Promise.all([setSortBy(columnId), setSortOrder(direction)]).catch(
-          (err) => {
-            console.error("Failed to update URL sorting params:", err);
-          }
-        );
-      }
-    },
-    [setSortBy, setSortOrder, sorting]
-  );
-
-  const handleColumnFiltersChange = useCallback(
-    (
-      updater:
-        | typeof columnFilters
-        | ((prev: typeof columnFilters) => typeof columnFilters)
-    ) => {
-      const newFilters =
-        typeof updater === "function" ? updater(columnFilters) : updater;
-      setColumnFilters(newFilters);
-    },
-    [columnFilters, setColumnFilters]
-  );
-
-  const handleColumnVisibilityChange = useCallback(
-    (
-      updater:
-        | typeof columnVisibility
-        | ((prev: typeof columnVisibility) => typeof columnVisibility)
-    ) => {
-      const newVisibility =
-        typeof updater === "function" ? updater(columnVisibility) : updater;
-      setColumnVisibility(newVisibility);
-    },
-    [columnVisibility, setColumnVisibility]
-  );
-
+  // Handle pagination changes
   const handlePaginationChange = useCallback(
     (
       updaterOrValue:
-        | PaginationUpdater
         | { pageIndex: number; pageSize: number }
+        | ((prev: { pageIndex: number; pageSize: number }) => {
+            pageIndex: number;
+            pageSize: number;
+          })
     ) => {
-      // Extract the new pagination state
       const newPagination =
         typeof updaterOrValue === "function"
-          ? updaterOrValue({ pageIndex: page - 1, pageSize })
+          ? updaterOrValue({
+              pageIndex: currentPage - 1,
+              pageSize: pageSize,
+            })
           : updaterOrValue;
 
-      // Special handling: When page size changes, always reset to page 1
-      if (newPagination.pageSize !== pageSize) {
-        // First, directly update URL to ensure it's in sync
-        const url = new URL(window.location.href);
-        url.searchParams.set("pageSize", String(newPagination.pageSize));
-        url.searchParams.set("page", "1"); // Always reset to page 1
-        window.history.replaceState({}, "", url.toString());
-
-        // Then update our state
-        setPageSize(newPagination.pageSize);
-        setPage(1);
-        return;
+      if (onPageChange && newPagination.pageIndex !== currentPage - 1) {
+        onPageChange(newPagination.pageIndex + 1);
       }
 
-      // Only update page if it's changed - this handles normal page navigation
-      if (newPagination.pageIndex + 1 !== page) {
-        const setPagePromise = setPage(newPagination.pageIndex + 1);
-        if (setPagePromise && typeof setPagePromise.catch === "function") {
-          setPagePromise.catch((err) => {
-            console.error("Failed to update page param:", err);
-          });
-        }
+      if (onPageSizeChange && newPagination.pageSize !== pageSize) {
+        onPageSizeChange(newPagination.pageSize);
       }
     },
-    [page, pageSize, setPage, setPageSize]
+    [currentPage, pageSize, onPageChange, onPageSizeChange]
   );
 
   const handleColumnSizingChange = useCallback(
@@ -565,20 +387,20 @@ export function DataTable<TData, TValue>({
       // Persist column order to localStorage
       try {
         localStorage.setItem(
-          "data-table-column-order",
+          `${tableId}-column-order`,
           JSON.stringify(newColumnOrder)
         );
       } catch (error) {
         console.error("Failed to save column order to localStorage:", error);
       }
     },
-    [columnOrder]
+    [columnOrder, tableId]
   );
 
   // Load column order from localStorage on initial render
   useEffect(() => {
     try {
-      const savedOrder = localStorage.getItem("data-table-column-order");
+      const savedOrder = localStorage.getItem(`${tableId}-column-order`);
       if (savedOrder) {
         const parsedOrder = JSON.parse(savedOrder);
         setColumnOrder(parsedOrder);
@@ -586,7 +408,12 @@ export function DataTable<TData, TValue>({
     } catch (error) {
       console.error("Error loading column order:", error);
     }
-  }, []);
+  }, [tableId]);
+
+  // Calculate total pages based on totalItems and current pageSize
+  const totalPages = useMemo(() => {
+    return Math.ceil(totalItems / pageSize);
+  }, [totalItems, pageSize]);
 
   // Set up the table with memoized state
   const table = useReactTable<TData>({
@@ -594,26 +421,25 @@ export function DataTable<TData, TValue>({
     columns,
     state: {
       sorting,
-      columnVisibility,
       rowSelection,
-      columnFilters,
       pagination,
       columnSizing,
       columnOrder,
+      globalFilter: tableConfig.manualSearch ? "" : globalFilter,
     },
     columnResizeMode: "onChange" as ColumnResizeMode,
     onColumnSizingChange: handleColumnSizingChange,
     onColumnOrderChange: handleColumnOrderChange,
-    pageCount: data?.pagination.total_pages || 0,
+    onSortingChange: handleSortingChange,
+    onGlobalFilterChange: tableConfig.manualSearch ? undefined : setGlobalFilter,
+    pageCount: totalPages,
     enableRowSelection: tableConfig.enableRowSelection,
     enableColumnResizing: tableConfig.enableColumnResizing,
-    manualPagination: true,
-    manualSorting: true,
-    manualFiltering: true,
+    enableGlobalFilter: tableConfig.enableSearch && !tableConfig.manualSearch,
+    manualPagination: tableConfig.manualPagination,
+    manualSorting: tableConfig.manualSorting,
+    manualFiltering: tableConfig.manualFiltering,
     onRowSelectionChange: handleRowSelectionChange,
-    onSortingChange: handleSortingChange,
-    onColumnFiltersChange: handleColumnFiltersChange,
-    onColumnVisibilityChange: handleColumnVisibilityChange,
     onPaginationChange: handlePaginationChange,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -633,16 +459,6 @@ export function DataTable<TData, TValue>({
     },
     [table]
   );
-
-  // Add an effect to validate page number when page size changes
-  useEffect(() => {
-    // This effect ensures page is valid after page size changes
-    const totalPages = data?.pagination.total_pages || 0;
-
-    if (totalPages > 0 && page > totalPages) {
-      setPage(1);
-    }
-  }, [data?.pagination?.total_pages, page, setPage]);
 
   // Initialize default column sizes when columns are available and no saved sizes exist
   useEffect(() => {
@@ -673,57 +489,18 @@ export function DataTable<TData, TValue>({
 
     // Remove from localStorage
     try {
-      localStorage.removeItem("data-table-column-order");
+      localStorage.removeItem(`${tableId}-column-order`);
     } catch (error) {
       console.error("Failed to remove column order from localStorage:", error);
     }
-  }, [table]);
-
-  // Add synchronization effect to ensure URL is the source of truth
-  useEffect(() => {
-    // Force the table's sorting state to match URL parameters
-    table.setSorting(sorting);
-  }, [table, sorting]);
-
-  // Keep pagination in sync with URL parameters
-  useEffect(() => {
-    // Make sure table pagination state matches URL state
-    const tableState = table.getState().pagination;
-    if (tableState.pageIndex !== page - 1 || tableState.pageSize !== pageSize) {
-      // Avoid unnecessary updates that might cause infinite loops
-      if (
-        tableState.pageSize !== pageSize ||
-        Math.abs(tableState.pageIndex - (page - 1)) > 0
-      ) {
-        table.setPagination({
-          pageIndex: page - 1,
-          pageSize: pageSize,
-        });
-      }
-    }
-  }, [table, page, pageSize]);
-
-  // Handle error state
-  if (isError) {
-    return (
-      <Alert variant="destructive" className="my-4">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Failed to load data:{" "}
-          {error instanceof Error ? error.message : "Unknown error"}
-        </AlertDescription>
-      </Alert>
-    );
-  }
+  }, [table, tableId]);
 
   return (
     <div className="space-y-4">
+      {/* Toolbar */}
       {tableConfig.enableToolbar && (
         <DataTableToolbar
           table={table}
-          setSearch={setSearch}
-          setDateRange={setDateRange}
           totalSelectedItems={totalSelectedItems}
           deleteSelection={clearAllSelections}
           getSelectedItems={getSelectedItems}
@@ -741,6 +518,8 @@ export function DataTable<TData, TValue>({
           columnMapping={exportConfig.columnMapping}
           columnWidths={exportConfig.columnWidths}
           headers={exportConfig.headers}
+          searchValue={currentSearchValue}
+          onSearchChange={handleSearchChange}
           customToolbarComponent={renderToolbarContent?.({
             selectedRows: dataItems.filter(
               (item) => selectedItemIds[String(item[idField])]
@@ -876,7 +655,7 @@ export function DataTable<TData, TValue>({
       {tableConfig.enablePagination && (
         <DataTablePagination
           table={table}
-          totalItems={data?.pagination.total_items || 0}
+          totalItems={totalItems}
           totalSelectedItems={totalSelectedItems}
           pageSizeOptions={pageSizeOptions || [10, 20, 30, 40, 50]}
           size={tableConfig.size}

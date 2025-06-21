@@ -17,29 +17,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createUser } from "@/features/users/services/optimized-users.service";
+import { useCreateUser } from "@/features/users/hooks/use-users";
 import type { UserCreate } from "@/features/users/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-
-const userCreateSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 characters"),
-  age: z.coerce
-    .number()
-    .min(16, "Age must be at least 16")
-    .max(120, "Age must be less than 120"),
-});
+import {userCreateSchema} from "@/features/users/schema/users.schema.ts";
 
 export function AddUser() {
   const [open, setOpen] = useState(false);
-  const queryClient = useQueryClient();
 
   const form = useForm<UserCreate>({
     resolver: zodResolver(userCreateSchema),
@@ -51,31 +39,21 @@ export function AddUser() {
     },
   });
 
-  const createMutation = useMutation({
-    mutationFn: createUser,
-    onSuccess: () => {
-      // Invalidate and refetch users data
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-
-      // Show success message
-      toast.success(`User "${form.getValues("name")}" created successfully`);
-
-      // Reset form and close dialog
-      form.reset();
-      setOpen(false);
-    },
-    onError: (error) => {
-      console.error("Create user error:", error);
-      toast.error("Failed to create user. Please try again.");
-    },
-  });
+  const createMutation = useCreateUser();
 
   const onSubmit = async (data: UserCreate) => {
     try {
       await createMutation.mutateAsync(data);
+
+      // Show success message
+      toast.success(`User "${data.name}" created successfully`);
+
+      // Reset form and close dialog
+      form.reset();
+      setOpen(false);
     } catch (error) {
-      // Error is already handled in onError callback
       console.error("Create user failed:", error);
+      toast.error("Failed to create user. Please try again.");
     }
   };
 

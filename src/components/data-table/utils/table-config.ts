@@ -46,6 +46,18 @@ export interface TableConfig {
 	// Unique ID for storing column sizing in localStorage
 	// This allows multiple tables to have independent sizing states
 	columnResizingTableId?: string;
+
+	// Manual pagination control - when true, pagination is handled externally
+	manualPagination: boolean;
+
+	// Manual sorting control - when true, sorting is handled externally
+	manualSorting: boolean;
+
+	// Manual filtering control - when true, filtering is handled externally
+	manualFiltering: boolean;
+
+	// Manual search control - when true, search is handled externally
+	manualSearching: boolean;
 }
 
 // Default configuration
@@ -64,6 +76,10 @@ const defaultConfig: TableConfig = {
 	enableToolbar: true, // Toolbar enabled by default
 	size: 'default', // Default size for buttons and inputs
 	columnResizingTableId: undefined, // No table ID by default
+	manualPagination: false, // Automatic pagination by default
+	manualSorting: false, // Automatic sorting by default
+	manualFiltering: false, // Automatic filtering by default
+	manualSearching: false, // Automatic search by default
 };
 
 /**

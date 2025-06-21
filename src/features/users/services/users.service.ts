@@ -33,3 +33,14 @@ export async function getUsers(filter: UserFilter) {
 export async function deleteUser(id: string) {
 	return await axiosClient.delete(`/users/${id}`);
 }
+
+export async function bulkDeleteUsers(ids: (string | number)[]) {
+	return await axiosClient.post('/users/bulk-delete', {
+		ids: ids.map(id => String(id)),
+	});
+}
+
+export async function fetchUsersData(filter: UserFilter) {
+	const response = await getUsers(filter);
+	return response.data;
+}

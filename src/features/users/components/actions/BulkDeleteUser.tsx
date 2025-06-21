@@ -7,8 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { bulkDeleteUsers } from "@/features/users/services/optimized-users.service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useBulkDeleteUsers } from "@/features/users/hooks/use-users";
 import { toast } from "sonner";
 
 interface BulkDeletePopupProps {
@@ -28,7 +27,8 @@ export function BulkDeleteUser({
   totalSelectedCount,
   resetSelection,
 }: BulkDeletePopupProps) {
-  const queryClient = useQueryClient();
+  // Mavjud hook dan foydalanish
+  const deleteMutation = useBulkDeleteUsers();
 
   // Use allSelectedIds if available, otherwise fallback to selectedUsers ids
   const idsToDelete = allSelectedIds || selectedUsers.map((user) => user.id);
@@ -36,11 +36,14 @@ export function BulkDeleteUser({
   // Use total count if available, otherwise fallback to visible items count
   const itemCount = totalSelectedCount ?? selectedUsers.length;
 
-  const deleteMutation = useMutation({
-    mutationFn: (ids: (string | number)[]) => bulkDeleteUsers(ids),
-    onSuccess: () => {
-      // Invalidate and refetch users data
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+  const handleDelete = async () => {
+    if (idsToDelete.length === 0) {
+      toast.error("No users selected for deletion");
+      return;
+    }
+
+    try {
+      await deleteMutation.mutateAsync(idsToDelete);
 
       // Show success message
       toast.success(
@@ -52,26 +55,11 @@ export function BulkDeleteUser({
       // Reset selection and close dialog
       resetSelection();
       onOpenChange(false);
-    },
-    onError: (error) => {
-      console.error("Delete error:", error);
+    } catch (error) {
+      console.error("Bulk delete failed:", error);
       toast.error(
         itemCount === 1 ? "Failed to delete user" : "Failed to delete users"
       );
-    },
-  });
-
-  const handleDelete = async () => {
-    if (idsToDelete.length === 0) {
-      toast.error("No users selected for deletion");
-      return;
-    }
-
-    try {
-      await deleteMutation.mutateAsync(idsToDelete);
-    } catch (error) {
-      // Error is already handled in onError callback
-      console.error("Bulk delete failed:", error);
     }
   };
 

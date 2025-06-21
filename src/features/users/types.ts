@@ -24,6 +24,7 @@ export interface UserFilter extends PaginationFilter {
 	to_date?: string;
 	sort_by?: string;
 	sort_order?: 'asc' | 'desc';
+	[key: string]: unknown; // Add index signature for DataTable compatibility
 }
 
 export interface UserUpdate {

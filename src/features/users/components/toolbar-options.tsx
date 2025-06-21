@@ -34,8 +34,8 @@ export const ToolbarOptions = ({
 
   return (
     <div className="flex items-center gap-2">
-      <AddUser />
 
+      <AddUser />
       {selectionCount > 0 && (
         <>
           <Button
