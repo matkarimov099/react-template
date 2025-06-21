@@ -3,9 +3,24 @@ import { NotFound } from '@/components/common/not-found.tsx';
 import { PageTitle } from '@/components/common/page-title.tsx';
 import { AuthLayout } from '@/layout/AuthLayout';
 import { DefaultLayout } from '@/layout/DefaultLayout';
+import { getUserFromToken, isAuthenticated } from '@/lib/auth.ts';
 import { Login } from '@/pages/auth/Login.tsx';
+import { Users } from '@/pages/users/Users.tsx';
 import AuthContextProvider from '@/provider/auth-context-provider.tsx';
-import { createBrowserRouter } from 'react-router';
+import {
+	type LoaderFunctionArgs,
+	createBrowserRouter,
+	redirect,
+} from 'react-router';
+
+// function authLoader({ request }: LoaderFunctionArgs) {
+// 	if (!isAuthenticated()) {
+// 		const user = getUserFromToken();
+// 		sessionStorage.setItem(user?.id || '', new URL(request.url).pathname);
+// 		return redirect('/auth/login');
+// 	}
+// 	return null;
+// }
 
 export const router = createBrowserRouter([
 	{
@@ -30,34 +45,6 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: (
-					<>
-						<PageTitle title="Dashboard" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">Dashboard Home</h1>
-							<p>
-								Welcome to the main dashboard. Use the sidebar navigation to
-								explore different sections.
-							</p>
-						</div>
-					</>
-				),
-			},
-			{
-				path: 'analytics',
-				element: (
-					<>
-						<PageTitle title="Analytics" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">
-								Analytics Dashboard
-							</h1>
-							<p>View your analytics and performance metrics here.</p>
-						</div>
-					</>
-				),
-			},
-			{
 				path: 'reports',
 				element: (
 					<>
@@ -74,46 +61,7 @@ export const router = createBrowserRouter([
 				element: (
 					<>
 						<PageTitle title="Users" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">User Management</h1>
-							<p>Manage users and access controls.</p>
-						</div>
-					</>
-				),
-			},
-			{
-				path: 'users/list',
-				element: (
-					<>
-						<PageTitle title="User List" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">User List</h1>
-							<p>View and manage all users in the system.</p>
-						</div>
-					</>
-				),
-			},
-			{
-				path: 'users/groups',
-				element: (
-					<>
-						<PageTitle title="User Groups" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">User Groups</h1>
-							<p>Manage user groups and permissions.</p>
-						</div>
-					</>
-				),
-			},
-			{
-				path: 'statistics',
-				element: (
-					<>
-						<PageTitle title="Statistics" />
-						<div className="bg-card rounded-lg p-6 shadow-sm">
-							<h1 className="text-2xl font-semibold mb-4">Statistics</h1>
-							<p>View detailed statistics and data visualizations.</p>
-						</div>
+						<Users />
 					</>
 				),
 			},

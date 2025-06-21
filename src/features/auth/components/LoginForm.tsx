@@ -9,16 +9,19 @@ import {
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input.tsx';
+import {
+	type LoginSchema,
+	loginSchema,
+} from '@/features/auth/schema/auth.schema';
 import { getUserFromToken } from '@/lib/auth';
 import type { ServerError } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
+import { ChevronRightIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { useLogin } from '../hooks/use-auth';
-import { type LoginSchema, loginSchema } from '../validations/auth.schema';
-import { ChevronRightIcon } from 'lucide-react';
 
 export const LoginForm = () => {
 	const { mutate: login, isPending } = useLogin();

@@ -7,7 +7,6 @@ import {
 	SettingsIcon,
 	ShieldIcon,
 	TruckIcon,
-	UsersIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -57,22 +56,7 @@ export const mainMenuItems: SidebarMenuItem[] = [
 	},
 	{
 		title: 'Users',
-		url: '', // Removed URL for parent with subitems
-		icon: <UsersIcon />,
-		items: [
-			{
-				title: 'User List',
-				url: '/users/list',
-			},
-			{
-				title: 'User Groups',
-				url: '/users/groups',
-			},
-		],
-	},
-	{
-		title: 'Statistics',
-		url: '/statistics',
+		url: '/Users',
 		icon: <BarChart3Icon />,
 	},
 	{
