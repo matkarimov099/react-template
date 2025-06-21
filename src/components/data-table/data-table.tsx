@@ -143,15 +143,15 @@ export function DataTable<TData>({
 
   // Update internal search when external search changes
   useEffect(() => {
-    if (tableConfig.manualSearch) {
+    if (tableConfig.manualSearching) {
       setSearchTerm(externalSearchValue);
     }
-  }, [externalSearchValue, tableConfig.manualSearch]);
+  }, [externalSearchValue, tableConfig.manualSearching]);
 
   // Handle search change
   const handleSearchChange = useCallback(
     (value: string) => {
-      if (tableConfig.manualSearch && onSearchChange) {
+      if (tableConfig.manualSearching && onSearchChange) {
         // Manual search - call external handler
         onSearchChange(value);
       } else {
@@ -160,11 +160,13 @@ export function DataTable<TData>({
       }
       setSearchTerm(value);
     },
-    [tableConfig.manualSearch, onSearchChange]
+    [tableConfig.manualSearching, onSearchChange]
   );
 
   // Get current search value
-  const currentSearchValue = tableConfig.manualSearch ? searchTerm : globalFilter;
+  const currentSearchValue = tableConfig.manualSearching
+    ? searchTerm
+    : globalFilter;
 
   // Update internal sorting when external sorting changes
   useEffect(() => {
@@ -425,17 +427,19 @@ export function DataTable<TData>({
       pagination,
       columnSizing,
       columnOrder,
-      globalFilter: tableConfig.manualSearch ? "" : globalFilter,
+      globalFilter: tableConfig.manualSearching ? "" : globalFilter,
     },
     columnResizeMode: "onChange" as ColumnResizeMode,
     onColumnSizingChange: handleColumnSizingChange,
     onColumnOrderChange: handleColumnOrderChange,
     onSortingChange: handleSortingChange,
-    onGlobalFilterChange: tableConfig.manualSearch ? undefined : setGlobalFilter,
+    onGlobalFilterChange: tableConfig.manualSearching
+      ? undefined
+      : setGlobalFilter,
     pageCount: totalPages,
     enableRowSelection: tableConfig.enableRowSelection,
     enableColumnResizing: tableConfig.enableColumnResizing,
-    enableGlobalFilter: tableConfig.enableSearch && !tableConfig.manualSearch,
+    enableGlobalFilter: tableConfig.enableSearch && !tableConfig.manualSearching,
     manualPagination: tableConfig.manualPagination,
     manualSorting: tableConfig.manualSorting,
     manualFiltering: tableConfig.manualFiltering,

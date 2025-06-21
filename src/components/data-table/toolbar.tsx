@@ -51,7 +51,8 @@ export function DataTableToolbar<TData>({
   searchValue,
   onSearchChange,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0 ||
+  const isFiltered =
+    table.getState().columnFilters.length > 0 ||
     table.getState().globalFilter ||
     (config.manualSearching && searchValue);
 
@@ -64,7 +65,11 @@ export function DataTableToolbar<TData>({
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search..."
-              value={config.manualSearching ? (searchValue ?? "") : (table.getState().globalFilter as string) ?? ""}
+              value={
+                config.manualSearching
+                  ? searchValue ?? ""
+                  : (table.getState().globalFilter as string) ?? ""
+              }
               onChange={(event) => {
                 if (config.manualSearching && onSearchChange) {
                   onSearchChange(event.target.value);
@@ -74,7 +79,8 @@ export function DataTableToolbar<TData>({
               }}
               className="pl-8 w-[250px] lg:w-[300px]"
             />
-            {((config.manualSearching && searchValue) || (!config.manualSearching && table.getState().globalFilter)) && (
+            {((config.manualSearching && searchValue) ||
+              (!config.manualSearching && table.getState().globalFilter)) && (
               <Button
                 variant="ghost"
                 onClick={() => {
@@ -91,10 +97,10 @@ export function DataTableToolbar<TData>({
             )}
           </div>
         )}
-        
+
         {/* Custom toolbar component */}
         {customToolbarComponent}
-        
+
         {/* Clear filters */}
         {isFiltered && (
           <Button
