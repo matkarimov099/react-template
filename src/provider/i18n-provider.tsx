@@ -53,21 +53,13 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 			let value: unknown = messages[locale];
 
 			for (const k of keys) {
-				if (
-					value &&
-					typeof value === 'object' &&
-					k in value
-				) {
+				if (value && typeof value === 'object' && k in value) {
 					value = (value as Record<string, unknown>)[k];
 				} else {
 					// Fallback to English if key not found
 					value = messages.en;
 					for (const fallbackKey of keys) {
-						if (
-							value &&
-							typeof value === 'object' &&
-							fallbackKey in value
-						) {
+						if (value && typeof value === 'object' && fallbackKey in value) {
 							value = (value as Record<string, unknown>)[fallbackKey];
 						} else {
 							return `Missing translation: ${key}`;

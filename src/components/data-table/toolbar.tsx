@@ -11,6 +11,7 @@ import {
 import type { TableConfig } from './utils/table-config';
 import { DataTableViewOptions } from './view-options';
 import type { ReactNode } from 'react';
+import { DataTableExport } from './data-export';
 
 // Helper functions for component sizing
 const getButtonSizeClass = (size: 'sm' | 'default' | 'lg') => {
@@ -44,21 +45,30 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({
 	table,
+	getSelectedItems,
+	getAllItems,
 	config,
 	resetColumnSizing,
 	resetColumnOrder,
+	entityName,
+	columnMapping,
+	columnWidths,
+	headers,
 	customToolbarComponent,
 	searchValue,
 	onSearchChange,
-}: DataTableToolbarProps<TData>) {
+}: Omit<
+	DataTableToolbarProps<TData>,
+	'totalSelectedItems' | 'deleteSelection'
+>) {
 	const isFiltered =
 		table.getState().columnFilters.length > 0 ||
 		table.getState().globalFilter ||
 		(config.manualSearching && searchValue);
 
 	return (
-		<div className="flex items-center justify-between">
-			<div className="flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2">
+		<div className="flex flex-wrap items-center justify-between">
+			<div className="flex flex-1 flex-wrap items-center gap-2">
 				{/* Search input */}
 				{config.enableSearch && (
 					<div className="relative">
@@ -97,10 +107,6 @@ export function DataTableToolbar<TData>({
 						)}
 					</div>
 				)}
-
-				{/* Custom toolbar component */}
-				{customToolbarComponent}
-
 				{/* Clear filters */}
 				{isFiltered && (
 					<Button
@@ -122,6 +128,23 @@ export function DataTableToolbar<TData>({
 			</div>
 
 			<div className="flex items-center gap-2">
+				{/* Custom toolbar component */}
+				{customToolbarComponent}
+
+				{config.enableExport && getAllItems && (
+					<DataTableExport<TData>
+						table={table}
+						data={getAllItems()}
+						selectedData={[]}
+						getSelectedItems={getSelectedItems}
+						entityName={entityName}
+						columnMapping={columnMapping}
+						columnWidths={columnWidths}
+						headers={headers}
+						size={config.size}
+					/>
+				)}
+
 				{/* Column visibility */}
 				{config.enableColumnVisibility && (
 					<DataTableViewOptions table={table} size={config.size} />

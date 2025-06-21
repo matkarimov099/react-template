@@ -506,8 +506,6 @@ export function DataTable<TData>({
 			{tableConfig.enableToolbar && (
 				<DataTableToolbar
 					table={table}
-					totalSelectedItems={totalSelectedItems}
-					deleteSelection={clearAllSelections}
 					getSelectedItems={getSelectedItems}
 					getAllItems={getAllItems}
 					config={tableConfig}

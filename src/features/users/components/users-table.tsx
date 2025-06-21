@@ -21,6 +21,8 @@ export const UsersTable = () => {
 		onSearchChange,
 	} = useUsersData();
 
+	const exportConfig = useExportConfig();
+
 	return (
 		<DataTable<User>
 			getColumns={getColumns}
@@ -35,7 +37,7 @@ export const UsersTable = () => {
 			onSortingChange={onSortingChange}
 			searchValue={search}
 			onSearchChange={onSearchChange}
-			exportConfig={useExportConfig()}
+			exportConfig={exportConfig}
 			idField="id"
 			pageSizeOptions={[10, 20, 30, 40, 50, 100, 150]}
 			renderToolbarContent={({

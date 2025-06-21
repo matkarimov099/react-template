@@ -9,14 +9,9 @@ import type { Table } from '@tanstack/react-table';
 import { DownloadIcon, Loader2 } from 'lucide-react';
 import { type JSX, useState } from 'react';
 import { toast } from 'sonner';
-import {
-	type ExportableData,
-	exportData,
-	exportToCSV,
-	exportToExcel,
-} from './utils/export-utils';
+import { exportData, exportToCSV, exportToExcel } from './utils/export-utils';
 
-interface DataTableExportProps<TData extends ExportableData> {
+interface DataTableExportProps<TData> {
 	table: Table<TData>;
 	data: TData[];
 	selectedData?: TData[];
@@ -29,7 +24,7 @@ interface DataTableExportProps<TData extends ExportableData> {
 	size?: 'sm' | 'default' | 'lg';
 }
 
-export function DataTableExport<TData extends ExportableData>({
+export function DataTableExport<TData>({
 	table,
 	data,
 	selectedData,
@@ -51,7 +46,9 @@ export function DataTableExport<TData extends ExportableData>({
 			// If we have selected items and a function to get their complete data
 			if (getSelectedItems && selectedData && selectedData.length > 0) {
 				// Check if data is on current page or needs to be fetched
-				if (selectedData.some((item) => Object.keys(item).length === 0)) {
+				if (
+					selectedData.some((item) => Object.keys(item as object).length === 0)
+				) {
 					// We have placeholder data, need to fetch complete data
 					toast.loading('Preparing export...', {
 						description: `Fetching complete data for selected ${entityName}.`,
@@ -192,7 +189,7 @@ export function DataTableExport<TData extends ExportableData>({
 			// Use the generic export function with proper options
 			await exportData(
 				type,
-				fetchExportData,
+				fetchExportData as () => Promise<Record<string, unknown>[]>,
 				() => setIsLoading(true),
 				() => setIsLoading(false),
 				{
@@ -280,10 +277,14 @@ export function DataTableExport<TData extends ExportableData>({
 			// Export based on type
 			let success: boolean;
 			if (type === 'csv') {
-				success = exportToCSV(allData, filename, exportHeaders);
+				success = exportToCSV(
+					allData as Record<string, unknown>[],
+					filename,
+					exportHeaders,
+				);
 			} else {
-				success = exportToExcel(
-					allData,
+				success = await exportToExcel(
+					allData as Record<string, unknown>[],
 					filename,
 					exportColumnMapping,
 					exportColumnWidths,
