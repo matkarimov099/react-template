@@ -51,11 +51,11 @@ export const router = createBrowserRouter([
 			return null;
 		},
 		element: <MainLayoutWrapper />,
-		errorElement: (
-			<LocaleWrapper>
-				<NotFound />
-			</LocaleWrapper>
-		),
+		// errorElement: (
+		// 	<LocaleWrapper>
+		// 		<NotFound />
+		// 	</LocaleWrapper>
+		// ),
 		children: mainRoutes,
 	},
 
