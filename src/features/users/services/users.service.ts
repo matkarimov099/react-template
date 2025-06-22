@@ -25,7 +25,7 @@ export async function updateUser(id: string, data: UserUpdate) {
 
 export async function getUsers(filter: UserFilter) {
 	return await axiosClient.post<PaginatedResponse<User>>(
-		'/users/search',
+		'/users',
 		filter,
 	);
 }

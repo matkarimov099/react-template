@@ -51,7 +51,11 @@ export const router = createBrowserRouter([
 			return null; // Bypass authentication check temporarily
 		},
 		element: <MainLayoutWrapper />,
-		errorElement: <NotFound />,
+		errorElement: (
+			<LocaleWrapper>
+				<NotFound />
+			</LocaleWrapper>
+		),
 		children: mainRoutes,
 	},
 

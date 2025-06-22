@@ -3,7 +3,6 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import type { User } from '@/features/users/types.ts';
 import type { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns';
 import { DataTableRowActions } from './row-actions';
 
 export const getColumns = (
@@ -121,11 +120,8 @@ export const getColumns = (
 				<DataTableColumnHeader column={column} title="Joined" />
 			),
 			cell: ({ row }) => {
-				const date = new Date(row.getValue('created_at'));
-				// Format date as "MMM d, yyyy" (e.g., "Mar 16, 2025")
-				const formattedDate = format(date, 'MMM d, yyyy');
 				return (
-					<div className="max-w-full text-left truncate">{formattedDate}</div>
+					<div className="max-w-full text-left truncate">{row.original.created_at}</div>
 				);
 			},
 			size: 120,
