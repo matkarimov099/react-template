@@ -5,7 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import type { Locale } from '@/context/i18n-context';
+import type { Locale } from '@/lib/i18n';
 import { useI18n } from '@/hooks/use-i18n';
 import {
 	addLocaleToPath,

@@ -1,6 +1,6 @@
-import type { Locale } from '@/context/i18n-context.ts';
+import { type Locale, SUPPORTED_LOCALES } from '@/lib/i18n';
 
-export const SUPPORTED_LOCALES: Locale[] = ['uz', 'ru', 'en'];
+export { SUPPORTED_LOCALES };
 export const DEFAULT_LOCALE: Locale = 'uz';
 
 export function getLocaleFromPath(pathname: string): Locale {

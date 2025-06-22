@@ -5,7 +5,7 @@ const Reports = () => {
 
 	return (
 		<div>
-			<h1 className="text-xl font-bold mb-4">{t('reports.title')}</h1>
+			<h1 className="text-xl font-bold mb-4">{t('pages.reports.title')}</h1>
 			<div className="p-4 border rounded-lg">
 				<p className="text-muted-foreground">Reports feature coming soon...</p>
 			</div>

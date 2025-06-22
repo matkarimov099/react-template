@@ -59,29 +59,29 @@
 		"loginTitle": "Sign In",
 		"registerTitle": "Create Account"
 	},
-	"users": {
-		"title": "Users List",
-		"name": "Name",
-		"email": "Email",
-		"phone": "Phone",
-		"age": "Age",
-		"createdAt": "Created At",
-		"expenseCount": "Expense Count",
-		"totalExpenses": "Total Expenses",
-		"actions": "Actions",
-		"addUser": "Add User",
-		"editUser": "Edit User",
-		"deleteUser": "Delete User",
-		"searchUsers": "Search users...",
-		"noUsersFound": "No users found",
-		"userCreated": "User created successfully",
-		"userUpdated": "User updated successfully",
-		"userDeleted": "User deleted successfully"
-	},
 	"pages": {
 		"reports": {
 			"title": "Reports",
 			"description": "View and generate reports here."
+		},
+		"users": {
+			"title": "Users List",
+			"name": "Name",
+			"email": "Email",
+			"phone": "Phone",
+			"age": "Age",
+			"createdAt": "Created At",
+			"expenseCount": "Expense Count",
+			"totalExpenses": "Total Expenses",
+			"actions": "Actions",
+			"addUser": "Add User",
+			"editUser": "Edit User",
+			"deleteUser": "Delete User",
+			"searchUsers": "Search users...",
+			"noUsersFound": "No users found",
+			"userCreated": "User created successfully",
+			"userUpdated": "User updated successfully",
+			"userDeleted": "User deleted successfully"
 		},
 		"calendar": {
 			"title": "Calendar",

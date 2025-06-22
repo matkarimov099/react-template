@@ -12,7 +12,7 @@ const Users = () => {
 
 	return (
 		<div>
-			<h1 className="text-xl font-bold mb-4">{t('users.title')}</h1>
+			<h1 className="text-xl font-bold mb-4">{t('pages.users.title')}</h1>
 
 			{/* DataTable with custom configuration */}
 			<LazyComponent>

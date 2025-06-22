@@ -9,7 +9,7 @@ A modern and professional dashboard application built with React 19, TypeScript,
 - 🔐 **Authentication** - Secure JWT token-based login/logout system
 - 👥 **User Management** - Complete CRUD operations with role-based access
 - 📊 **Data Tables** - Advanced tables with search, filtering, sorting, and export
-- 🌐 **Internationalization** - Multi-language support (English, Russian, Uzbek)
+- 🌐 **Internationalization** - Multi-language support (English, Russian, Uzbek) with react-i18next
 - 🎨 **Modern UI** - Beautiful interface using Shadcn/ui components and Tailwind CSS
 - 📱 **Responsive Design** - Optimized for all screen sizes and devices
 - 🌙 **Theme Support** - Dark/Light mode with user preference persistence

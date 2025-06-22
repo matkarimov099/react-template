@@ -1,10 +1,29 @@
-import { useContext } from 'react';
-import { I18nContext } from '@/context/i18n-context';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage, getCurrentLanguage, type Locale } from '@/lib/i18n';
 
+/**
+ * Custom hook that wraps react-i18next's useTranslation
+ * Maintains the same API as the previous custom i18n system
+ */
 export function useI18n() {
-	const context = useContext(I18nContext);
-	if (!context) {
-		throw new Error('useI18n must be used within an I18nProvider');
-	}
-	return context;
+	const { t: translate } = useTranslation();
+
+	// Translation function (same API as before)
+	const t = (key: string): string => {
+		return translate(key);
+	};
+
+	// Get current locale
+	const locale = getCurrentLanguage();
+
+	// Set locale function (same API as before)
+	const setLocale = (newLocale: Locale) => {
+		changeLanguage(newLocale);
+	};
+
+	return {
+		locale,
+		setLocale,
+		t,
+	};
 }
