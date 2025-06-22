@@ -1,9 +1,13 @@
-import { Spinner } from '@/components/ui/spinner.tsx';
-import { UsersTable } from '@/features/users/components/users-table.tsx';
 import { useI18n } from '@/hooks/use-i18n';
-import { Suspense } from 'react';
+import { lazy } from 'react';
+import { LazyComponent } from '@/components/common/lazy-component.tsx';
 
-export const Users = () => {
+// Lazy load the heavy users table component
+const UsersTable = lazy(
+	() => import('@/features/users/components/users-table.tsx'),
+);
+
+const Users = () => {
 	const { t } = useI18n();
 
 	return (
@@ -11,9 +15,11 @@ export const Users = () => {
 			<h1 className="text-xl font-bold mb-4">{t('users.title')}</h1>
 
 			{/* DataTable with custom configuration */}
-			<Suspense fallback={<Spinner />}>
+			<LazyComponent>
 				<UsersTable />
-			</Suspense>
+			</LazyComponent>
 		</div>
 	);
 };
+
+export default Users;

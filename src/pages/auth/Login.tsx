@@ -7,7 +7,7 @@ import { LoginForm } from '@/features/auth/components/LoginForm.tsx';
 import { useI18n } from '@/hooks/use-i18n';
 import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 
-export const Login = () => {
+const Login = () => {
 	const { t } = useI18n();
 
 	return (
@@ -30,3 +30,5 @@ export const Login = () => {
 		</CustomCard>
 	);
 };
+
+export default Login;

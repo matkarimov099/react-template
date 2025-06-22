@@ -1,7 +1,21 @@
 import { PageTitle } from '@/components/common/page-title.tsx';
-import { Users } from '@/pages/users/Users.tsx';
 import { Navigate } from 'react-router';
 import type { RouteObject } from 'react-router';
+import { lazy } from 'react';
+import { LazyComponent } from '@/components/common/lazy-component.tsx';
+
+// Lazy load all main components for better code splitting
+const Users = lazy(() => import('@/pages/users/Users.tsx'));
+const Reports = lazy(() => import('@/pages/dashboard/Reports.tsx'));
+const Calendar = lazy(() => import('@/pages/dashboard/Calendar.tsx'));
+const Documents = lazy(() => import('@/pages/dashboard/Documents.tsx'));
+const Settings = lazy(() => import('@/pages/dashboard/Settings.tsx'));
+const Help = lazy(() => import('@/pages/dashboard/Help.tsx'));
+const Ecommerce = lazy(
+	() => import('@/pages/dashboard/projects/Ecommerce.tsx'),
+);
+const Social = lazy(() => import('@/pages/dashboard/projects/Social.tsx'));
+const Security = lazy(() => import('@/pages/dashboard/projects/Security.tsx'));
 
 /**
  * Main application routes with required authentication
@@ -13,45 +27,83 @@ export const mainRoutes: RouteObject[] = [
 	},
 	{
 		path: 'reports',
-		element: <div>Reports</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.reports" />
+				<Reports />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'users',
 		element: (
-			<>
+			<LazyComponent>
 				<PageTitle title="navigation.users" />
 				<Users />
-			</>
+			</LazyComponent>
 		),
 	},
 	{
 		path: 'calendar',
-		element: <div>Calendar</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.calendar" />
+				<Calendar />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'documents',
-		element: <div>Documents</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.documents" />
+				<Documents />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'settings',
-		element: <div>Settings</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.settings" />
+				<Settings />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'help',
-		element: <div>Help</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.help" />
+				<Help />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'projects/ecommerce',
-		element: <div>E commerce</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.ecommerce" />
+				<Ecommerce />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'projects/social',
-		element: <div>Social</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.social" />
+				<Social />
+			</LazyComponent>
+		),
 	},
 	{
 		path: 'projects/security',
-		element: <div>Security</div>,
+		element: (
+			<LazyComponent>
+				<PageTitle title="navigation.security" />
+				<Security />
+			</LazyComponent>
+		),
 	},
 ];
-
-// Navigate is already imported at the top of the file

@@ -1,12 +1,16 @@
 import { DataTable } from '@/components/data-table/data-table.tsx';
 import { getColumns } from '@/features/users/components/columns.tsx';
-import { ToolbarOptions } from '@/features/users/components/toolbar-options.tsx';
 import type { User } from '@/features/users/types.ts';
 import { useExportConfig } from '@/features/users/utils/config.ts';
 import { usersTableConfig } from '@/features/users/utils/table-config.ts';
 import { useUsersData } from '../utils/data-fetching';
+import { lazy } from 'react';
+import { LazyComponent } from '@/components/common/lazy-component.tsx';
 
-export const UsersTable = () => {
+const ToolbarOptions = lazy(
+	() => import('@/features/users/components/toolbar-options.tsx'),
+);
+const UsersTable = () => {
 	const {
 		users,
 		total,
@@ -46,17 +50,21 @@ export const UsersTable = () => {
 				totalSelectedCount,
 				resetSelection,
 			}) => (
-				<ToolbarOptions
-					selectedUsers={selectedRows.map((row) => ({
-						id: row.id,
-						name: row.name,
-					}))}
-					allSelectedUserIds={allSelectedIds}
-					totalSelectedCount={totalSelectedCount}
-					resetSelection={resetSelection}
-				/>
+				<LazyComponent>
+					<ToolbarOptions
+						selectedUsers={selectedRows.map((row) => ({
+							id: row.id,
+							name: row.name,
+						}))}
+						allSelectedUserIds={allSelectedIds}
+						totalSelectedCount={totalSelectedCount}
+						resetSelection={resetSelection}
+					/>
+				</LazyComponent>
 			)}
 			config={usersTableConfig}
 		/>
 	);
 };
+
+export default UsersTable;

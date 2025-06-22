@@ -15,7 +15,7 @@ interface ToolbarOptionsProps {
 	resetSelection: () => void;
 }
 
-export const ToolbarOptions = ({
+const ToolbarOptions = ({
 	selectedUsers,
 	allSelectedUserIds = [],
 	totalSelectedCount,
@@ -60,3 +60,5 @@ export const ToolbarOptions = ({
 		</div>
 	);
 };
+
+export default ToolbarOptions;
