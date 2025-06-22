@@ -8,11 +8,32 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"], // Separate React into its own chunk
+        manualChunks: (id) => {
+          // Vendor chunks for core libraries
+          if (id.includes('node_modules')) {
+            // Separate large libraries into their own chunks
+            if (id.includes('exceljs')) return 'exceljs';
+            if (id.includes('react-router')) return 'react-router';
+            if (id.includes('@tanstack/react-table')) return 'tanstack-table';
+            if (id.includes('@tanstack/react-query')) return 'react-query';
+            if (id.includes('react-hook-form')) return 'react-hook-form';
+            if (id.includes('recharts')) return 'recharts';
+            if (id.includes('lucide-react')) return 'lucide-react';
+            if (id.includes('sonner')) return 'sonner';
+            if (id.includes('zod')) return 'zod';
+            if (id.includes('@hookform/resolvers')) return 'zod';
+
+            // Core React libraries
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            return 'vendor';
+          }
         },
       },
     },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
   },
   resolve: {
     alias: {
