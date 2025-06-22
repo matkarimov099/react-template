@@ -16,7 +16,10 @@
 		"previous": "Previous",
 		"submit": "Submit",
 		"reset": "Reset",
-		"close": "Close"
+		"close": "Close",
+		"tryAgain": "Try Again",
+		"goBack": "Go Back",
+		"home": "Home"
 	},
 	"navigation": {
 		"menu": "MENU",
@@ -36,7 +39,8 @@
 		"account": "Account",
 		"billing": "Billing",
 		"notifications": "Notifications",
-		"upgrade": "Upgrade to Pro"
+		"upgrade": "Upgrade to Pro",
+		"home": "Home"
 	},
 	"auth": {
 		"login": "Login",
@@ -116,6 +120,9 @@
 		"noAccess": "Access Denied",
 		"noAccessDescription": "You don't have permission to access this page.",
 		"goHome": "Go to Home",
-		"tryAgain": "Try Again"
+		"tryAgain": "Try Again",
+		"somethingWentWrong": "Something Went Wrong",
+		"errorDescription": "An unexpected error occurred. Please try again or come back later.",
+		"persistentError": "If the problem persists, please contact technical support."
 	}
 }

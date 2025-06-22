@@ -16,7 +16,10 @@
 		"previous": "Oldingi",
 		"submit": "Yuborish",
 		"reset": "Tozalash",
-		"close": "Yopish"
+		"close": "Yopish",
+		"tryAgain": "Qayta urinish",
+		"goBack": "Orqaga qaytish",
+		"home": "Uy"
 	},
 	"navigation": {
 		"menu": "MENYU",
@@ -35,6 +38,7 @@
 		"profile": "Profil",
 		"account": "Hisob",
 		"billing": "To'lovlar",
+		"home": "Bosh sahifa",
 		"notifications": "Bildirishnomalar",
 		"upgrade": "Pro versiyaga o'tish"
 	},
@@ -116,6 +120,9 @@
 		"noAccess": "Kirish rad etildi",
 		"noAccessDescription": "Sizda bu sahifaga kirish huquqi yo'q.",
 		"goHome": "Bosh sahifaga o'tish",
-		"tryAgain": "Qayta urinish"
+		"tryAgain": "Qayta urinish",
+		"somethingWentWrong": "Nimadir noto'g'ri ketdi",
+		"errorDescription": "Kutilmagan xatolik yuz berdi. Iltimos, qayta urinib ko'ring yoki bir ozdan so'ng qaytib keling.",
+		"persistentError": "Agar muammo davom etsa, texnik yordam bilan bog'laning."
 	}
 }

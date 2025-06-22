@@ -24,10 +24,7 @@ export async function updateUser(id: string, data: UserUpdate) {
 }
 
 export async function getUsers(filter: UserFilter) {
-	return await axiosClient.post<PaginatedResponse<User>>(
-		'/users',
-		filter,
-	);
+	return await axiosClient.post<PaginatedResponse<User>>('/users', filter);
 }
 
 export async function deleteUser(id: string) {

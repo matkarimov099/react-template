@@ -121,7 +121,9 @@ export const getColumns = (
 			),
 			cell: ({ row }) => {
 				return (
-					<div className="max-w-full text-left truncate">{row.original.created_at}</div>
+					<div className="max-w-full text-left truncate">
+						{row.original.created_at}
+					</div>
 				);
 			},
 			size: 120,

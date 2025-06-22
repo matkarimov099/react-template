@@ -12,7 +12,7 @@ import {
 	RootRedirect,
 } from '@/components/common/router-components.tsx';
 import {
-	//   authLoader,
+	// authLoader,
 	authLocaleLoader,
 	localeLoader,
 	rootRedirectLoader,
@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
 
 			// Authentication check temporarily disabled
 			// return authLoader(args);
-			return null; // Bypass authentication check temporarily
+			return null;
 		},
 		element: <MainLayoutWrapper />,
 		errorElement: (
