@@ -19,14 +19,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronRightIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import { toast } from 'sonner';
 import { useLogin } from '../hooks/use-auth';
+import { useI18n } from '@/hooks/use-i18n';
 
 export const LoginForm = () => {
 	const { mutate: login, isPending } = useLogin();
 	const navigate = useNavigate();
+	const location = useLocation();
+	const { locale } = useI18n();
 
 	const form = useForm<LoginSchema>({
 		resolver: zodResolver(loginSchema),
@@ -41,9 +44,11 @@ export const LoginForm = () => {
 					localStorage.setItem('refreshToken', data?.data.refreshToken);
 					const user = getUserFromToken() ?? null;
 					if (user) {
-						navigate('/');
+						// location.state?.from sahifasiga qaytish yoki default "/reports" ga yo'naltirish
+						const from = location.state?.from?.pathname || `/${locale}/reports`;
+						navigate(from, { replace: true });
 					} else {
-						navigate('/auth/login');
+						navigate(`/${locale}/auth/login`);
 					}
 				},
 				onError: (error) => {

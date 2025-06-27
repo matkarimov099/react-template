@@ -3,6 +3,7 @@ import { AuthLayout } from '@/layout/AuthLayout.tsx';
 import { DefaultLayout } from '@/layout/DefaultLayout.tsx';
 import { getLocaleFromPath } from '@/plugins/i18n-routing.ts';
 import AuthContextProvider from '@/provider/auth-context-provider.tsx';
+// import { AuthGuard } from '@/components/common/auth-guard.tsx';
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 import { useEffect } from 'react';
@@ -32,7 +33,9 @@ export function MainLayoutWrapper() {
 	return (
 		<LocaleWrapper>
 			<AuthContextProvider>
-				<DefaultLayout />
+				{/*<AuthGuard>*/}
+					<DefaultLayout />
+				{/*</AuthGuard>*/}
 			</AuthContextProvider>
 		</LocaleWrapper>
 	);

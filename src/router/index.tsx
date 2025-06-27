@@ -46,9 +46,9 @@ export const router = createBrowserRouter([
 			const localeResult = localeLoader(args);
 			if (localeResult) return localeResult;
 
-			// Authentication check temporarily disabled
+			// Authentication check
 			// return authLoader(args);
-			return null;
+			return null
 		},
 		element: <MainLayoutWrapper />,
 		// errorElement: (
