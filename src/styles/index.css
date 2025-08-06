@@ -41,7 +41,13 @@
 }
 
 :root {
-	--radius: 0.625rem;
+    --scale-factor: 1.15;
+    /* Component sizing - 15% larger */
+    --button-height: calc(2.5rem * var(--scale-factor));
+    --input-height: calc(2.5rem * var(--scale-factor));
+    --sidebar-width: calc(17rem * var(--scale-factor));
+
+    --radius: 0.625rem;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
 	--card: oklch(1 0 0);
@@ -110,6 +116,9 @@
 }
 
 @layer base {
+    html {
+        font-size: calc(1rem * var(--scale-factor)); /* 18.4px instead of 16px */
+    }
 	* {
 		border-color: var(--border);
 		outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
@@ -164,4 +173,22 @@
 		0px 2px 3px -1px rgba(0, 0, 0, 0.1),
 		0px 1px 0px 0px rgba(25, 28, 33, 0.02),
 		0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+}
+
+@screen sm {
+    html {
+        font-size: calc(1rem * 1.1); /* Smaller increase on mobile */
+    }
+}
+
+@screen md {
+    html {
+        font-size: calc(1rem * 1.15); /* Standard 15% increase on tablet+ */
+    }
+}
+
+@screen lg {
+    html {
+        font-size: calc(1rem * 1.11); /* Maintain 15% on desktop */
+    }
 }
