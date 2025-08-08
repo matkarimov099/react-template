@@ -1,19 +1,78 @@
 import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import { MouseEnterContext } from '@/context/mouse-enter-context';
 import { useMouseEnter } from '@/hooks/use-mouse-enter.ts';
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+const threeDCardVariants = cva(
+	'flex items-center justify-center relative transition-all duration-200 ease-linear hover:shadow-lg',
+	{
+		variants: {
+			size: {
+				sm: 'p-4',
+				default: 'p-6',
+				lg: 'p-8',
+				xl: 'p-12',
+			},
+		},
+		defaultVariants: {
+			size: 'default',
+		},
+	}
+);
+
+const threeDCardBodyVariants = cva(
+	'[transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d] rounded-xl border border-border/20 bg-card/50 backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:border-primary/20',
+	{
+		variants: {
+			size: {
+				sm: 'h-64 w-64',
+				default: 'h-96 w-96',
+				lg: 'h-[28rem] w-[28rem]',
+				xl: 'h-[32rem] w-[32rem]',
+			},
+		},
+		defaultVariants: {
+			size: 'default',
+		},
+	}
+);
+
+const threeDCardItemVariants = cva(
+	'w-fit transition duration-200 ease-linear hover:text-primary focus-visible:text-primary',
+	{
+		variants: {
+			size: {
+				sm: 'text-sm',
+				default: 'text-base',
+				lg: 'text-lg',
+				xl: 'text-xl',
+			},
+		},
+		defaultVariants: {
+			size: 'default',
+		},
+	}
+);
+
+export interface ThreeDCardContainerProps
+	extends React.HTMLAttributes<HTMLDivElement>,
+		VariantProps<typeof threeDCardVariants> {
+	children?: React.ReactNode;
+	className?: string;
+	containerClassName?: string;
+	size?: 'sm' | 'default' | 'lg' | 'xl';
+}
+
 export const ThreeDCardContainer = ({
 	children,
 	className,
 	containerClassName,
-}: {
-	children?: React.ReactNode;
-	className?: string;
-	containerClassName?: string;
-}) => {
+	size,
+	...props
+}: ThreeDCardContainerProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -40,22 +99,20 @@ export const ThreeDCardContainer = ({
 		<MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
 			<div
 				className={cn(
-					'py-20 flex items-center justify-center',
+					'py-20 flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-muted/20',
 					containerClassName,
 				)}
 				style={{
 					perspective: '1000px',
 				}}
+				{...props}
 			>
 				<div
 					ref={containerRef}
 					onMouseEnter={handleMouseEnter}
 					onMouseMove={handleMouseMove}
 					onMouseLeave={handleMouseLeave}
-					className={cn(
-						'flex items-center justify-center relative transition-all duration-200 ease-linear',
-						className,
-					)}
+					className={cn(threeDCardVariants({ size, className }))}
 					style={{
 						transformStyle: 'preserve-3d',
 					}}
@@ -67,40 +124,37 @@ export const ThreeDCardContainer = ({
 	);
 };
 
+export interface ThreeDCardBodyProps
+	extends React.HTMLAttributes<HTMLDivElement>,
+		VariantProps<typeof threeDCardBodyVariants> {
+	children: React.ReactNode;
+	className?: string;
+	size?: 'sm' | 'default' | 'lg' | 'xl';
+}
+
 export const ThreeDCardBody = ({
 	children,
 	className,
-}: {
-	children: React.ReactNode;
-	className?: string;
-}) => {
+	size,
+	...props
+}: ThreeDCardBodyProps) => {
 	return (
 		<div
-			className={cn(
-				'h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]',
-				className,
-			)}
+			className={cn(threeDCardBodyVariants({ size, className }))}
+			{...props}
 		>
 			{children}
 		</div>
 	);
 };
 
-export const ThreeDCardItem = ({
-	as: Tag = 'div',
-	children,
-	className,
-	translateX = 0,
-	translateY = 0,
-	translateZ = 0,
-	rotateX = 0,
-	rotateY = 0,
-	rotateZ = 0,
-	...rest
-}: {
+export interface ThreeDCardItemProps
+	extends React.HTMLAttributes<HTMLElement>,
+		VariantProps<typeof threeDCardItemVariants> {
 	as?: React.ElementType;
 	children: React.ReactNode;
 	className?: string;
+	size?: 'sm' | 'default' | 'lg' | 'xl';
 	translateX?: number | string;
 	translateY?: number | string;
 	translateZ?: number | string;
@@ -108,7 +162,21 @@ export const ThreeDCardItem = ({
 	rotateY?: number | string;
 	rotateZ?: number | string;
 	[key: string]: unknown;
-}) => {
+}
+
+export const ThreeDCardItem = ({
+	as: Tag = 'div',
+	children,
+	className,
+	size,
+	translateX = 0,
+	translateY = 0,
+	translateZ = 0,
+	rotateX = 0,
+	rotateY = 0,
+	rotateZ = 0,
+	...rest
+}: ThreeDCardItemProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isMouseEntered] = useMouseEnter();
 
@@ -137,7 +205,7 @@ export const ThreeDCardItem = ({
 	return (
 		<Tag
 			ref={ref}
-			className={cn('w-fit transition duration-200 ease-linear', className)}
+			className={cn(threeDCardItemVariants({ size, className }))}
 			{...rest}
 		>
 			{children}

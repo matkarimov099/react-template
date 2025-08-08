@@ -37,7 +37,7 @@ export function AuthNavbar() {
 				<NavItems items={navItems} />
 				<div className="flex items-center gap-4">
 					<NavbarButton variant="primary">Ro'yxatdan o'tish</NavbarButton>
-					<NavbarButton variant="gradient">Bog'lanish</NavbarButton>
+					<NavbarButton variant="secondary">Bog'lanish</NavbarButton>
 				</div>
 			</NavBody>
 

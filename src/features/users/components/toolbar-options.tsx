@@ -40,7 +40,7 @@ const ToolbarOptions = ({
 				<>
 					<Button
 						variant="outline"
-						size="default"
+						size="md"
 						onClick={() => setDeleteDialogOpen(true)}
 					>
 						<TrashIcon className="mr-2 size-4" aria-hidden="true" />

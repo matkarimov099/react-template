@@ -21,7 +21,7 @@ interface DataTableExportProps<TData> {
 	columnMapping?: Record<string, string>;
 	columnWidths?: Array<{ wch: number }>;
 	headers?: string[];
-	size?: 'sm' | 'default' | 'lg';
+	size?: 'sm' | 'md' | 'lg';
 }
 
 export function DataTableExport<TData>({
@@ -34,7 +34,7 @@ export function DataTableExport<TData>({
 	columnMapping,
 	columnWidths,
 	// headers,
-	size = 'default',
+	size = 'md',
 }: DataTableExportProps<TData>): JSX.Element {
 	const [isLoading, setIsLoading] = useState(false);
 

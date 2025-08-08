@@ -52,8 +52,9 @@ export function NavMain() {
 											asChild
 											tooltip={t(item.titleKey || item.title)}
 											className={cn(
-												'',
-												item.url === location.pathname && 'bg-neutral-400/10',
+												'transition-all duration-200 hover:bg-primary/5 hover:text-primary',
+												item.url === location.pathname && 
+													'bg-primary/10 border-l-2 border-primary text-primary font-medium',
 											)}
 										>
 											<span>
@@ -67,8 +68,9 @@ export function NavMain() {
 										asChild
 										tooltip={t(item.titleKey || item.title)}
 										className={cn(
-											'w-full',
-											isParentActive && 'font-bold bg-neutral-400/10',
+											'w-full transition-all duration-200 hover:bg-primary/5 hover:text-primary',
+											isParentActive && 
+												'bg-primary/10 border-l-2 border-primary text-primary font-medium',
 										)}
 									>
 										<span>
@@ -96,8 +98,20 @@ export function NavMain() {
 																	cn('w-full', isActive && 'font-bold')
 																}
 															>
-																<SidebarMenuSubButton asChild>
+																<SidebarMenuSubButton 
+																	asChild
+																	className={cn(
+																		'transition-all duration-200 hover:bg-secondary/10 hover:text-secondary ml-4',
+																		subItem.url === location.pathname && 
+																			'bg-secondary/15 border-l-2 border-secondary text-secondary font-medium'
+																	)}
+																>
 																	<span>
+																		{subItem.icon && (
+																			<span className="mr-2 opacity-70 group-hover:opacity-100 transition-opacity">
+																				{subItem.icon}
+																			</span>
+																		)}
 																		{t(subItem.titleKey || subItem.title)}
 																	</span>
 																</SidebarMenuSubButton>

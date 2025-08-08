@@ -446,7 +446,7 @@ export const CalendarDatePicker = React.forwardRef<
 								'w-auto',
 								multiSelectVariants({ variant, className }),
 							)}
-							size="default"
+							size="md"
 							onClick={handleTogglePopover}
 							suppressHydrationWarning
 						>
@@ -612,16 +612,16 @@ export const CalendarDatePicker = React.forwardRef<
 						>
 							<div className="flex">
 								{numberOfMonths === 2 && (
-									<div className="flex flex-col gap-1 pr-4 text-left border-r border-foreground/10">
+									<div className="flex flex-col gap-1 pr-4 text-left border-r border-border/30">
 										{dateRanges.map(({ label, start, end }) => (
 											<Button
 												key={label}
 												variant="ghost"
-												size="default"
+												size="md"
 												className={cn(
-													'justify-start hover:bg-primary/90 hover:text-background',
+													'justify-start hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-transparent hover:border-primary/20',
 													selectedRange === label &&
-														'bg-primary text-background hover:bg-primary/90 hover:text-background',
+														'bg-primary/10 text-primary border-primary/30 font-medium shadow-sm',
 												)}
 												onClick={() => {
 													selectDateRange(start, end, label);
@@ -648,7 +648,7 @@ export const CalendarDatePicker = React.forwardRef<
 													monthFrom ? months[monthFrom.getMonth()] : undefined
 												}
 											>
-												<SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium hover:bg-accent hover:text-accent-foreground">
+												<SelectTrigger className="w-[122px] focus:ring-2 focus:ring-primary focus:ring-offset-2 font-medium hover:bg-accent hover:text-accent-foreground border border-border/50 bg-background/80 backdrop-blur-sm transition-all duration-200">
 													<SelectValue placeholder="Month" />
 												</SelectTrigger>
 												<SelectContent>
@@ -666,7 +666,7 @@ export const CalendarDatePicker = React.forwardRef<
 												}}
 												value={yearFrom ? yearFrom.toString() : undefined}
 											>
-												<SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium hover:bg-accent hover:text-accent-foreground">
+												<SelectTrigger className="w-[122px] focus:ring-2 focus:ring-primary focus:ring-offset-2 font-medium hover:bg-accent hover:text-accent-foreground border border-border/50 bg-background/80 backdrop-blur-sm transition-all duration-200">
 													<SelectValue placeholder="Year" />
 												</SelectTrigger>
 												<SelectContent>
@@ -689,7 +689,7 @@ export const CalendarDatePicker = React.forwardRef<
 														monthTo ? months[monthTo.getMonth()] : undefined
 													}
 												>
-													<SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium hover:bg-accent hover:text-accent-foreground">
+													<SelectTrigger className="w-[122px] focus:ring-2 focus:ring-primary focus:ring-offset-2 font-medium hover:bg-accent hover:text-accent-foreground border border-border/50 bg-background/80 backdrop-blur-sm transition-all duration-200">
 														<SelectValue placeholder="Month" />
 													</SelectTrigger>
 													<SelectContent>
@@ -707,7 +707,7 @@ export const CalendarDatePicker = React.forwardRef<
 													}}
 													value={yearTo ? yearTo.toString() : undefined}
 												>
-													<SelectTrigger className="w-[122px] focus:ring-0 focus:ring-offset-0 font-medium hover:bg-accent hover:text-accent-foreground">
+													<SelectTrigger className="w-[122px] focus:ring-2 focus:ring-primary focus:ring-offset-2 font-medium hover:bg-accent hover:text-accent-foreground border border-border/50 bg-background/80 backdrop-blur-sm transition-all duration-200">
 														<SelectValue placeholder="Year" />
 													</SelectTrigger>
 													<SelectContent>

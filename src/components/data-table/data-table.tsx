@@ -47,6 +47,9 @@ interface DataTableProps<TData> {
 	// Allow overriding the table configuration
 	config?: Partial<TableConfig>;
 
+	// Table size variant
+	size?: 'compact' | 'md' | 'comfortable';
+
 	// Column definitions generator
 	getColumns: (
 		handleRowDeselection: ((rowId: string) => void) | null | undefined,
@@ -96,6 +99,7 @@ interface DataTableProps<TData> {
 
 export function DataTable<TData>({
 	config = {},
+	size = 'md',
 	getColumns,
 	data,
 	totalItems,
@@ -536,7 +540,7 @@ export function DataTable<TData>({
 
 			<div
 				ref={tableContainerRef}
-				className="overflow-y-auto rounded-md border table-container"
+				className={`overflow-y-auto rounded-md border table-container data-table-${size === 'md' ? 'default' : size}`}
 				aria-label="Data table"
 				onKeyDown={
 					tableConfig.enableKeyboardNavigation ? handleKeyDown : undefined

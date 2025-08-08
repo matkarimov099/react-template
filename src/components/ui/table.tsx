@@ -1,8 +1,67 @@
 import type * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-function Table({ className, ...props }: React.ComponentProps<'table'>) {
+const tableVariants = cva('w-full caption-bottom transition-all duration-200', {
+	variants: {
+		size: {
+			xs: 'text-xs',
+			sm: 'text-sm',
+			md: 'text-sm',
+			lg: 'text-base',
+			xl: 'text-lg',
+			'2xl': 'text-xl',
+		},
+	},
+	defaultVariants: {
+		size: 'md',
+	},
+});
+
+const tableHeadVariants = cva(
+	'text-foreground text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] transition-colors duration-200',
+	{
+		variants: {
+			size: {
+				xs: 'h-6 px-1 text-xs',
+				sm: 'h-8 px-1.5 text-sm',
+				md: 'h-10 px-2 text-sm',
+				lg: 'h-12 px-3 text-base',
+				xl: 'h-14 px-4 text-lg',
+				'2xl': 'h-16 px-5 text-xl',
+			},
+		},
+		defaultVariants: {
+			size: 'md',
+		},
+	},
+);
+
+const tableCellVariants = cva(
+	'align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] transition-colors duration-200',
+	{
+		variants: {
+			size: {
+				xs: 'p-1 text-xs',
+				sm: 'p-1.5 text-sm',
+				md: 'p-2 text-sm',
+				lg: 'p-3 text-base',
+				xl: 'p-4 text-lg',
+				'2xl': 'p-5 text-xl',
+			},
+		},
+		defaultVariants: {
+			size: 'md',
+		},
+	},
+);
+
+function Table({ 
+	className, 
+	size,
+	...props 
+}: React.ComponentProps<'table'> & VariantProps<typeof tableVariants>) {
 	return (
 		<div
 			data-slot="table-container"
@@ -10,7 +69,7 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
 		>
 			<table
 				data-slot="table"
-				className={cn('w-full caption-bottom text-sm', className)}
+				className={cn(tableVariants({ size }), className)}
 				{...props}
 			/>
 		</div>
@@ -63,27 +122,29 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
 	);
 }
 
-function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
+function TableHead({ 
+	className, 
+	size,
+	...props 
+}: React.ComponentProps<'th'> & VariantProps<typeof tableHeadVariants>) {
 	return (
 		<th
 			data-slot="table-head"
-			className={cn(
-				'text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-				className,
-			)}
+			className={cn(tableHeadVariants({ size }), className)}
 			{...props}
 		/>
 	);
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
+function TableCell({ 
+	className,
+	size,
+	...props 
+}: React.ComponentProps<'td'> & VariantProps<typeof tableCellVariants>) {
 	return (
 		<td
 			data-slot="table-cell"
-			className={cn(
-				'p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-				className,
-			)}
+			className={cn(tableCellVariants({ size }), className)}
 			{...props}
 		/>
 	);
@@ -111,4 +172,7 @@ export {
 	TableRow,
 	TableCell,
 	TableCaption,
+	tableVariants,
+	tableHeadVariants,
+	tableCellVariants,
 };

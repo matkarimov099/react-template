@@ -5,8 +5,6 @@ import {
 	LayoutDashboardIcon,
 	MessageSquareIcon,
 	SettingsIcon,
-	ShieldIcon,
-	TruckIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -48,7 +46,7 @@ export const mainMenuItems: SidebarMenuItem[] = [
 	{
 		title: 'Dashboard',
 		titleKey: 'navigation.dashboard',
-		url: '', // Removed URL for parent with subitems
+		url: '', // Parent with subitems
 		icon: <LayoutDashboardIcon size={18} />,
 		isActive: true,
 		items: [
@@ -85,7 +83,7 @@ export const projectItems: SidebarProjectItem[] = [
 		title: 'E-Commerce',
 		titleKey: 'navigation.ecommerce',
 		url: '/projects/ecommerce',
-		icon: <TruckIcon />,
+		icon: <SettingsIcon />,
 	},
 	{
 		title: 'Social App',
@@ -97,7 +95,7 @@ export const projectItems: SidebarProjectItem[] = [
 		title: 'Security App',
 		titleKey: 'navigation.security',
 		url: '/projects/security',
-		icon: <ShieldIcon />,
+		icon: <FileTextIcon />,
 	},
 ];
 

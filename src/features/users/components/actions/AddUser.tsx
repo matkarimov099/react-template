@@ -60,7 +60,7 @@ export function AddUser() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button size="default">
+				<Button size="md">
 					<PlusIcon className="mr-2 h-4 w-4" />
 					Add User
 				</Button>

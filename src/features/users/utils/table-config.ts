@@ -14,7 +14,7 @@ export const usersTableConfig: Partial<TableConfig> = {
 	enableUrlState: false,
 	enableColumnResizing: true,
 	columnResizingTableId: 'users-table',
-	size: 'default',
+	size: 'md',
 	manualPagination: true,
 	manualSorting: true,
 	manualFiltering: true,

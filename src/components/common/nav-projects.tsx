@@ -30,8 +30,9 @@ export function NavProjects() {
 							<SidebarMenuButton
 								asChild
 								className={cn(
-									'',
-									item.url === location.pathname && 'bg-neutral-400/10',
+									'transition-all duration-200 hover:bg-accent/10 hover:text-accent',
+									item.url === location.pathname && 
+										'bg-accent/15 border-l-2 border-accent text-accent font-medium',
 								)}
 							>
 								<span>

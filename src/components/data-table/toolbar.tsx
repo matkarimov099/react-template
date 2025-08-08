@@ -14,12 +14,13 @@ import type { ReactNode } from 'react';
 import { DataTableExport } from './data-export';
 
 // Helper functions for component sizing
-const getButtonSizeClass = (size: 'sm' | 'default' | 'lg') => {
+const getButtonSizeClass = (size: 'sm' | 'md' | 'lg') => {
 	switch (size) {
 		case 'sm':
 			return 'h-8 px-3';
 		case 'lg':
 			return 'h-11 px-5';
+		case 'md':
 		default:
 			return '';
 	}
@@ -155,7 +156,7 @@ export function DataTableToolbar<TData>({
 					<PopoverTrigger asChild>
 						<Button
 							variant="outline"
-							size={config.size === 'sm' ? 'sm' : 'default'}
+							size={config.size === 'sm' ? 'sm' : 'md'}
 							className={`ml-auto hidden lg:flex ${getButtonSizeClass(
 								config.size,
 							)}`}

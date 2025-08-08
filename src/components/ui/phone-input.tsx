@@ -23,17 +23,17 @@ import { cn } from '@/lib/utils';
 
 type PhoneInputProps = Omit<
 	React.InputHTMLAttributes<HTMLInputElement>,
-	'onChange' | 'value'
+	'onChange' | 'value' | 'size'
 > &
 	Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
 		onChange?: (value: RPNInput.Value) => void;
-		inputSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | string;
-		inputClassName?: string; // yangi prop qo'shildi
+		inputSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+		inputClassName?: string;
 	};
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
 	React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-		({ className, inputClassName, onChange, ...props }, ref) => {
+		({ className, inputClassName, onChange, inputSize = 'md', ...props }, ref) => {
 			return (
 				<RPNInput.default
 					ref={ref}
@@ -55,6 +55,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
 						if (value) onChange?.(value);
 					}}
 					inputClassName={inputClassName}
+					inputSize={inputSize}
 					{...props}
 				/>
 			);
@@ -64,10 +65,11 @@ PhoneInput.displayName = 'PhoneInput';
 
 const InputComponent = React.forwardRef<
 	HTMLInputElement,
-	InputProps & { inputClassName?: string }
->(({ className, inputClassName, ...props }, ref) => (
+	InputProps & { inputClassName?: string; inputSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' }
+>(({ className, inputClassName, inputSize = 'md', ...props }, ref) => (
 	<Input
 		className={cn('rounded-md', inputClassName, className)}
+		inputSize={inputSize}
 		{...props}
 		ref={ref}
 	/>

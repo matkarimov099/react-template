@@ -45,10 +45,10 @@ export function NavUser({ user, logout }: NavUserProps) {
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							className="transition-all duration-200 hover:bg-primary/5 data-[state=open]:bg-primary/10 data-[state=open]:border-l-2 data-[state=open]:border-primary"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarFallback className="rounded-lg">
+								<AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
 									{`${user?.firstname?.[0] ?? ''}${
 										user?.lastname?.[0] ?? ''
 									}`.toUpperCase() || 'SU'}
@@ -59,7 +59,9 @@ export function NavUser({ user, logout }: NavUserProps) {
 								<span className="truncate font-medium">
 									{user?.firstname || 'USERNAME'}
 								</span>
-								<span className="truncate text-xs">{user?.lastname}</span>
+								<span className="truncate text-xs">
+									{user?.lastname}
+								</span>
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>
