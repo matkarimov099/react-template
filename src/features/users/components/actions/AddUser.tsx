@@ -45,10 +45,10 @@ export function AddUser() {
 		try {
 			await createMutation.mutateAsync(data);
 
-			// Show success message
+			// Show a success message
 			toast.success(`User "${data.name}" created successfully`);
 
-			// Reset form and close dialog
+			// Reset form and close the dialog
 			form.reset();
 			setOpen(false);
 		} catch (error) {

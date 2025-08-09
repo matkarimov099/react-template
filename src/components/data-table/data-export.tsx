@@ -335,7 +335,9 @@ export function DataTableExport<TData>({
 					)}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent 
+				align="end"
+			>
 				{hasSelection ? (
 					<>
 						<DropdownMenuItem
@@ -370,13 +372,13 @@ export function DataTableExport<TData>({
 								<DropdownMenuItem
 									onClick={() => exportAllPages('csv')}
 									disabled={isLoading}
-								>
+										>
 									Export All Pages as CSV
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									onClick={() => exportAllPages('excel')}
 									disabled={isLoading}
-								>
+										>
 									Export All Pages as XLS
 								</DropdownMenuItem>
 							</>

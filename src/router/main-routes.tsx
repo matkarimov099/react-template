@@ -16,6 +16,7 @@ const Ecommerce = lazy(
 );
 const Social = lazy(() => import("@/pages/dashboard/projects/Social.tsx"));
 const Security = lazy(() => import("@/pages/dashboard/projects/Security.tsx"));
+const ThemeDemo = lazy(() => import("@/pages/dashboard/ThemeDemo.tsx"));
 
 /**
  * Main application routes with required authentication
@@ -103,6 +104,15 @@ export const mainRoutes: RouteObject[] = [
       <LazyComponent>
         <PageTitle title="navigation.security" />
         <Security />
+      </LazyComponent>
+    ),
+  },
+  {
+    path: "theme-demo",
+    element: (
+      <LazyComponent>
+        <PageTitle title="Theme Demo" />
+        <ThemeDemo />
       </LazyComponent>
     ),
   },

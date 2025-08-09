@@ -1,38 +1,41 @@
-import { cva } from 'class-variance-authority';
+import { cva } from "class-variance-authority";
 
 const buttonVariants = cva(
-	'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
-	{
-		variants: {
-			variant: {
-				default:
-					'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-				destructive:
-					'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-				outline:
-					'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-				secondary:
-					'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-				ghost: 'hover:bg-accent hover:text-accent-foreground',
-				link: 'text-primary underline-offset-4 hover:underline',
-				success:
-					'bg-green-600 hover:bg-green-500 hover:text-white text-green-100 shadow-sm',
-				primary:
-					'bg-blue-600 text-blue-100 shadow-sm hover:bg-blue-500 hover:text-white',
-			},
-			size: {
-				default: 'h-9 px-4 py-2',
-				sm: 'h-8 rounded-md px-3 text-xs',
-				lg: 'h-10 rounded-md px-8',
-				xl: 'h-12 rounded-md px-5 py-3',
-				icon: 'h-9 w-9',
-			},
-		},
-		defaultVariants: {
-			variant: 'default',
-			size: 'default',
-		},
-	},
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium select-none focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 backdrop-filter backdrop-blur-[10px] backdrop-saturate-150 -webkit-tap-highlight-color-transparent",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-[var(--system-blue)] text-white shadow-[var(--shadow-sm)] border border-black/[0.03] hover:bg-[var(--system-blue-500)] focus-visible:ring-2 focus-visible:ring-[var(--system-blue)] focus-visible:ring-offset-2",
+        destructive:
+          "bg-[var(--system-red)] text-white border border-black/[0.02] hover:bg-[color-mix(in_srgb,var(--system-red)_90%,white)] focus-visible:ring-2 focus-visible:ring-[var(--system-red)] focus-visible:ring-offset-2",
+        outline:
+          "bg-[var(--card-bg)] text-[var(--label)] border border-[var(--border)] hover:bg-[var(--control-ghost-bg)] hover:shadow-[var(--shadow-sm)] hover:-translate-y-[1px] transition-all duration-[var(--motion-short)] ease-[var(--motion-ease)] focus-visible:ring-2 focus-visible:ring-[var(--system-blue)] focus-visible:ring-offset-2",
+        secondary:
+          "bg-[var(--system-green)] text-white border border-black/[0.03] hover:bg-[color-mix(in_srgb,var(--system-green)_90%,white)] focus-visible:ring-2 focus-visible:ring-[var(--system-green)] focus-visible:ring-offset-2",
+        ghost:
+          "bg-transparent text-[var(--label)] hover:bg-[var(--control-ghost-bg)] focus-visible:ring-2 focus-visible:ring-[var(--system-blue)] focus-visible:ring-offset-2",
+        link: "text-[var(--system-blue)] underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-[var(--system-blue)] focus-visible:ring-offset-2",
+        success:
+          "bg-[var(--system-green)] text-white border border-black/[0.03] hover:bg-[color-mix(in_srgb,var(--system-green)_90%,white)] focus-visible:ring-2 focus-visible:ring-[var(--system-green)] focus-visible:ring-offset-2",
+        primary:
+          "bg-[var(--system-blue)] text-white shadow-[var(--shadow-sm)] border border-black/[0.03] hover:bg-[var(--system-blue-500)] focus-visible:ring-2 focus-visible:ring-[var(--system-blue)] focus-visible:ring-offset-2",
+      },
+      size: {
+        xs: "h-7 px-2 text-xs rounded-[var(--radius-sm)] [&_svg]:size-3",
+        sm: "h-8 px-3 text-sm rounded-[var(--radius-md)] [&_svg]:size-3.5",
+        default: "h-9 px-4 text-sm rounded-[var(--radius-md)] [&_svg]:size-4",
+        md: "h-9 px-4 text-sm rounded-[var(--radius-md)] [&_svg]:size-4",
+        lg: "h-11 px-6 text-base rounded-[var(--radius-lg)] [&_svg]:size-5",
+        xl: "h-12 px-8 text-lg rounded-[var(--radius-lg)] [&_svg]:size-6",
+        icon: "h-9 w-9 rounded-[var(--radius-md)] [&_svg]:size-4",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
 );
 
 export { buttonVariants };
