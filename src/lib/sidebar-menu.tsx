@@ -51,11 +51,12 @@ export const mainMenuItems: SidebarMenuItem[] = [
     title: "Dashboard",
     titleKey: "navigation.dashboard",
     icon: <LayoutDashboardIcon />,
+    url:"",
     items: [
       {
         title: "Reports",
         titleKey: "navigation.reports",
-        url: "/dashboard/reports",
+        url: "/reports",
       },
     ],
   },

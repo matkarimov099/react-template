@@ -24,36 +24,50 @@ import { useI18n } from "@/hooks/use-i18n";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { mainMenuItems } from "@/lib/sidebar-menu.tsx";
 import { cn } from "@/lib/utils";
-import { ChevronRight, Dot } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useLocation } from "react-router";
+import { removeLocaleFromPath } from "@/plugins/i18n-routing.ts";
+import { useState } from "react";
 
 export function NavMain() {
   const location = useLocation();
   const { t } = useI18n();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const [openItems, setOpenItems] = useState<string[]>([]);
 
   return (
-    <SidebarGroup className={cn(
-      "transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-      isCollapsed && "py-2"
-    )}>
+    <SidebarGroup>
       <SidebarGroupLabel className={cn(
-        "transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-        isCollapsed && "opacity-0 h-0 overflow-hidden"
+        "px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider transition-opacity duration-200",
+        isCollapsed && "opacity-0"
       )}>
         {t("navigation.menu")}
       </SidebarGroupLabel>
       
-      <SidebarMenu>
+      <SidebarMenu className="space-y-1">
         {mainMenuItems.map((item) => {
-          const isParentActive =
-            item.items?.some((subItem) => subItem.url === location.pathname) ||
-            (item.url && item.url === location.pathname);
+          // Get current path without locale prefix for comparison
+          const currentPath = removeLocaleFromPath(location.pathname);
+          
+          // Check if this item or any of its sub-items is active
+          const hasActiveSubItem = item.items?.some((subItem) => subItem.url === currentPath);
+          const isDirectlyActive = item.url && item.url !== "" && item.url === currentPath;
+          const isParentActive = hasActiveSubItem || isDirectlyActive;
           const hasSubItems = item.items && item.items.length > 0;
 
-          // For collapsed sidebar with subitems, use Popover
-          if (isCollapsed && hasSubItems && !item.url) {
+          console.log(`Item: ${item.title}`, {
+            rawPath: location.pathname,
+            currentPath: currentPath,
+            itemUrl: item.url,
+            hasActiveSubItem,
+            isDirectlyActive,
+            isParentActive,
+            hasSubItems
+          });
+
+          // For collapsed sidebar with subitems
+          if (isCollapsed && hasSubItems && (!item.url || item.url === "")) {
             return (
               <SidebarMenuItem key={item.title}>
                 <Popover>
@@ -61,42 +75,30 @@ export function NavMain() {
                     <SidebarMenuButton
                       tooltip={t(item.titleKey || item.title)}
                       className={cn(
-                        "relative group w-full h-8 w-8 p-0 justify-center transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                        "hover:bg-gradient-to-br hover:from-[var(--system-blue)]/10 hover:to-[var(--system-blue)]/5 hover:shadow-md hover:scale-105",
-                        "dark:hover:from-[var(--system-blue)]/15 dark:hover:to-[var(--system-blue)]/8",
-                        isParentActive && "bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/80 text-white shadow-lg ring-2 ring-[var(--system-blue)]/30 scale-105"
+                        "relative h-9 w-9 p-0 rounded-lg transition-all duration-200",
+                        "text-gray-900 hover:!bg-blue-500 hover:!text-white",
+                        isParentActive && "!text-blue-500 !font-semibold hover:!bg-blue-600"
                       )}
-                      data-active={isParentActive}
                     >
-                      <div className="relative">
+                      <div className="flex items-center justify-center">
                         {item.icon}
-                        {/* Active indicator */}
-                        {isParentActive && (
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-pulse" />
-                        )}
-                        {/* Sub-items indicator - dots to show expandable menu */}
-                        <div className="absolute -bottom-1 -right-1 flex space-x-0.5">
-                          <div className="w-1 h-1 bg-[var(--system-blue)] rounded-full opacity-60 animate-pulse" />
-                          <div className="w-1 h-1 bg-[var(--system-blue)] rounded-full opacity-40 animate-pulse [animation-delay:0.2s]" />
-                          <div className="w-1 h-1 bg-[var(--system-blue)] rounded-full opacity-20 animate-pulse [animation-delay:0.4s]" />
-                        </div>
                       </div>
                     </SidebarMenuButton>
                   </PopoverTrigger>
                   <PopoverContent 
                     side="right" 
                     align="start"
-                    className="w-48 p-1 ml-2 bg-[var(--content-bg)] backdrop-blur-xl saturate-150 border border-[var(--border)]/50 shadow-2xl"
+                    className="w-48 p-2 border border-gray-200 bg-white shadow-lg rounded-lg"
                   >
-                    <div className="p-2 border-b border-[var(--border)]/30">
-                      <div className="flex items-center gap-2 text-sm font-medium text-[var(--label)]">
+                    <div className="mb-2 pb-2 border-b border-gray-200">
+                      <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
                         {item.icon}
                         {t(item.titleKey || item.title)}
                       </div>
                     </div>
-                    <div className="py-1">
+                    <div className="space-y-1">
                       {item.items?.map((subItem) => {
-                        const isSubActive = subItem.url === location.pathname;
+                        const isSubActive = subItem.url === currentPath;
                         return (
                           <LocalizedNavLink
                             key={subItem.title}
@@ -104,19 +106,15 @@ export function NavMain() {
                             className="block"
                           >
                             <div className={cn(
-                              "group flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-all duration-200 cursor-pointer",
-                              "hover:bg-gradient-to-r hover:from-[var(--system-blue)]/8 hover:to-[var(--system-blue)]/4 hover:text-[var(--system-blue)]",
-                              "dark:hover:from-[var(--system-blue)]/12 dark:hover:to-[var(--system-blue)]/6",
-                              isSubActive && "bg-gradient-to-r from-[var(--system-blue)] to-[var(--system-blue)]/80 text-white font-medium shadow-md ring-1 ring-[var(--system-blue)]/20"
+                              "flex items-center gap-2 px-2 py-1.5 text-sm rounded-md transition-colors duration-200 cursor-pointer",
+                              "text-gray-900 hover:bg-blue-500 hover:text-white",
+                              isSubActive && "text-blue-500 font-semibold"
                             )}>
-                              <Dot className={cn(
-                                "w-3 h-3 transition-colors",
-                                isSubActive ? "text-white" : "text-[var(--secondaryLabel)] group-hover:text-[var(--system-blue)]"
+                              <div className={cn(
+                                "w-1.5 h-1.5 rounded-full transition-colors",
+                                isSubActive ? "bg-blue-500" : "bg-gray-400"
                               )} />
                               {t(subItem.titleKey || subItem.title)}
-                              {isSubActive && (
-                                <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full" />
-                              )}
                             </div>
                           </LocalizedNavLink>
                         );
@@ -128,150 +126,111 @@ export function NavMain() {
             );
           }
 
-          // For collapsed sidebar without subitems or expanded sidebar
+          // For regular items (with or without sub-items)
+          const isOpen = openItems.includes(item.title) || isParentActive;
+          
+          const toggleOpen = () => {
+            setOpenItems(prev => 
+              prev.includes(item.title) 
+                ? prev.filter(id => id !== item.title)
+                : [...prev, item.title]
+            );
+          };
+
           return (
-            <Collapsible
-              key={item.title}
-              asChild
-              defaultOpen={item.isActive || Boolean(isParentActive)}
-            >
-              <SidebarMenuItem>
-                {item.url ? (
-                  <LocalizedNavLink
-                    to={item.url}
-                    className={({ isActive }) =>
-                      cn("w-full", isActive && "font-bold")
-                    }
-                  >
+            <SidebarMenuItem key={item.title}>
+                {/* Main item button */}
+                {item.url && item.url !== "" ? (
+                  // Item with direct URL
+                  <LocalizedNavLink to={item.url} className="block">
                     <SidebarMenuButton
-                      asChild
-                      tooltip={t(item.titleKey || item.title)}
+                      tooltip={isCollapsed ? t(item.titleKey || item.title) : undefined}
                       className={cn(
-                        "group relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                        "hover:bg-gradient-to-br hover:from-[var(--system-blue)]/8 hover:to-[var(--system-blue)]/4 hover:shadow-md hover:scale-[1.02]",
-                        "dark:hover:from-[var(--system-blue)]/12 dark:hover:to-[var(--system-blue)]/6",
-                        isCollapsed && "justify-center h-8 w-8 p-0 mx-auto"
+                        "relative h-9 px-2 rounded-lg transition-all duration-200 w-full",
+                        "text-gray-900 hover:!bg-blue-500 hover:!text-white",
+                        isDirectlyActive && "!text-blue-500 !font-semibold hover:!bg-blue-600",
+                        isCollapsed && "w-9 p-0 justify-center"
                       )}
-                      data-active={item.url === location.pathname}
                     >
-                      <span className={cn(
+                      <div className={cn(
                         "flex items-center gap-2",
-                        isCollapsed && "justify-center h-8 w-8 p-0 mx-auto"
+                        isCollapsed && "justify-center"
                       )}>
-                        <div className="relative">
-                          {item.icon}
-                          {/* Enhanced active state indicator */}
-                          {item.url === location.pathname && (
-                            <>
-                              <div className="absolute -inset-1 bg-gradient-to-br from-[var(--system-blue)]/15 via-[var(--system-blue)]/8 to-transparent rounded-lg dark:from-[var(--system-blue)]/20 dark:via-[var(--system-blue)]/12 shadow-inner" />
-                              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/90 rounded-full shadow-md border border-white/20" />
-                            </>
-                          )}
-                        </div>
+                        {item.icon}
                         {!isCollapsed && (
-                          <span className="transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]">
+                          <span className="font-medium">
                             {t(item.titleKey || item.title)}
                           </span>
                         )}
-                      </span>
+                      </div>
                     </SidebarMenuButton>
                   </LocalizedNavLink>
                 ) : (
+                  // Item without direct URL (parent only) - acts as toggle
                   <SidebarMenuButton
-                    asChild
-                    tooltip={t(item.titleKey || item.title)}
+                    onClick={hasSubItems ? toggleOpen : undefined}
+                    tooltip={isCollapsed ? t(item.titleKey || item.title) : undefined}
                     className={cn(
-                      "group relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                      "hover:bg-gradient-to-br hover:from-[var(--system-blue)]/8 hover:to-[var(--system-blue)]/4 hover:shadow-md hover:scale-[1.02]",
-                      "dark:hover:from-[var(--system-blue)]/12 dark:hover:to-[var(--system-blue)]/6",
-                      isCollapsed && "justify-center"
+                      "relative h-9 px-2 rounded-lg transition-all duration-200 w-full",
+                      "text-gray-900 hover:!bg-blue-500 hover:!text-white",
+                      isParentActive && "!text-blue-500 !font-semibold hover:!bg-blue-600",
+                      isCollapsed && "w-9 p-0 justify-center"
                     )}
-                    data-active={isParentActive}
                   >
-                    <span className={cn(
+                    <div className={cn(
                       "flex items-center gap-2",
                       isCollapsed && "justify-center"
                     )}>
-                      <div className="relative">
-                        {item.icon}
-                        {/* Enhanced parent active state */}
-                        {isParentActive && (
-                          <>
-                            <div className="absolute -inset-1 bg-gradient-to-br from-[var(--system-blue)]/20 via-[var(--system-blue)]/12 to-transparent rounded-lg dark:from-[var(--system-blue)]/25 dark:via-[var(--system-blue)]/15 shadow-inner" />
-                            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gradient-to-br from-[var(--system-orange)] to-[var(--system-orange)]/90 rounded-full shadow-md border border-white/30" />
-                          </>
-                        )}
-                      </div>
+                      {item.icon}
                       {!isCollapsed && (
-                        <span className="transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]">
+                        <span className="font-medium">
                           {t(item.titleKey || item.title)}
                         </span>
                       )}
-                    </span>
+                      {!isCollapsed && hasSubItems && (
+                        <ChevronDown className={cn(
+                          "ml-auto h-4 w-4 transition-transform duration-300",
+                          isOpen && "rotate-180"
+                        )} />
+                      )}
+                    </div>
                   </SidebarMenuButton>
                 )}
                 
-                {/* Expanded sidebar sub-items */}
-                {!isCollapsed && hasSubItems && (
-                  <>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuAction className={cn(
-                        "transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                        "hover:bg-gradient-to-br hover:from-[var(--system-blue)]/8 hover:to-[var(--system-blue)]/4 hover:shadow-sm hover:scale-110",
-                        "dark:hover:from-[var(--system-blue)]/12 dark:hover:to-[var(--system-blue)]/6",
-                        "data-[state=open]:rotate-90 data-[state=open]:text-[var(--system-blue)] data-[state=open]:bg-gradient-to-br data-[state=open]:from-[var(--system-blue)]/10 data-[state=open]:to-[var(--system-blue)]/5"
-                      )}>
-                        <ChevronRight className="transition-transform duration-200" />
-                        <span className="sr-only">Toggle</span>
-                      </SidebarMenuAction>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]">
-                      <SidebarMenuSub>
+                {/* Sub-items for expanded sidebar */}
+                {!isCollapsed && hasSubItems && isOpen && (
+                  <div>
+                      <SidebarMenuSub className="ml-4 border-l border-gray-200 pl-3 space-y-1">
                         {item.items?.map((subItem) => {
-                          const isSubActive = subItem.url === location.pathname;
+                          const isSubActive = subItem.url === currentPath;
                           return (
                             <SidebarMenuSubItem key={subItem.title}>
-                              <LocalizedNavLink
-                                to={subItem.url}
-                                className={({ isActive }) =>
-                                  cn("w-full", isActive && "font-bold")
-                                }
-                              >
+                              <LocalizedNavLink to={subItem.url} className="block">
                                 <SidebarMenuSubButton
-                                  asChild
                                   className={cn(
-                                    "group relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                                    "hover:bg-gradient-to-r hover:from-[var(--system-blue)]/6 hover:to-transparent hover:shadow-sm hover:translate-x-1",
-                                    "dark:hover:from-[var(--system-blue)]/10 dark:hover:to-transparent",
-                                    isSubActive && "bg-gradient-to-r from-[var(--system-blue)]/12 via-[var(--system-blue)]/8 to-transparent shadow-sm dark:from-[var(--system-blue)]/15 dark:via-[var(--system-blue)]/10 border-l-2 border-[var(--system-blue)] ml-1 pl-3"
+                                    "h-8 px-2 rounded-md transition-colors duration-200 w-full",
+                                    "text-gray-900 hover:!bg-blue-500 hover:!text-white",
+                                    isSubActive && "!text-blue-500 !font-semibold hover:!bg-blue-600"
                                   )}
-                                  data-active={isSubActive}
                                 >
-                                  <span className="flex items-center gap-2">
-                                    <Dot className={cn(
-                                      "w-3 h-3 transition-all duration-200",
-                                      isSubActive ? "text-[var(--system-blue)] scale-125 dark:text-[var(--system-blue)]" : "text-[var(--secondaryLabel)] group-hover:text-[var(--system-blue)] dark:text-[var(--tertiaryLabel)] dark:group-hover:text-[var(--system-blue)]"
+                                  <div className="flex items-center gap-2">
+                                    <div className={cn(
+                                      "w-1.5 h-1.5 rounded-full transition-colors",
+                                      isSubActive ? "bg-blue-500" : "bg-gray-400"
                                     )} />
-                                    <span className="relative">
+                                    <span className="text-sm">
                                       {t(subItem.titleKey || subItem.title)}
-                                      {/* Removed underline for cleaner look */}
                                     </span>
-                                    {/* Active indicator */}
-                                    {isSubActive && (
-                                      <div className="ml-auto w-2 h-2 bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/90 rounded-full shadow-md border border-white/30 dark:border-white/20" />
-                                    )}
-                                  </span>
+                                  </div>
                                 </SidebarMenuSubButton>
                               </LocalizedNavLink>
                             </SidebarMenuSubItem>
                           );
                         })}
                       </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </>
+                  </div>
                 )}
               </SidebarMenuItem>
-            </Collapsible>
           );
         })}
       </SidebarMenu>

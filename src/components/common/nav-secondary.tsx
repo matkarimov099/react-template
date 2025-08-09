@@ -12,6 +12,7 @@ import { footerMenuItems } from "@/lib/sidebar-menu.tsx";
 import { cn } from "@/lib/utils";
 import type * as React from "react";
 import { useLocation } from "react-router";
+import { removeLocaleFromPath } from "@/plugins/i18n-routing.ts";
 
 export function NavSecondary({
   ...props
@@ -23,67 +24,53 @@ export function NavSecondary({
 
   return (
     <SidebarGroup className={cn(
-      "transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
+      "transition-all duration-200",
       isCollapsed && "px-1"
     )} {...props}>
       <SidebarGroupContent>
-        {/* Subtle separator */}
+        {/* Separator */}
         {!isCollapsed && (
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-[var(--border)]/50 to-transparent mb-2" />
+          <div className="w-full h-px bg-gray-200 mb-2" />
         )}
         
         <SidebarMenu className={cn(
-          "gap-1",
+          "space-y-1",
           isCollapsed && "items-center"
         )}>
           {footerMenuItems.map((item) => {
-            const isActive = item.url === location.pathname;
+            const currentPath = removeLocaleFromPath(location.pathname);
+            const isActive = item.url === currentPath;
+            
+            console.log(`Footer: ${item.title}`, {
+              rawPath: location.pathname,
+              currentPath: currentPath,
+              itemUrl: item.url,
+              isActive
+            });
             
             return (
               <SidebarMenuItem key={item.title}>
-                <LocalizedNavLink
-                  to={item.url}
-                  className={({ isActive }) =>
-                    cn("w-full", isActive && "font-bold")
-                  }
-                >
+                <LocalizedNavLink to={item.url} className="block">
                   <SidebarMenuButton
-                    asChild
-                    size="sm"
                     tooltip={isCollapsed ? t(item.titleKey || item.title) : undefined}
                     className={cn(
-                      "group relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                      "hover:bg-[var(--control-ghost-bg)] hover:shadow-sm hover:scale-[1.02]",
-                      isCollapsed && "justify-center h-8 w-8",
-                      isActive && "bg-[var(--fill-quaternary)] shadow-sm"
+                      "relative h-9 px-2 rounded-lg transition-all duration-200 w-full",
+                      "text-gray-900 hover:!bg-blue-500 hover:!text-white",
+                      isActive && "!text-blue-500 !font-semibold hover:!bg-blue-600",
+                      isCollapsed && "w-9 p-0 justify-center"
                     )}
-                    data-active={isActive}
                   >
-                    <span className={cn(
+                    <div className={cn(
                       "flex items-center gap-2",
                       isCollapsed && "justify-center"
                     )}>
-                      <div className="relative">
-                        {item.icon}
-                        {/* Subtle active indicator for secondary nav */}
-                        {isActive && (
-                          <div className="absolute -inset-0.5 bg-[var(--fill-quaternary)] rounded-md opacity-30" />
-                        )}
-                        {/* Small dot indicator for collapsed mode */}
-                        {isCollapsed && isActive && (
-                          <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-[var(--label)] rounded-full" />
-                        )}
-                      </div>
+                      {item.icon}
                       {!isCollapsed && (
-                        <span className={cn(
-                          "text-xs transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]",
-                          "text-[var(--secondaryLabel)] group-hover:text-[var(--label)]",
-                          isActive && "text-[var(--label)] font-medium"
-                        )}>
+                        <span className="text-xs font-medium">
                           {t(item.titleKey || item.title)}
                         </span>
                       )}
-                    </span>
+                    </div>
                   </SidebarMenuButton>
                 </LocalizedNavLink>
               </SidebarMenuItem>
@@ -91,10 +78,10 @@ export function NavSecondary({
           })}
         </SidebarMenu>
         
-        {/* Collapsed mode visual separator */}
+        {/* Collapsed mode separator */}
         {isCollapsed && (
           <div className="flex justify-center pt-2">
-            <div className="w-4 h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
+            <div className="w-4 h-px bg-gray-300" />
           </div>
         )}
       </SidebarGroupContent>
