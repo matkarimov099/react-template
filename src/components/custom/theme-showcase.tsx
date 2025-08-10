@@ -33,19 +33,19 @@ export function ThemeShowcase() {
 				<CardContent className="space-y-4">
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-blue)] rounded-ios-md shadow-ios-sm"></div>
+							<div className="h-16 bg-[var(--system-blue)] rounded-ios-md shadow-ios-sm" />
 							<p className="text-sm font-medium text-ios-label">System Blue</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-green)] rounded-ios-md shadow-ios-sm"></div>
+							<div className="h-16 bg-[var(--system-green)] rounded-ios-md shadow-ios-sm" />
 							<p className="text-sm font-medium text-ios-label">System Green</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-red)] rounded-ios-md shadow-ios-sm"></div>
+							<div className="h-16 bg-[var(--system-red)] rounded-ios-md shadow-ios-sm" />
 							<p className="text-sm font-medium text-ios-label">System Red</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-yellow)] rounded-ios-md shadow-ios-sm"></div>
+							<div className="h-16 bg-[var(--system-yellow)] rounded-ios-md shadow-ios-sm" />
 							<p className="text-sm font-medium text-ios-label">
 								System Yellow
 							</p>

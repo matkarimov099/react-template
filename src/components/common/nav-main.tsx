@@ -30,9 +30,9 @@ export function NavMain() {
 	const isCollapsed = state === 'collapsed';
 	const [openItems, setOpenItems] = useState<string[]>([]);
 
-	// Auto-open menu if it has active sub-item
+	// Auto-open a menu if it has an active subitem
 	useEffect(() => {
-		mainMenuItems.forEach((item) => {
+		for (const item of mainMenuItems) {
 			if (item.items && item.items.length > 0) {
 				const hasActiveSubItem = item.items.some(
 					(subItem) => subItem.url === removeLocaleFromPath(location.pathname),
@@ -41,8 +41,8 @@ export function NavMain() {
 					setOpenItems((prev) => [...prev, item.title]);
 				}
 			}
-		});
-	}, [location.pathname]);
+		}
+	}, [location.pathname, openItems]);
 
 	return (
 		<SidebarGroup>

@@ -145,7 +145,7 @@ export function announceToScreenReader(
 /**
  * Generate a unique ID for ARIA relationships
  */
-export function generateId(prefix: string = 'ios-component'): string {
+export function generateId(prefix = 'ios-component'): string {
 	return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
