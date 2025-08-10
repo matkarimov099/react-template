@@ -5,53 +5,53 @@
 @import "./reduced-motion.css";
 
 @theme {
-  /* iOS-based radius system */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+	/* iOS-based radius system */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--radius-xl: 18px;
 
-  /* Map iOS tokens to Tailwind color system */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+	/* Map iOS tokens to Tailwind color system */
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
 }
 
 /* iOS theme tokens are now defined in ios-theme.css */
 /* Component sizing variables for compatibility */
 :root {
-  /* Component sizing - responsive scaling handled in ios-theme.css */
-  --button-height: calc(2.5rem * var(--scale-factor));
-  --input-height: calc(2.5rem * var(--scale-factor));
-  --sidebar-width: calc(17rem * var(--scale-factor));
+	/* Component sizing - responsive scaling handled in ios-theme.css */
+	--button-height: calc(2.5rem * var(--scale-factor));
+	--input-height: calc(2.5rem * var(--scale-factor));
+	--sidebar-width: calc(17rem * var(--scale-factor));
 }
 
 /* Dark mode tokens are now defined in ios-theme.css */
@@ -60,45 +60,45 @@
 
 /* iOS-style scrollbars - enhanced from ios-theme.css */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+	width: 10px;
+	height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 8px;
+	background: var(--border);
+	border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 /* Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+	scrollbar-width: thin;
+	scrollbar-color: var(--border) transparent;
 }
 
 /* Sidebar specific scrollbars */
 [data-sidebar],
 [data-slot="sidebar-content"] {
-  scrollbar-width: thin;
-  scrollbar-color: var(--sidebar-border) transparent;
+	scrollbar-width: thin;
+	scrollbar-color: var(--sidebar-border) transparent;
 }
 [data-sidebar]::-webkit-scrollbar,
 [data-slot="sidebar-content"]::-webkit-scrollbar {
-  width: 10px;
+	width: 10px;
 }
 [data-sidebar]::-webkit-scrollbar-thumb,
 [data-slot="sidebar-content"]::-webkit-scrollbar-thumb {
-  background: var(--sidebar-border);
-  border-radius: 8px;
+	background: var(--sidebar-border);
+	border-radius: 8px;
 }
 [data-sidebar]::-webkit-scrollbar-track,
 [data-slot="sidebar-content"]::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 @theme inline {
-  --shadow-input: var(--shadow-sm);
+	--shadow-input: var(--shadow-sm);
 }
 
 /* Responsive scaling is now handled in ios-theme.css */

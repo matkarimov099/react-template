@@ -51,11 +51,12 @@ i18n
 			order: ['localStorage', 'navigator'],
 			caches: ['localStorage'],
 		},
-	});
+	})
+	.then();
 
 // Helper function to change language and save to localStorage
 export const changeLanguage = (locale: Locale) => {
-	i18n.changeLanguage(locale);
+	i18n.changeLanguage(locale).then();
 	localStorage.setItem('app-locale', locale);
 	document.documentElement.lang = locale;
 };

@@ -23,10 +23,8 @@ export default function AuthContextProvider({
 		isError: logoutError,
 		isPending: logoutPending,
 	} = useLogout();
-	const { 
-		data: currentUserData, 
-		isPending: isUserDataPending
-	} = useCurrentUser();
+	const { data: currentUserData, isPending: isUserDataPending } =
+		useCurrentUser();
 
 	const logout = async () => {
 		logoutUser(undefined, {

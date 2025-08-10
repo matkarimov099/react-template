@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
 
 			// Authentication check
 			// return authLoader(args);
-			return null
+			return null;
 		},
 		element: <MainLayoutWrapper />,
 		// errorElement: (

@@ -34,7 +34,7 @@ export function MainLayoutWrapper() {
 		<LocaleWrapper>
 			<AuthContextProvider>
 				{/*<AuthGuard>*/}
-					<DefaultLayout />
+				<DefaultLayout />
 				{/*</AuthGuard>*/}
 			</AuthContextProvider>
 		</LocaleWrapper>

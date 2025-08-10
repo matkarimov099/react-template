@@ -27,7 +27,7 @@ export function useLogout() {
 
 export function useCurrentUser() {
 	const token = localStorage.getItem('accessToken');
-	
+
 	return useQuery({
 		queryKey: ['current-user'],
 		queryFn: currentUser,
