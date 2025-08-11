@@ -3,7 +3,6 @@ import {
 	CalendarIcon,
 	FileTextIcon,
 	LayoutDashboardIcon,
-	PaletteIcon,
 	SettingsIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -66,12 +65,6 @@ export const mainMenuItems: SidebarMenuItem[] = [
 		titleKey: 'navigation.documents',
 		url: '/documents',
 		icon: <FileTextIcon />,
-	},
-	{
-		title: 'Theme Demo',
-		titleKey: 'navigation.theme_demo',
-		url: '/theme-demo',
-		icon: <PaletteIcon />,
 	},
 ];
 

@@ -77,7 +77,11 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 	);
 }
 
-function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
+interface FormLabelProps extends React.ComponentProps<typeof LabelPrimitive.Root> {
+	required?: boolean;
+}
+
+function FormLabel({ className, required, children, ...props }: FormLabelProps) {
 	const { error, formItemId } = useFormField();
 
 	return (
@@ -87,7 +91,10 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPri
 			className={cn('data-[error=true]:ios-text-red', className)}
 			htmlFor={formItemId}
 			{...props}
-		/>
+		>
+			{children}
+			{required && <span className="ios-text-red">*</span>}
+		</Label>
 	);
 }
 

@@ -80,9 +80,9 @@ export function AddUser() {
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Full Name</FormLabel>
+									<FormLabel required>Full Name</FormLabel>
 									<FormControl>
-										<Input placeholder="John Doe" {...field} />
+										<Input showFocusRing inputSize="md" placeholder="John Doe" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>

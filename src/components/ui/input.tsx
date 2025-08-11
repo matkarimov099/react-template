@@ -9,7 +9,6 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 	label?: string;
 	error?: string;
 	helperText?: string;
-	showFocusRing?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -21,7 +20,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			label,
 			error,
 			helperText,
-			showFocusRing = true,
 			id,
 			'aria-describedby': ariaDescribedBy,
 			...props
@@ -41,9 +39,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 		const motionAwareClassName = React.useMemo(() => {
 			return cn(
 				'flex w-full ios-bg-control ios-border-control ios-rounded-md ios-text-primary ios-font file:border-0 file:bg-transparent file:font-medium file:ios-text-primary placeholder:ios-text-secondary placeholder:opacity-90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 appearance-none',
-				// Focus styles with conditional motion
-				showFocusRing && !prefersReducedMotion && 'focus:ios-ring',
-				showFocusRing && prefersReducedMotion && 'focus:border-[var(--ring)]',
+				// Focus styles - consistent with data table toolbar
+				'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0',
 				// Transition with conditional duration
 				prefersReducedMotion ? 'transition-colors duration-0' : 'ios-transition-fast',
 				// Size-specific classes
@@ -56,7 +53,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				error && 'border-[var(--system-red)] focus:border-[var(--system-red)]',
 				className
 			);
-		}, [inputSize, className, prefersReducedMotion, showFocusRing, error]);
+		}, [inputSize, className, prefersReducedMotion, error]);
 
 		return (
 			<div className="space-y-1">

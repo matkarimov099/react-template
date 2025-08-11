@@ -33,14 +33,14 @@ export function useUsersData() {
 		const newSorting =
 			typeof updaterOrValue === 'function' ? updaterOrValue(sorting) : updaterOrValue;
 		setSorting(newSorting);
-		// Reset to first page when sorting changes
+		// Reset to the first page when sorting changes
 		setPagination(prev => ({ ...prev, pageIndex: 0 }));
 	};
 
 	// Handler for search changes
 	const handleSearchChange = (searchValue: string) => {
 		setSearch(searchValue);
-		// Reset to first page when search changes
+		// Reset to the first page when search changes
 		setPagination(prev => ({ ...prev, pageIndex: 0 }));
 	};
 

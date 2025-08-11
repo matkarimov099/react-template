@@ -60,7 +60,7 @@ export function DataTableToolbar<TData>({
 		(config.manualSearching && searchValue);
 
 	return (
-		<div className="flex flex-wrap items-center justify-between rounded-ios-md border border-border/50 bg-ios-card/90 p-4 shadow-sm saturate-[150%] backdrop-blur-md">
+		<div className="flex flex-wrap items-center justify-between">
 			<div className="flex flex-1 flex-wrap items-center gap-2">
 				{/* Search input */}
 				{config.enableSearch && (
@@ -80,7 +80,7 @@ export function DataTableToolbar<TData>({
 									table.setGlobalFilter(event.target.value);
 								}
 							}}
-							className="w-[250px] rounded-md border border-border/50 bg-background/80 pl-8 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 lg:w-[300px]"
+							className="w-[350px] rounded-md border border-border/50 bg-background/80 pl-8 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 lg:w-[300px]"
 						/>
 						{((config.manualSearching && searchValue) ||
 							(!config.manualSearching && table.getState().globalFilter)) && (

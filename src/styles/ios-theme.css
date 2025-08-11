@@ -167,9 +167,16 @@
 		font-size: calc(1rem * var(--scale-factor));
 	}
 
+	html, body {
+		height: 100%;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+	}
+
 	body,
 	#root {
-		min-height: 100%;
+		height: 100%;
 		background: var(--background);
 		color: var(--label);
 		font-family: var(--font-sans), sans-serif;
