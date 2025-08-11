@@ -1,7 +1,6 @@
 import { buttonVariants } from '@/components/ui/button-variants';
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
-import { announceToScreenReader } from '@/lib/accessibility';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import type { VariantProps } from 'class-variance-authority';
 import * as React from 'react';
@@ -17,7 +16,6 @@ export interface ButtonProps
 	isVisible?: boolean;
 	loading?: boolean;
 	loadingText?: string;
-	announceOnClick?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -33,7 +31,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			isVisible = true,
 			loading = false,
 			loadingText,
-			announceOnClick = false,
 			onClick,
 			children,
 			...props
@@ -46,12 +43,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 		const handleClick = React.useCallback(
 			(event: React.MouseEvent<HTMLButtonElement>) => {
-				if (announceOnClick && children) {
-					announceToScreenReader(`${children} activated`);
-				}
 				onClick?.(event);
 			},
-			[onClick, announceOnClick, children],
+			[onClick],
 		);
 
 		const Comp = asChild ? Slot : 'button';

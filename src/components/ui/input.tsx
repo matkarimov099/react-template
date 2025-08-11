@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
-import { generateId } from '@/lib/accessibility';
 import { forwardRef } from 'react';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -30,7 +29,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 		ref,
 	) => {
 		const prefersReducedMotion = useReducedMotion();
-		const inputId = id || generateId('input');
+		const inputId = id || React.useId();
 		const errorId = error ? `${inputId}-error` : undefined;
 		const helperTextId = helperText ? `${inputId}-helper` : undefined;
 
