@@ -30,14 +30,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			collapsible="icon"
 			className={cn(
 				'transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]',
-				'group-data-[state=collapsed]:backdrop-blur-xl',
+				'group-data-[state=collapsed]:backdrop-blur-xl'
 			)}
 			{...props}
 		>
 			<SidebarHeader
 				className={cn(
 					'transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]',
-					isCollapsed && 'flex items-center justify-center px-1.5',
+					isCollapsed && 'flex items-center justify-center px-1.5'
 				)}
 			>
 				<SidebarMenu>
@@ -47,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 							asChild
 							className={cn(
 								'group transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)] hover:scale-[1.02]',
-								isCollapsed && 'px-2 justify-center',
+								isCollapsed && 'px-2 justify-center'
 							)}
 						>
 							<LocalizedNavLink to="/">
@@ -56,7 +56,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 										'flex items-center justify-center rounded-lg relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)] group-hover:shadow-lg',
 										isCollapsed ? 'size-8' : 'size-8',
 										'bg-gradient-to-br from-[var(--system-blue)] via-[var(--system-blue)]/90 to-[var(--system-blue)]/70',
-										'shadow-lg border border-white/20',
+										'shadow-lg border border-white/20'
 									)}
 								>
 									{/* Glassmorphic overlay */}
@@ -98,7 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarContent
 				className={cn(
 					'transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]',
-					isCollapsed && 'px-1.5',
+					isCollapsed && 'px-1.5'
 				)}
 			>
 				<NavMain />
@@ -109,7 +109,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarFooter
 				className={cn(
 					'transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]',
-					isCollapsed && 'items-center',
+					isCollapsed && 'items-center'
 				)}
 			>
 				<NavUser user={currentUser} logout={logout} />

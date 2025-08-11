@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useLocation, useNavigate, useSearchParams} from 'react-router';
-import {isDeepEqual} from './deep-utils';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router';
+import { isDeepEqual } from './deep-utils';
 
 // Flag to track if we're currently in a batch update
 let isInBatchUpdate = false;
@@ -163,7 +163,7 @@ export function useUrlState<T>(
 		}
 
 		// Update the previous search params ref
-        prevSearchParamsRef.current = new URLSearchParams(searchParamsString);
+		prevSearchParamsRef.current = new URLSearchParams(searchParamsString);
 
 		// Get the new value and update if different
 		const newValue = getValueFromUrl();
@@ -186,7 +186,7 @@ export function useUrlState<T>(
 	// Synchronously update URL now instead of waiting
 	const updateUrlNow = useCallback(
 		(params: URLSearchParams) => {
-            lastUrlUpdate.timestamp = Date.now();
+			lastUrlUpdate.timestamp = Date.now();
 			lastUrlUpdate.params = params;
 
 			// Update the URL immediately

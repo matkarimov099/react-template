@@ -9,11 +9,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Spinner } from '@/components/ui/spinner.tsx';
 import { usePageTitle } from '@/hooks/use-page-title.ts';
 import { AnimatePresence, motion } from 'motion/react';

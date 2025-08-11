@@ -16,8 +16,8 @@
 	--motion-ease: cubic-bezier(0.2, 0.9, 0.25, 1);
 
 	/* Font stack (system SF fallback) */
-	--font-sans: -apple-system, "SF Pro Text", "SF Pro Display", "Segoe UI",
-		Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+	--font-sans: -apple-system, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue",
+		Arial, system-ui, sans-serif;
 
 	/* Semantic tokens (Light mode) - follow Apple HIG naming */
 	--background: #fbfbfc; /* systemBackground */
@@ -67,8 +67,6 @@
 	--sidebar-accent-foreground: var(--label);
 	--sidebar-border: rgba(60, 60, 67, 0.1);
 	--sidebar-ring: var(--system-blue);
-	--sidebar-width: 17rem;
-	--sidebar-width-icon: 3rem;
 
 	/* iOS text sizes aligned with iOS HIG */
 	--text-xs: 0.75rem;
@@ -148,8 +146,6 @@
 	--sidebar-accent-foreground: var(--label);
 	--sidebar-border: rgba(255, 255, 255, 0.06);
 	--sidebar-ring: var(--system-blue);
-	--sidebar-width: 17rem;
-	--sidebar-width-icon: 3rem;
 
 	/* Update shadcn compatibility variables for dark mode */
 	--foreground: var(--label);
@@ -179,8 +175,8 @@
 		font-family: var(--font-sans), sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		transition: background var(--motion-medium) var(--motion-ease), color
-			var(--motion-medium) var(--motion-ease);
+		transition: background var(--motion-medium) var(--motion-ease), color var(--motion-medium)
+			var(--motion-ease);
 	}
 
 	/* system text sizes aligned with iOS HIG */
@@ -264,8 +260,8 @@
 
 	/* Hover lift / generic effects */
 	.hover-lift {
-		transition: transform var(--motion-short) var(--motion-ease), box-shadow
-			var(--motion-medium) var(--motion-ease);
+		transition: transform var(--motion-short) var(--motion-ease), box-shadow var(--motion-medium)
+			var(--motion-ease);
 	}
 	.hover-lift:hover {
 		transform: translateY(-1px);
@@ -289,9 +285,8 @@
 		user-select: none;
 		border-radius: var(--radius-md);
 		padding: 0.56rem 1.1rem;
-		transition: transform var(--motion-short) var(--motion-ease), background
-			var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium)
-			var(--motion-ease);
+		transition: transform var(--motion-short) var(--motion-ease), background var(--motion-medium)
+			var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease);
 		-webkit-tap-highlight-color: transparent;
 		backdrop-filter: blur(10px) saturate(150%);
 	}
@@ -404,11 +399,9 @@
 		padding: 0.56rem 0.75rem;
 		border-radius: var(--radius-md);
 		color: var(--label);
-		transition: box-shadow var(--motion-short) var(--motion-ease), border-color
-			var(--motion-short) var(--motion-ease), background var(--motion-short)
-			var(--motion-ease);
+		transition: box-shadow var(--motion-short) var(--motion-ease), border-color var(--motion-short)
+			var(--motion-ease), background var(--motion-short) var(--motion-ease);
 		-webkit-appearance: none;
-		-moz-appearance: none;
 		appearance: none;
 	}
 
@@ -475,7 +468,7 @@
 		color: var(--sidebar-foreground);
 		border-right: 1px solid var(--sidebar-border);
 		padding: 1rem;
-		width: var(--sidebar-width, 17rem);
+		width: var(--sidebar-width);
 		min-height: 100vh;
 		box-shadow: none;
 		backdrop-filter: blur(8px) saturate(140%);
@@ -539,8 +532,8 @@
 		border: 1px solid var(--control-border);
 		position: relative;
 		box-sizing: content-box;
-		transition: background var(--motion-short) var(--motion-ease), border-color
-			var(--motion-short) var(--motion-ease);
+		transition: background var(--motion-short) var(--motion-ease), border-color var(--motion-short)
+			var(--motion-ease);
 	}
 
 	.switch .knob {
@@ -585,21 +578,13 @@
 	}
 
 	.badge.success {
-		background: color-mix(
-			in srgb,
-			var(--system-green) 14%,
-			var(--secondaryBackground) 86%
-		);
+		background: color-mix(in srgb, var(--system-green) 14%, var(--secondaryBackground) 86%);
 		color: var(--label);
 		border-color: var(--control-border);
 	}
 
 	.badge.danger {
-		background: color-mix(
-			in srgb,
-			var(--system-red) 14%,
-			var(--secondaryBackground) 86%
-		);
+		background: color-mix(in srgb, var(--system-red) 14%, var(--secondaryBackground) 86%);
 		color: var(--label);
 		border-color: var(--control-border);
 	}
@@ -616,15 +601,21 @@
    Scrollbar (subtle iOS-like)
    ============================ */
 ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: 8px;
+	height: 8px;
 }
 ::-webkit-scrollbar-track {
 	background: transparent;
 }
 ::-webkit-scrollbar-thumb {
 	background: var(--border);
-	border-radius: 8px;
+	border-radius: 6px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: color-mix(in srgb, var(--border) 80%, var(--label) 20%);
+	background-clip: content-box;
 }
 
 /* Firefox */
@@ -676,40 +667,15 @@
 		animation: ios-lift 120ms cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
 	}
 
-	/* Button ripple effect */
-	@keyframes ios-ripple {
-		0% {
-			transform: scale(0);
-			opacity: 0.6;
-		}
-		100% {
-			transform: scale(4);
-			opacity: 0;
-		}
-	}
-
+	/* Button ripple effect (optimized) */
 	.ios-ripple {
 		position: relative;
 		overflow: hidden;
 	}
 
-	.ios-ripple::before {
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 0;
-		height: 0;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.3);
-		transform: translate(-50%, -50%);
-		transition: width 0.3s, height 0.3s;
-	}
-
-	.ios-ripple:active::before {
-		width: 300px;
-		height: 300px;
-		animation: ios-ripple 0.3s cubic-bezier(0.2, 0.9, 0.25, 1);
+	.ios-ripple:active {
+		transform: scale(0.98);
+		transition: transform 0.1s cubic-bezier(0.2, 0.9, 0.25, 1);
 	}
 
 	/* iOS-style page transitions */
@@ -762,35 +728,11 @@
 			cubic-bezier(0.2, 0.9, 0.25, 1);
 	}
 
-	/* iOS-style sidebar transitions */
-	.ios-sidebar-expand {
-		animation: ios-sidebar-expand 300ms cubic-bezier(0.2, 0.9, 0.25, 1);
-	}
-
+	/* iOS-style sidebar transitions (optimized) */
+	.ios-sidebar-expand,
 	.ios-sidebar-collapse {
-		animation: ios-sidebar-collapse 300ms cubic-bezier(0.2, 0.9, 0.25, 1);
-	}
-
-	@keyframes ios-sidebar-expand {
-		from {
-			width: var(--sidebar-width-icon);
-			opacity: 0.8;
-		}
-		to {
-			width: var(--sidebar-width);
-			opacity: 1;
-		}
-	}
-
-	@keyframes ios-sidebar-collapse {
-		from {
-			width: var(--sidebar-width);
-			opacity: 1;
-		}
-		to {
-			width: var(--sidebar-width-icon);
-			opacity: 0.8;
-		}
+		transition: width 300ms cubic-bezier(0.2, 0.9, 0.25, 1), opacity 200ms
+			cubic-bezier(0.2, 0.9, 0.25, 1);
 	}
 }
 
@@ -843,9 +785,8 @@
 		color: #fff;
 		box-shadow: var(--shadow-sm);
 		border: 1px solid rgba(0, 0, 0, 0.03);
-		transition: transform var(--motion-short) var(--motion-ease), background
-			var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium)
-			var(--motion-ease);
+		transition: transform var(--motion-short) var(--motion-ease), background var(--motion-medium)
+			var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease);
 	}
 
 	.ios-btn-ghost {
@@ -859,9 +800,8 @@
 		background: transparent;
 		color: var(--label);
 		border: 1px solid var(--border);
-		transition: transform var(--motion-short) var(--motion-ease), background
-			var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium)
-			var(--motion-ease);
+		transition: transform var(--motion-short) var(--motion-ease), background var(--motion-medium)
+			var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease);
 	}
 
 	.ios-input {
@@ -870,9 +810,8 @@
 		padding: 0.56rem 0.75rem;
 		border-radius: var(--radius-md);
 		color: var(--label);
-		transition: box-shadow var(--motion-short) var(--motion-ease), border-color
-			var(--motion-short) var(--motion-ease), background var(--motion-short)
-			var(--motion-ease);
+		transition: box-shadow var(--motion-short) var(--motion-ease), border-color var(--motion-short)
+			var(--motion-ease), background var(--motion-short) var(--motion-ease);
 	}
 
 	.ios-card {
