@@ -10,7 +10,7 @@ import { Navigate } from 'react-router';
 
 /**
  * LocaleWrapper component that provides I18n context
- * Now uses react-i18next instead of custom provider
+ * Now uses react-i18next instead of a custom provider
  */
 export function LocaleWrapper({ children }: { children: ReactNode }) {
 	const currentPath = window.location.pathname;

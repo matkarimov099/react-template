@@ -25,7 +25,7 @@ import { createBrowserRouter } from 'react-router';
  * Application router with internationalization support
  */
 export const router = createBrowserRouter([
-	// Root path redirect to preferred locale
+	// Root path redirect to the preferred locale
 	{
 		path: '/',
 		element: <RootRedirect />,
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
 		path: '/:locale',
 		// Combine locale validation and authentication in one loader
 		loader: async args => {
-			// First validate the locale
+			// First, validate the locale
 			const localeResult = localeLoader(args);
 			if (localeResult) return localeResult;
 

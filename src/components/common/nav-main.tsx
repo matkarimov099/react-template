@@ -1,23 +1,23 @@
-import { LocalizedNavLink } from '@/components/common/localized-nav-link';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {LocalizedNavLink} from '@/components/common/localized-nav-link';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {
-	SidebarGroup,
-	SidebarGroupLabel,
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuSubButton,
-	SidebarMenuSubItem,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
 } from '@/components/ui/sidebar.tsx';
-import { useI18n } from '@/hooks/use-i18n';
-import { useSidebar } from '@/hooks/use-sidebar';
-import { mainMenuItems } from '@/lib/sidebar-menu.tsx';
-import { cn } from '@/lib/utils';
-import { removeLocaleFromPath } from '@/plugins/i18n-routing.ts';
-import { ChevronDown, ChevronRightIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import {useI18n} from '@/hooks/use-i18n';
+import {useSidebar} from '@/hooks/use-sidebar';
+import {mainMenuItems} from '@/lib/sidebar-menu.tsx';
+import {cn} from '@/lib/utils';
+import {removeLocaleFromPath} from '@/plugins/i18n-routing.ts';
+import {ChevronDown, ChevronRightIcon} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router';
 
 export function NavMain() {
 	const location = useLocation();
@@ -28,17 +28,25 @@ export function NavMain() {
 
 	// Auto-open a menu if it has an active subitem
 	useEffect(() => {
+		const currentPath = removeLocaleFromPath(location.pathname);
+		const shouldBeOpen: string[] = [];
+
 		for (const item of mainMenuItems) {
 			if (item.items && item.items.length > 0) {
-				const hasActiveSubItem = item.items.some(
-					subItem => subItem.url === removeLocaleFromPath(location.pathname)
-				);
-				if (hasActiveSubItem && !openItems.includes(item.title)) {
-					setOpenItems(prev => [...prev, item.title]);
+				const hasActiveSubItem = item.items.some(subItem => subItem.url === currentPath);
+				if (hasActiveSubItem) {
+					shouldBeOpen.push(item.title);
 				}
 			}
 		}
-	}, [location.pathname, openItems]);
+
+		// Only update if there's a difference
+		if (shouldBeOpen.length > 0) {
+			setOpenItems(prev => {
+                return [...new Set([...prev, ...shouldBeOpen])];
+			});
+		}
+	}, [location.pathname]);
 
 	return (
 		<SidebarGroup>

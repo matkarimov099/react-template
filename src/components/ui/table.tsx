@@ -6,14 +6,11 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
 	return (
 		<div
 			data-slot="table-container"
-			className="relative w-full overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-sm)]"
+			className="relative w-full overflow-x-auto ios-rounded-lg ios-border ios-bg-card ios-shadow-sm"
 		>
 			<table
 				data-slot="table"
-				className={cn(
-					'w-full caption-bottom font-family-[var(--font-sans)] text-[var(--label)] text-sm',
-					className
-				)}
+				className={cn('w-full caption-bottom ios-font ios-text-primary ios-text-sm', className)}
 				{...props}
 			/>
 		</div>

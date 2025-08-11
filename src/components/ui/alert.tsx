@@ -8,15 +8,14 @@ const alertVariants = cva(
 	{
 		variants: {
 			variant: {
-				default:
-					'bg-[var(--card-bg)] text-[var(--label)] border-[var(--border)] shadow-[var(--shadow-sm)]',
+				default: 'ios-bg-card ios-text-primary ios-border ios-shadow-sm',
 				destructive:
-					'text-[var(--system-red)] bg-[color-mix(in_srgb,var(--system-red)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-red)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:text-[var(--system-red)]/90',
+					'ios-text-red bg-[color-mix(in_srgb,var(--system-red)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-red)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:ios-text-red/90',
 				success:
-					'text-[var(--system-green)] bg-[color-mix(in_srgb,var(--system-green)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-green)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:text-[var(--system-green)]/90',
+					'ios-text-green bg-[color-mix(in_srgb,var(--system-green)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-green)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:ios-text-green/90',
 				warning:
-					'text-[var(--system-yellow)] bg-[color-mix(in_srgb,var(--system-yellow)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-yellow)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:text-[var(--system-yellow)]/90',
-				info: 'text-[var(--system-cyan)] bg-[color-mix(in_srgb,var(--system-cyan)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-cyan)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:text-[var(--system-cyan)]/90',
+					'ios-text-yellow bg-[color-mix(in_srgb,var(--system-yellow)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-yellow)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:ios-text-yellow/90',
+				info: 'ios-text-cyan bg-[color-mix(in_srgb,var(--system-cyan)_8%,var(--card-bg))] border-[color-mix(in_srgb,var(--system-cyan)_20%,var(--border))] [&>svg]:text-current *:data-[slot=alert-description]:ios-text-cyan/90',
 			},
 		},
 		defaultVariants: {
@@ -55,7 +54,7 @@ function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) 
 		<div
 			data-slot="alert-description"
 			className={cn(
-				'col-start-2 grid justify-items-start gap-1 text-[var(--secondaryLabel)] text-sm [&_p]:leading-relaxed',
+				'col-start-2 grid justify-items-start gap-1 ios-text-secondary ios-text-sm ios-font [&_p]:leading-relaxed',
 				className
 			)}
 			{...props}

@@ -3,15 +3,12 @@ import {
 	CalendarIcon,
 	FileTextIcon,
 	LayoutDashboardIcon,
-	MessageSquareIcon,
 	PaletteIcon,
 	SettingsIcon,
-	ShieldIcon,
-	TruckIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-interface SidebarMenuItem {
+export interface SidebarMenuItem {
 	title: string;
 	titleKey?: string; // Translation key
 	url: string;
@@ -22,7 +19,7 @@ interface SidebarMenuItem {
 	items?: SidebarSubMenuItem[];
 }
 
-interface SidebarSubMenuItem {
+export interface SidebarSubMenuItem {
 	title: string;
 	titleKey?: string; // Translation key
 	url: string;
@@ -31,14 +28,7 @@ interface SidebarSubMenuItem {
 	privileges?: string[];
 }
 
-interface SidebarProjectItem {
-	title: string;
-	titleKey?: string; // Translation key
-	url: string;
-	icon: ReactNode;
-}
-
-interface SidebarFooterItem {
+export interface SidebarFooterItem {
 	title: string;
 	titleKey?: string; // Translation key
 	url: string;
@@ -82,27 +72,6 @@ export const mainMenuItems: SidebarMenuItem[] = [
 		titleKey: 'navigation.theme_demo',
 		url: '/theme-demo',
 		icon: <PaletteIcon />,
-	},
-];
-
-export const projectItems: SidebarProjectItem[] = [
-	{
-		title: 'E-Commerce',
-		titleKey: 'navigation.ecommerce',
-		url: '/projects/ecommerce',
-		icon: <TruckIcon />,
-	},
-	{
-		title: 'Social App',
-		titleKey: 'navigation.social',
-		url: '/projects/social',
-		icon: <MessageSquareIcon />,
-	},
-	{
-		title: 'Security App',
-		titleKey: 'navigation.security',
-		url: '/projects/security',
-		icon: <ShieldIcon />,
 	},
 ];
 

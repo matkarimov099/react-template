@@ -18,29 +18,29 @@ function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.V
 }
 
 const selectTriggerVariants = cva(
-	"flex w-fit items-center justify-between gap-2 whitespace-nowrap font-medium select-none transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+	"flex w-fit items-center justify-between gap-2 whitespace-nowrap font-medium select-none ios-transition-fast outline-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 ios-font",
 	{
 		variants: {
 			variant: {
 				default: [
-					'bg-[var(--control-bg)] border border-[var(--control-border)] text-[var(--label)]',
-					'hover:bg-[var(--control-ghost-bg)] hover:border-[var(--border)]',
-					'focus:border-[var(--ring)] focus:ring-[6px] focus:ring-[color-mix(in_srgb,var(--ring)_10%,transparent)]',
-					'data-[placeholder]:text-[var(--secondaryLabel)]',
-					"[&_svg:not([class*='text-'])]:text-[var(--secondaryLabel)]",
+					'ios-bg-control ios-border-control ios-text-primary',
+					'hover:ios-bg-control-ghost hover:ios-border',
+					'focus:ios-ring',
+					'data-[placeholder]:ios-text-secondary',
+					"[&_svg:not([class*='text-'])]:ios-text-secondary",
 				],
 				ghost: [
-					'bg-transparent border border-[var(--border)] text-[var(--label)]',
-					'hover:bg-[var(--control-ghost-bg)]',
-					'focus:border-[var(--ring)] focus:ring-[6px] focus:ring-[color-mix(in_srgb,var(--ring)_10%,transparent)]',
+					'bg-transparent ios-border ios-text-primary',
+					'hover:ios-bg-control-ghost',
+					'focus:ios-ring',
 				],
 			},
 			size: {
-				xs: 'h-7 px-2 text-xs rounded-[var(--radius-sm)]',
-				sm: 'h-8 px-3 text-sm rounded-[var(--radius-sm)]',
-				md: 'h-9 px-4 text-base rounded-[var(--radius-md)]',
-				lg: 'h-11 px-5 text-lg rounded-[var(--radius-md)]',
-				xl: 'h-12 px-6 text-xl rounded-[var(--radius-lg)]',
+				xs: 'h-7 px-2 ios-text-xs ios-rounded-sm',
+				sm: 'h-8 px-3 ios-text-sm ios-rounded-sm',
+				md: 'h-9 px-4 ios-text-md ios-rounded-md',
+				lg: 'h-11 px-5 ios-text-lg ios-rounded-md',
+				xl: 'h-12 px-6 ios-text-xl ios-rounded-lg',
 			},
 		},
 		defaultVariants: {
@@ -83,10 +83,10 @@ function SelectContent({
 			<SelectPrimitive.Content
 				data-slot="select-content"
 				className={cn(
-					'border border-[var(--border)] bg-[var(--content-bg)] text-[var(--label)] shadow-[var(--shadow-lg)] saturate-150 backdrop-blur-[10px]',
+					'ios-border ios-bg-content ios-text-primary ios-shadow-lg ios-backdrop-blur',
 					'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=open]:animate-in',
 					'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-					'relative z-50 max-h-[var(--radix-select-content-available-height)] min-w-[8rem] origin-[var(--radix-select-content-transform-origin)] overflow-y-auto overflow-x-hidden rounded-[var(--radius-md)]',
+					'relative z-50 max-h-[var(--radix-select-content-available-height)] min-w-[8rem] origin-[var(--radix-select-content-transform-origin)] overflow-y-auto overflow-x-hidden ios-rounded-md',
 					position === 'popper' &&
 						'data-[side=left]:-translate-x-1 data-[side=top]:-translate-y-1 data-[side=right]:translate-x-1 data-[side=bottom]:translate-y-1',
 					className
@@ -114,7 +114,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
 	return (
 		<SelectPrimitive.Label
 			data-slot="select-label"
-			className={cn('px-2 py-1.5 font-medium text-[var(--secondaryLabel)] text-xs', className)}
+			className={cn('px-2 py-1.5 font-medium ios-text-secondary ios-text-xs ios-font', className)}
 			{...props}
 		/>
 	);

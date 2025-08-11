@@ -5,30 +5,30 @@ import type * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-	'inline-flex items-center justify-center rounded-[var(--radius-pill)] border px-2 py-0.5 text-xs font-semibold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-all duration-200 overflow-hidden',
+	'inline-flex items-center justify-center ios-rounded-pill border px-2 py-0.5 ios-text-xs font-semibold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none ios-transition overflow-hidden ios-font',
 	{
 		variants: {
 			variant: {
 				default:
-					'border-transparent bg-[var(--system-blue)] text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-blue)_85%,black)]',
+					'border-transparent ios-bg-blue ios-text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-blue)_85%,black)]',
 				secondary:
-					'border-transparent bg-[var(--secondaryBackground)] text-[var(--label)] [a&]:hover:bg-[color-mix(in_srgb,var(--secondaryBackground)_85%,var(--label))]',
+					'border-transparent ios-bg-secondary ios-text-primary [a&]:hover:bg-[color-mix(in_srgb,var(--secondaryBackground)_85%,var(--label))]',
 				destructive:
-					'border-transparent bg-[var(--system-red)] text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-red)_85%,black)]',
+					'border-transparent ios-bg-red ios-text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-red)_85%,black)]',
 				success:
-					'border-transparent bg-[var(--system-green)] text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-green)_85%,black)]',
+					'border-transparent ios-bg-green ios-text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-green)_85%,black)]',
 				warning:
-					'border-transparent bg-[var(--system-yellow)] text-black [a&]:hover:bg-[color-mix(in_srgb,var(--system-yellow)_85%,black)]',
-				info: 'border-transparent bg-[var(--system-cyan)] text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-cyan)_85%,black)]',
+					'border-transparent ios-bg-yellow text-black [a&]:hover:bg-[color-mix(in_srgb,var(--system-yellow)_85%,black)]',
+				info: 'border-transparent ios-bg-cyan ios-text-white [a&]:hover:bg-[color-mix(in_srgb,var(--system-cyan)_85%,black)]',
 				outline:
-					'text-[var(--label)] border-[var(--border)] bg-transparent [a&]:hover:bg-[var(--control-ghost-bg)] [a&]:hover:text-[var(--label)]',
+					'ios-text-primary ios-border bg-transparent [a&]:hover:ios-bg-control-ghost [a&]:hover:ios-text-primary',
 			},
 			size: {
-				xs: 'px-1.5 py-0.5 text-xs rounded-[var(--radius-sm)]',
-				sm: 'px-2 py-0.5 text-xs rounded-[var(--radius-md)]',
-				md: 'px-2.5 py-1 text-sm rounded-[var(--radius-md)]',
-				lg: 'px-3 py-1.5 text-sm rounded-[var(--radius-lg)]',
-				xl: 'px-4 py-2 text-base rounded-[var(--radius-lg)]',
+				xs: 'px-1.5 py-0.5 ios-text-xs ios-rounded-sm',
+				sm: 'px-2 py-0.5 ios-text-xs ios-rounded-md',
+				md: 'px-2.5 py-1 ios-text-sm ios-rounded-md',
+				lg: 'px-3 py-1.5 ios-text-sm ios-rounded-lg',
+				xl: 'px-4 py-2 ios-text-md ios-rounded-lg',
 			},
 		},
 		defaultVariants: {

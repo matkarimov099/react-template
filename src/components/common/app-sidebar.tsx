@@ -3,7 +3,6 @@ import type * as React from 'react';
 
 import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import { NavMain } from '@/components/common/nav-main.tsx';
-import { NavProjects } from '@/components/common/nav-projects.tsx';
 import { NavSecondary } from '@/components/common/nav-secondary.tsx';
 import { NavUser } from '@/components/common/nav-user.tsx';
 import {
@@ -102,7 +101,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				)}
 			>
 				<NavMain />
-				<NavProjects />
 				<NavSecondary className="mt-auto" />
 			</SidebarContent>
 

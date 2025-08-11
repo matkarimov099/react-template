@@ -64,7 +64,7 @@ export function LanguageToggle() {
 					<Button
 						variant="ghost"
 						size="sm"
-						className="group relative mr-2 h-9 w-9 overflow-hidden bg-[var(--card-bg)] p-0 saturate-150 backdrop-blur-md transition-all duration-200 hover:border-[var(--system-blue)]/30 hover:bg-[var(--control-ghost-bg)]"
+						className="group relative mr-2 h-9 w-9 overflow-hidden ios-bg-card p-0 ios-backdrop-blur ios-transition hover:border-[var(--system-blue)]/30 hover:ios-bg-control-ghost"
 					>
 						<div className="relative flex h-full w-full items-center justify-center">
 							{/* Flag or Globe icon */}
@@ -82,7 +82,7 @@ export function LanguageToggle() {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-64">
-					<div className="border-[var(--border)]/50 border-b px-3 py-2 font-medium text-[var(--secondaryLabel)] text-xs">
+					<div className="ios-border/50 border-b px-3 py-2 font-medium ios-text-secondary ios-text-xs ios-font">
 						Language Settings
 					</div>
 					{languageOptions.map(option => {
@@ -94,11 +94,11 @@ export function LanguageToggle() {
 								onClick={() => handleLanguageChange(option.code)}
 								className={cn(
 									'group relative mx-1 my-0.5 flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-3 py-3',
-									isSelected && 'bg-[var(--system-blue)]/10 text-[var(--system-blue)]'
+									isSelected && 'bg-[var(--system-blue)]/10 ios-text-blue'
 								)}
 							>
 								<div className="flex flex-1 items-center gap-3">
-									<div className="bder relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border-[var(--border)] bg-[var(--card-bg)]">
+									<div className="bder relative flex h-8 w-8 items-center justify-center overflow-hidden ios-rounded-lg ios-border ios-bg-card">
 										<img
 											src={option.flag}
 											alt={option.name}
@@ -107,14 +107,14 @@ export function LanguageToggle() {
 									</div>
 									<div className="flex flex-col">
 										<span className="font-medium text-sm">{option.name}</span>
-										<span className="text-[var(--secondaryLabel)] text-xs">
+										<span className="ios-text-secondary ios-text-xs ios-font">
 											{option.description}
 										</span>
 									</div>
 								</div>
 								{isSelected && (
 									<div className="flex items-center gap-1">
-										<CheckIcon className="h-6 w-6 text-[var(--system-blue)]" />
+										<CheckIcon className="h-6 w-6 ios-text-blue" />
 									</div>
 								)}
 							</DropdownMenuItem>
