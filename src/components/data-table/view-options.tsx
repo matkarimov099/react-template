@@ -8,11 +8,7 @@ import {
 	CommandList,
 	CommandSeparator,
 } from '@/components/ui/command';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import type { Column, Table } from '@tanstack/react-table';
 import { Check, GripVertical, RotateCcw, Settings2 } from 'lucide-react';
@@ -38,11 +34,8 @@ export function DataTableViewOptions<TData>({
 		() =>
 			table
 				.getAllColumns()
-				.filter(
-					(column) =>
-						typeof column.accessorFn !== 'undefined' && column.getCanHide(),
-				),
-		[table],
+				.filter(column => typeof column.accessorFn !== 'undefined' && column.getCanHide()),
+		[table]
 	);
 
 	// State for drag and drop
@@ -85,30 +78,21 @@ export function DataTableViewOptions<TData>({
 	// Save column order to localStorage when it changes
 	const saveColumnOrder = useCallback((columnOrder: string[]) => {
 		try {
-			localStorage.setItem(
-				COLUMN_ORDER_STORAGE_KEY,
-				JSON.stringify(columnOrder),
-			);
+			localStorage.setItem(COLUMN_ORDER_STORAGE_KEY, JSON.stringify(columnOrder));
 		} catch (error) {
 			console.error('Error saving column order:', error);
 		}
 	}, []);
 
 	// Handle drag start
-	const handleDragStart = useCallback(
-		(e: React.DragEvent, columnId: string) => {
-			setDraggedColumnId(columnId);
-			e.dataTransfer.effectAllowed = 'move';
-			// This helps with dragging visuals
-			if (
-				e.dataTransfer.setDragImage &&
-				e.currentTarget instanceof HTMLElement
-			) {
-				e.dataTransfer.setDragImage(e.currentTarget, 20, 20);
-			}
-		},
-		[],
-	);
+	const handleDragStart = useCallback((e: React.DragEvent, columnId: string) => {
+		setDraggedColumnId(columnId);
+		e.dataTransfer.effectAllowed = 'move';
+		// This helps with dragging visuals
+		if (e.dataTransfer.setDragImage && e.currentTarget instanceof HTMLElement) {
+			e.dataTransfer.setDragImage(e.currentTarget, 20, 20);
+		}
+	}, []);
 
 	// Handle drag over
 	const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -127,7 +111,7 @@ export function DataTableViewOptions<TData>({
 			const currentOrder =
 				table.getState().columnOrder.length > 0
 					? [...table.getState().columnOrder]
-					: table.getAllLeafColumns().map((d) => d.id);
+					: table.getAllLeafColumns().map(d => d.id);
 
 			// Find indices
 			const draggedIndex = currentOrder.indexOf(draggedColumnId);
@@ -148,7 +132,7 @@ export function DataTableViewOptions<TData>({
 
 			setDraggedColumnId(null);
 		},
-		[draggedColumnId, table, saveColumnOrder],
+		[draggedColumnId, table, saveColumnOrder]
 	);
 
 	// Reset column order
@@ -173,7 +157,7 @@ export function DataTableViewOptions<TData>({
 				column.id.replace(/_/g, ' ')
 			);
 		},
-		[columnMapping],
+		[columnMapping]
 	);
 
 	return (
@@ -195,29 +179,25 @@ export function DataTableViewOptions<TData>({
 					<CommandList>
 						<CommandEmpty>No columns found.</CommandEmpty>
 						<CommandGroup>
-							{orderedColumns.map((column) => (
+							{orderedColumns.map(column => (
 								<CommandItem
 									key={column.id}
-									onSelect={() =>
-										column.toggleVisibility(!column.getIsVisible())
-									}
+									onSelect={() => column.toggleVisibility(!column.getIsVisible())}
 									draggable
-									onDragStart={(e) => handleDragStart(e, column.id)}
+									onDragStart={e => handleDragStart(e, column.id)}
 									onDragOver={handleDragOver}
-									onDrop={(e) => handleDrop(e, column.id)}
+									onDrop={e => handleDrop(e, column.id)}
 									className={cn(
-										'flex items-center cursor-grab hover:[&_svg]:text-[var(--label)]',
-										draggedColumnId === column.id && 'bg-accent opacity-50',
+										'flex cursor-grab items-center hover:[&_svg]:text-[var(--label)]',
+										draggedColumnId === column.id && 'bg-accent opacity-50'
 									)}
 								>
 									<GripVertical className="mr-2 h-4 w-4 cursor-grab" />
-									<span className="flex-grow truncate capitalize">
-										{getColumnLabel(column)}
-									</span>
+									<span className="flex-grow truncate capitalize">{getColumnLabel(column)}</span>
 									<Check
 										className={cn(
 											'ml-auto h-4 w-4',
-											column.getIsVisible() ? 'opacity-100' : 'opacity-0',
+											column.getIsVisible() ? 'opacity-100' : 'opacity-0'
 										)}
 									/>
 								</CommandItem>
@@ -227,7 +207,7 @@ export function DataTableViewOptions<TData>({
 						<CommandGroup>
 							<CommandItem
 								onSelect={resetColumnOrder}
-								className="justify-center text-center cursor-pointer"
+								className="cursor-pointer justify-center text-center"
 							>
 								<RotateCcw className="mr-2 h-4 w-4" />
 								Reset Column Order

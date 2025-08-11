@@ -24,7 +24,7 @@ export const formatNumber = (
 	value: number | undefined,
 	format: 'space' | 'dot' | 'comma',
 	currencySymbol?: string,
-	disableDecimals: boolean = Boolean(true), // Default to no decimals
+	disableDecimals: boolean = Boolean(true) // Default to no decimals
 ): string => {
 	if (value === undefined || value === null) return '';
 
@@ -46,7 +46,5 @@ export const formatNumber = (
 			break; // "comma" remains unchanged, so no need to assign it to itself
 	}
 
-	return currencySymbol
-		? `${formattedValue} ${currencySymbol}`
-		: formattedValue; // Append currency
+	return currencySymbol ? `${formattedValue} ${currencySymbol}` : formattedValue; // Append currency
 };

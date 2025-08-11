@@ -17,7 +17,7 @@ export function NotFound() {
 					duration: 0.8,
 					ease: 'easeInOut',
 				}}
-				className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+				className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text py-4 text-center font-medium text-4xl text-transparent tracking-tight md:text-7xl"
 			>
 				404 - {t('errors.notFound')}
 			</motion.h1>

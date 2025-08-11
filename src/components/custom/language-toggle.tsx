@@ -5,20 +5,17 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import type { Locale } from '@/lib/i18n';
 import { useI18n } from '@/hooks/use-i18n';
-import {
-	addLocaleToPath,
-	removeLocaleFromPath,
-} from '@/plugins/i18n-routing.ts';
-import { useLocation, useNavigate } from 'react-router';
-import { CheckIcon, GlobeIcon } from 'lucide-react';
+import type { Locale } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
+import { addLocaleToPath, removeLocaleFromPath } from '@/plugins/i18n-routing.ts';
+import { CheckIcon, GlobeIcon } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router';
 
+import enFlag from '@/assets/flags/en.svg';
+import ruFlag from '@/assets/flags/ru.svg';
 // Flag images
 import uzFlag from '@/assets/flags/uz.svg';
-import ruFlag from '@/assets/flags/ru.svg';
-import enFlag from '@/assets/flags/en.svg';
 
 const languageOptions = [
 	{
@@ -58,7 +55,7 @@ export function LanguageToggle() {
 		navigate(newPath, { replace: true });
 	};
 
-	const currentLanguage = languageOptions.find((lang) => lang.code === locale);
+	const currentLanguage = languageOptions.find(lang => lang.code === locale);
 
 	return (
 		<div className="relative">
@@ -67,15 +64,15 @@ export function LanguageToggle() {
 					<Button
 						variant="ghost"
 						size="sm"
-						className="group relative mr-2 h-9 w-9 p-0 bg-[var(--card-bg)] hover:bg-[var(--control-ghost-bg)] hover:border-[var(--system-blue)]/30 transition-all duration-200 backdrop-blur-md saturate-150 overflow-hidden"
+						className="group relative mr-2 h-9 w-9 overflow-hidden bg-[var(--card-bg)] p-0 saturate-150 backdrop-blur-md transition-all duration-200 hover:border-[var(--system-blue)]/30 hover:bg-[var(--control-ghost-bg)]"
 					>
-						<div className="relative flex items-center justify-center w-full h-full">
+						<div className="relative flex h-full w-full items-center justify-center">
 							{/* Flag or Globe icon */}
 							{currentLanguage ? (
 								<img
 									src={currentLanguage.flag}
 									alt={currentLanguage.name}
-									className="h-6 w-6 transition-all duration-300 group-hover:scale-110 rounded-sm"
+									className="h-6 w-6 rounded-sm transition-all duration-300 group-hover:scale-110"
 								/>
 							) : (
 								<GlobeIcon className="h-6 w-6 transition-all duration-300 group-hover:scale-110" />
@@ -85,10 +82,10 @@ export function LanguageToggle() {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-64">
-					<div className="px-3 py-2 text-xs font-medium text-[var(--secondaryLabel)] border-b border-[var(--border)]/50">
+					<div className="border-[var(--border)]/50 border-b px-3 py-2 font-medium text-[var(--secondaryLabel)] text-xs">
 						Language Settings
 					</div>
-					{languageOptions.map((option) => {
+					{languageOptions.map(option => {
 						const isSelected = locale === option.code;
 
 						return (
@@ -96,22 +93,21 @@ export function LanguageToggle() {
 								key={option.code}
 								onClick={() => handleLanguageChange(option.code)}
 								className={cn(
-									'group relative flex items-center gap-3 px-3 py-3 cursor-pointer rounded-[var(--radius-sm)] mx-1 my-0.5',
-									isSelected &&
-										'bg-[var(--system-blue)]/10 text-[var(--system-blue)]',
+									'group relative mx-1 my-0.5 flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-3 py-3',
+									isSelected && 'bg-[var(--system-blue)]/10 text-[var(--system-blue)]'
 								)}
 							>
-								<div className="flex items-center gap-3 flex-1">
-									<div className="relative w-8 h-8 rounded-lg bg-[var(--card-bg)] bder border-[var(--border)] flex items-center justify-center overflow-hidden">
+								<div className="flex flex-1 items-center gap-3">
+									<div className="bder relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border-[var(--border)] bg-[var(--card-bg)]">
 										<img
 											src={option.flag}
 											alt={option.name}
-											className="h-6 w-6 relative z-10 rounded-sm"
+											className="relative z-10 h-6 w-6 rounded-sm"
 										/>
 									</div>
 									<div className="flex flex-col">
-										<span className="text-sm font-medium">{option.name}</span>
-										<span className="text-xs text-[var(--secondaryLabel)]">
+										<span className="font-medium text-sm">{option.name}</span>
+										<span className="text-[var(--secondaryLabel)] text-xs">
 											{option.description}
 										</span>
 									</div>

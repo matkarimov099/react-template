@@ -31,7 +31,7 @@ export function BulkDeleteUser({
 	const deleteMutation = useBulkDeleteUsers();
 
 	// Use allSelectedIds if available, otherwise fallback to selectedUsers ids
-	const idsToDelete = allSelectedIds || selectedUsers.map((user) => user.id);
+	const idsToDelete = allSelectedIds || selectedUsers.map(user => user.id);
 
 	// Use total count if available, otherwise fallback to visible items count
 	const itemCount = totalSelectedCount ?? selectedUsers.length;
@@ -47,9 +47,7 @@ export function BulkDeleteUser({
 
 			// Show success message
 			toast.success(
-				itemCount === 1
-					? 'User deleted successfully'
-					: `${itemCount} users deleted successfully`,
+				itemCount === 1 ? 'User deleted successfully' : `${itemCount} users deleted successfully`
 			);
 
 			// Reset selection and close dialog
@@ -57,9 +55,7 @@ export function BulkDeleteUser({
 			onOpenChange(false);
 		} catch (error) {
 			console.error('Bulk delete failed:', error);
-			toast.error(
-				itemCount === 1 ? 'Failed to delete user' : 'Failed to delete users',
-			);
+			toast.error(itemCount === 1 ? 'Failed to delete user' : 'Failed to delete users');
 		}
 	};
 

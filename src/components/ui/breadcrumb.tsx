@@ -13,8 +13,8 @@ function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
 		<ol
 			data-slot="breadcrumb-list"
 			className={cn(
-				'text-[var(--secondaryLabel)] flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5 font-family-[var(--font-sans)]',
-				className,
+				'flex flex-wrap items-center gap-1.5 break-words font-family-[var(--font-sans)] text-[var(--secondaryLabel)] text-sm sm:gap-2.5',
+				className
 			)}
 			{...props}
 		/>
@@ -44,8 +44,8 @@ function BreadcrumbLink({
 		<Comp
 			data-slot="breadcrumb-link"
 			className={cn(
-				'text-[var(--system-blue)] hover:text-[var(--label)] transition-colors duration-200 no-underline hover:underline',
-				className,
+				'text-[var(--system-blue)] no-underline transition-colors duration-200 hover:text-[var(--label)] hover:underline',
+				className
 			)}
 			{...props}
 		/>
@@ -60,23 +60,19 @@ function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
 			aria-disabled="true"
 			aria-current="page"
 			tabIndex={0}
-			className={cn('text-[var(--label)] font-medium', className)}
+			className={cn('font-medium text-[var(--label)]', className)}
 			{...props}
 		/>
 	);
 }
 
-function BreadcrumbSeparator({
-	children,
-	className,
-	...props
-}: ComponentProps<'li'>) {
+function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'li'>) {
 	return (
 		<li
 			data-slot="breadcrumb-separator"
 			role="presentation"
 			aria-hidden="true"
-			className={cn('[&>svg]:size-3.5 text-[var(--secondaryLabel)]', className)}
+			className={cn('text-[var(--secondaryLabel)] [&>svg]:size-3.5', className)}
 			{...props}
 		>
 			{children ?? <ChevronRight />}

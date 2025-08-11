@@ -1,17 +1,6 @@
-import {
-	BadgeCheck,
-	Bell,
-	ChevronsUpDown,
-	CreditCard,
-	LogOut,
-	Sparkles,
-} from 'lucide-react';
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
 
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-} from '@/components/ui/avatar.tsx';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar.tsx';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -21,15 +10,11 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import {
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-} from '@/components/ui/sidebar.tsx';
-import { useSidebar } from '@/hooks/use-sidebar';
-import { useI18n } from '@/hooks/use-i18n';
-import { cn } from '@/lib/utils';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar.tsx';
 import type { CurrentUser } from '@/features/auth/types.ts';
+import { useI18n } from '@/hooks/use-i18n';
+import { useSidebar } from '@/hooks/use-sidebar';
+import { cn } from '@/lib/utils';
 
 interface NavUserProps {
 	user?: CurrentUser | null;
@@ -44,7 +29,7 @@ export function NavUser({ user, logout }: NavUserProps) {
 		<div
 			className={cn(
 				'relative',
-				'before:absolute before:-top-3 before:left-0 before:right-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--border)]/50 before:to-transparent',
+				'before:-top-3 before:absolute before:right-0 before:left-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--border)]/50 before:to-transparent'
 			)}
 		>
 			<SidebarMenu>
@@ -55,28 +40,27 @@ export function NavUser({ user, logout }: NavUserProps) {
 								size={isCollapsed ? 'sm' : 'lg'}
 								className={cn(
 									'group relative transition-all duration-300 ease-[cubic-bezier(0.2,0.9,0.25,1)]',
-									'bg-[var(--card-bg)] border border-[var(--border)]/60 rounded-lg',
-									'hover:bg-[var(--control-ghost-bg)] hover:border-[var(--system-blue)]/30 hover:shadow-md',
-									'data-[state=open]:bg-[var(--control-ghost-bg)] data-[state=open]:border-[var(--system-blue)]/40',
-									isCollapsed && 'justify-center h-8 w-8 p-0',
+									'rounded-lg border border-[var(--border)]/60 bg-[var(--card-bg)]',
+									'hover:border-[var(--system-blue)]/30 hover:bg-[var(--control-ghost-bg)] hover:shadow-md',
+									'data-[state=open]:border-[var(--system-blue)]/40 data-[state=open]:bg-[var(--control-ghost-bg)]',
+									isCollapsed && 'h-8 w-8 justify-center p-0'
 								)}
 							>
 								<div className="relative">
 									<Avatar
 										className={cn(
 											'rounded-lg border border-[var(--border)]/30 transition-all duration-200',
-											isCollapsed ? 'h-8 w-8' : 'h-8 w-8',
+											isCollapsed ? 'h-8 w-8' : 'h-8 w-8'
 										)}
 									>
 										<AvatarFallback
 											className={cn(
-												'rounded-lg bg-gradient-to-br from-[var(--system-blue)]/10 to-[var(--system-blue)]/5 text-[var(--system-blue)] font-semibold flex items-center justify-center',
-												isCollapsed && 'text-xs',
+												'flex items-center justify-center rounded-lg bg-gradient-to-br from-[var(--system-blue)]/10 to-[var(--system-blue)]/5 font-semibold text-[var(--system-blue)]',
+												isCollapsed && 'text-xs'
 											)}
 										>
-											{`${user?.firstname?.[0] ?? ''}${
-												user?.lastname?.[0] ?? ''
-											}`.toUpperCase() || 'SU'}
+											{`${user?.firstname?.[0] ?? ''}${user?.lastname?.[0] ?? ''}`.toUpperCase() ||
+												'SU'}
 										</AvatarFallback>
 										<AvatarImage src={user?.firstname} alt={user?.firstname} />
 									</Avatar>
@@ -87,11 +71,11 @@ export function NavUser({ user, logout }: NavUserProps) {
 											<span className="truncate font-medium text-[var(--label)]">
 												{user?.firstname || 'USERNAME'}
 											</span>
-											<span className="truncate text-xs text-[var(--secondaryLabel)]">
+											<span className="truncate text-[var(--secondaryLabel)] text-xs">
 												{user?.lastname}
 											</span>
 										</div>
-										<ChevronsUpDown className="ml-auto size-4 text-[var(--tertiaryLabel)] group-hover:text-[var(--secondaryLabel)] transition-colors" />
+										<ChevronsUpDown className="ml-auto size-4 text-[var(--tertiaryLabel)] transition-colors group-hover:text-[var(--secondaryLabel)]" />
 									</>
 								)}
 							</SidebarMenuButton>
@@ -107,9 +91,7 @@ export function NavUser({ user, logout }: NavUserProps) {
 									<Avatar className="h-8 w-8 rounded-lg">
 										<AvatarImage src={user?.firstname} alt={user?.lastname} />
 										<AvatarFallback className="rounded-lg">
-											{`${user?.firstname?.[0] ?? ''}${
-												user?.lastname?.[0] ?? ''
-											}`.toUpperCase()}
+											{`${user?.firstname?.[0] ?? ''}${user?.lastname?.[0] ?? ''}`.toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
 									<div className="grid flex-1 text-left text-sm leading-tight">

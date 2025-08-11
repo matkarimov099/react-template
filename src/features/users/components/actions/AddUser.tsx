@@ -18,13 +18,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useCreateUser } from '@/features/users/hooks/use-users';
+import { userCreateSchema } from '@/features/users/schema/users.schema.ts';
 import type { UserCreate } from '@/features/users/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { userCreateSchema } from '@/features/users/schema/users.schema.ts';
 
 export function AddUser() {
 	const [open, setOpen] = useState(false);
@@ -96,11 +96,7 @@ export function AddUser() {
 								<FormItem>
 									<FormLabel>Email Address</FormLabel>
 									<FormControl>
-										<Input
-											type="email"
-											placeholder="john.doe@example.com"
-											{...field}
-										/>
+										<Input type="email" placeholder="john.doe@example.com" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>

@@ -9,12 +9,8 @@ import { toast } from 'sonner';
 
 type AuthContextProviderProps = PropsWithChildren;
 
-export default function AuthContextProvider({
-	children,
-}: AuthContextProviderProps) {
-	const [authToken, setAuthToken] = useState<string | null>(
-		localStorage.getItem('accessToken'),
-	);
+export default function AuthContextProvider({ children }: AuthContextProviderProps) {
+	const [authToken, setAuthToken] = useState<string | null>(localStorage.getItem('accessToken'));
 	const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 	const navigate = useNavigate();
 	const {
@@ -23,8 +19,7 @@ export default function AuthContextProvider({
 		isError: logoutError,
 		isPending: logoutPending,
 	} = useLogout();
-	const { data: currentUserData, isPending: isUserDataPending } =
-		useCurrentUser();
+	const { data: currentUserData, isPending: isUserDataPending } = useCurrentUser();
 
 	const logout = async () => {
 		logoutUser(undefined, {
@@ -35,7 +30,7 @@ export default function AuthContextProvider({
 				toast.success('Profildan muvaffaqiyatli chiqildi');
 				navigate('/auth/login');
 			},
-			onError: (error) => {
+			onError: error => {
 				if (isAxiosError<ServerError>(error)) {
 					toast.error(error.response?.data?.message);
 				} else {

@@ -23,10 +23,12 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 
+import { DataTableToolbar } from '@/components/data-table/toolbar.tsx';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTableResizer } from './data-table-resizer';
 import { useTableColumnResize } from './hooks/use-table-column-resize';
 import { DataTablePagination } from './pagination';
+import type { ExportConfig, ToolbarRenderProps } from './types';
 import {
 	cleanupColumnResizing,
 	initializeColumnSizes,
@@ -34,14 +36,10 @@ import {
 } from './utils/column-sizing';
 import { createKeyboardNavigationHandler } from './utils/keyboard-navigation';
 import { type TableConfig, useTableConfig } from './utils/table-config';
-import type { ExportConfig, ToolbarRenderProps } from './types';
-import { DataTableToolbar } from '@/components/data-table/toolbar.tsx';
 
 // Types for table handlers
 type ColumnOrderUpdater = (prev: string[]) => string[];
-type RowSelectionUpdater = (
-	prev: Record<string, boolean>,
-) => Record<string, boolean>;
+type RowSelectionUpdater = (prev: Record<string, boolean>) => Record<string, boolean>;
 
 interface DataTableProps<TData> {
 	// Allow overriding the table configuration
@@ -49,7 +47,7 @@ interface DataTableProps<TData> {
 
 	// Column definitions generator
 	getColumns: (
-		handleRowDeselection: ((rowId: string) => void) | null | undefined,
+		handleRowDeselection: ((rowId: string) => void) | null | undefined
 	) => ColumnDef<TData>[];
 
 	// Data to display in the table
@@ -84,9 +82,7 @@ interface DataTableProps<TData> {
 	onSortingChange?: (
 		updaterOrValue:
 			| Array<{ id: string; desc: boolean }>
-			| ((
-					prev: Array<{ id: string; desc: boolean }>,
-			  ) => Array<{ id: string; desc: boolean }>),
+			| ((prev: Array<{ id: string; desc: boolean }>) => Array<{ id: string; desc: boolean }>)
 	) => void;
 
 	// Search props
@@ -120,20 +116,19 @@ export function DataTable<TData>({
 	const tableId = tableConfig.columnResizingTableId || 'data-table-default';
 
 	// Use our custom hook for column resizing
-	const { columnSizing, setColumnSizing, resetColumnSizing } =
-		useTableColumnResize(tableId, tableConfig.enableColumnResizing);
+	const { columnSizing, setColumnSizing, resetColumnSizing } = useTableColumnResize(
+		tableId,
+		tableConfig.enableColumnResizing
+	);
 
 	// Column order state (managed separately from the URL state as it's persisted in localStorage)
 	const [columnOrder, setColumnOrder] = useState<string[]>([]);
 
 	// PERFORMANCE FIX: Use only one selection state as the source of truth
-	const [selectedItemIds, setSelectedItemIds] = useState<
-		Record<string | number, boolean>
-	>({});
+	const [selectedItemIds, setSelectedItemIds] = useState<Record<string | number, boolean>>({});
 
 	// No sorting from filters - use external sorting if provided, otherwise internal
-	const [sorting, setSorting] =
-		useState<Array<{ id: string; desc: boolean }>>(externalSorting);
+	const [sorting, setSorting] = useState<Array<{ id: string; desc: boolean }>>(externalSorting);
 
 	// Global filter state for search
 	const [globalFilter, setGlobalFilter] = useState<string>('');
@@ -160,13 +155,11 @@ export function DataTable<TData>({
 			}
 			setSearchTerm(value);
 		},
-		[tableConfig.manualSearching, onSearchChange],
+		[tableConfig.manualSearching, onSearchChange]
 	);
 
 	// Get the current search value
-	const currentSearchValue = tableConfig.manualSearching
-		? searchTerm
-		: globalFilter;
+	const currentSearchValue = tableConfig.manualSearching ? searchTerm : globalFilter;
 
 	// Update internal sorting when external sorting changes
 	useEffect(() => {
@@ -180,9 +173,7 @@ export function DataTable<TData>({
 		(
 			updaterOrValue:
 				| Array<{ id: string; desc: boolean }>
-				| ((
-						prev: Array<{ id: string; desc: boolean }>,
-				  ) => Array<{ id: string; desc: boolean }>),
+				| ((prev: Array<{ id: string; desc: boolean }>) => Array<{ id: string; desc: boolean }>)
 		) => {
 			if (tableConfig.manualSorting && onSortingChange) {
 				onSortingChange(updaterOrValue);
@@ -191,7 +182,7 @@ export function DataTable<TData>({
 				setSorting(updaterOrValue);
 			}
 		},
-		[tableConfig.manualSorting, onSortingChange],
+		[tableConfig.manualSorting, onSortingChange]
 	);
 
 	// Get current data items - already provided as prop
@@ -215,10 +206,7 @@ export function DataTable<TData>({
 	}, [dataItems, selectedItemIds, idField]);
 
 	// Calculate total selected items - memoize to avoid recalculation
-	const totalSelectedItems = useMemo(
-		() => Object.keys(selectedItemIds).length,
-		[selectedItemIds],
-	);
+	const totalSelectedItems = useMemo(() => Object.keys(selectedItemIds).length, [selectedItemIds]);
 
 	// PERFORMANCE FIX: Optimized row deselection handler
 	const handleRowDeselection = useCallback(
@@ -230,7 +218,7 @@ export function DataTable<TData>({
 
 			if (item) {
 				const itemId = String(item[idField]);
-				setSelectedItemIds((prev) => {
+				setSelectedItemIds(prev => {
 					// Remove this item ID from selection
 					const next = { ...prev };
 					delete next[itemId];
@@ -238,7 +226,7 @@ export function DataTable<TData>({
 				});
 			}
 		},
-		[dataItems, idField],
+		[dataItems, idField]
 	);
 
 	// Clear all selections
@@ -251,12 +239,10 @@ export function DataTable<TData>({
 		(updaterOrValue: RowSelectionUpdater | Record<string, boolean>) => {
 			// Determine the new row selection value
 			const newRowSelection =
-				typeof updaterOrValue === 'function'
-					? updaterOrValue(rowSelection)
-					: updaterOrValue;
+				typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
 
 			// Batch update selectedItemIds based on the new row selection
-			setSelectedItemIds((prev) => {
+			setSelectedItemIds(prev => {
 				const next = { ...prev };
 
 				// Process changes for the current page
@@ -291,7 +277,7 @@ export function DataTable<TData>({
 				return next;
 			});
 		},
-		[dataItems, rowSelection, idField],
+		[dataItems, rowSelection, idField]
 	);
 
 	// Get selected items data
@@ -303,7 +289,7 @@ export function DataTable<TData>({
 
 		// Find items from the current page that are selected
 		// Return current page items (since we don't have fetchByIdsFn anymore)
-		return dataItems.filter((item) => selectedItemIds[String(item[idField])]);
+		return dataItems.filter(item => selectedItemIds[String(item[idField])]);
 	}, [dataItems, selectedItemIds, totalSelectedItems, idField]);
 
 	// Get all items on the current page
@@ -318,7 +304,7 @@ export function DataTable<TData>({
 			pageIndex: currentPage - 1,
 			pageSize: pageSize,
 		}),
-		[currentPage, pageSize],
+		[currentPage, pageSize]
 	);
 
 	// Ref for the table container for keyboard navigation
@@ -327,9 +313,7 @@ export function DataTable<TData>({
 	// Get columns with the deselection handler (memoize to avoid recreation on render)
 	const columns = useMemo(() => {
 		// Only pass the deselection handler if row selection is enabled
-		return getColumns(
-			tableConfig.enableRowSelection ? handleRowDeselection : null,
-		);
+		return getColumns(tableConfig.enableRowSelection ? handleRowDeselection : null);
 	}, [getColumns, handleRowDeselection, tableConfig.enableRowSelection]);
 
 	// Handle pagination changes
@@ -340,7 +324,7 @@ export function DataTable<TData>({
 				| ((prev: { pageIndex: number; pageSize: number }) => {
 						pageIndex: number;
 						pageSize: number;
-				  }),
+				  })
 		) => {
 			const newPagination =
 				typeof updaterOrValue === 'function'
@@ -358,45 +342,36 @@ export function DataTable<TData>({
 				onPageSizeChange(newPagination.pageSize);
 			}
 		},
-		[currentPage, pageSize, onPageChange, onPageSizeChange],
+		[currentPage, pageSize, onPageChange, onPageSizeChange]
 	);
 
 	const handleColumnSizingChange = useCallback(
-		(
-			updaterOrValue:
-				| ColumnSizingState
-				| ((prev: ColumnSizingState) => ColumnSizingState),
-		) => {
+		(updaterOrValue: ColumnSizingState | ((prev: ColumnSizingState) => ColumnSizingState)) => {
 			if (typeof updaterOrValue === 'function') {
-				setColumnSizing((current) => updaterOrValue(current));
+				setColumnSizing(current => updaterOrValue(current));
 			} else {
 				setColumnSizing(updaterOrValue);
 			}
 		},
-		[setColumnSizing],
+		[setColumnSizing]
 	);
 
 	// Column order change handler
 	const handleColumnOrderChange = useCallback(
 		(updaterOrValue: ColumnOrderUpdater | string[]) => {
 			const newColumnOrder =
-				typeof updaterOrValue === 'function'
-					? updaterOrValue(columnOrder)
-					: updaterOrValue;
+				typeof updaterOrValue === 'function' ? updaterOrValue(columnOrder) : updaterOrValue;
 
 			setColumnOrder(newColumnOrder);
 
 			// Persist column order to localStorage
 			try {
-				localStorage.setItem(
-					`${tableId}-column-order`,
-					JSON.stringify(newColumnOrder),
-				);
+				localStorage.setItem(`${tableId}-column-order`, JSON.stringify(newColumnOrder));
 			} catch (error) {
 				console.error('Failed to save column order to localStorage:', error);
 			}
 		},
-		[columnOrder, tableId],
+		[columnOrder, tableId]
 	);
 
 	// Load column order from localStorage on initial render
@@ -433,14 +408,11 @@ export function DataTable<TData>({
 		onColumnSizingChange: handleColumnSizingChange,
 		onColumnOrderChange: handleColumnOrderChange,
 		onSortingChange: handleSortingChange,
-		onGlobalFilterChange: tableConfig.manualSearching
-			? undefined
-			: setGlobalFilter,
+		onGlobalFilterChange: tableConfig.manualSearching ? undefined : setGlobalFilter,
 		pageCount: totalPages,
 		enableRowSelection: tableConfig.enableRowSelection,
 		enableColumnResizing: tableConfig.enableColumnResizing,
-		enableGlobalFilter:
-			tableConfig.enableSearch && !tableConfig.manualSearching,
+		enableGlobalFilter: tableConfig.enableSearch && !tableConfig.manualSearching,
 		manualPagination: tableConfig.manualPagination,
 		manualSorting: tableConfig.manualSorting,
 		manualFiltering: tableConfig.manualFiltering,
@@ -462,7 +434,7 @@ export function DataTable<TData>({
 			});
 			handler(event);
 		},
-		[table],
+		[table]
 	);
 
 	// Initialize default column sizes when columns are available and no saved sizes exist
@@ -474,9 +446,7 @@ export function DataTable<TData>({
 	useEffect(() => {
 		const isResizingAny = table
 			.getHeaderGroups()
-			.some((headerGroup) =>
-				headerGroup.headers.some((header) => header.column.getIsResizing()),
-			);
+			.some(headerGroup => headerGroup.headers.some(header => header.column.getIsResizing()));
 
 		trackColumnResizing(isResizingAny);
 
@@ -524,9 +494,7 @@ export function DataTable<TData>({
 					searchValue={currentSearchValue}
 					onSearchChange={handleSearchChange}
 					customToolbarComponent={renderToolbarContent?.({
-						selectedRows: dataItems.filter(
-							(item) => selectedItemIds[String(item[idField])],
-						),
+						selectedRows: dataItems.filter(item => selectedItemIds[String(item[idField])]),
 						allSelectedIds: Object.keys(selectedItemIds),
 						totalSelectedCount: totalSelectedItems,
 						resetSelection: clearAllSelections,
@@ -536,23 +504,19 @@ export function DataTable<TData>({
 
 			<div
 				ref={tableContainerRef}
-				className="overflow-y-auto rounded-ios-lg border-ios table-container bg-ios-card shadow-ios-sm backdrop-blur-[10px] saturate-[150%]"
+				className="table-container overflow-y-auto rounded-ios-lg border-ios bg-ios-card shadow-ios-sm saturate-[150%] backdrop-blur-[10px]"
 				aria-label="Data table"
-				onKeyDown={
-					tableConfig.enableKeyboardNavigation ? handleKeyDown : undefined
-				}
+				onKeyDown={tableConfig.enableKeyboardNavigation ? handleKeyDown : undefined}
 			>
 				<Table
-					className={`${
-						tableConfig.enableColumnResizing ? 'resizable-table' : ''
-					} text-ios-label`}
+					className={`${tableConfig.enableColumnResizing ? 'resizable-table' : ''} text-ios-label`}
 				>
 					<TableHeader>
-						{table.getHeaderGroups().map((headerGroup) => (
+						{table.getHeaderGroups().map(headerGroup => (
 							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header) => (
+								{headerGroup.headers.map(header => (
 									<TableHead
-										className="px-2 py-2 relative text-left group/th text-ios-label font-semibold bg-[var(--secondaryBackground)] border-b border-ios"
+										className="group/th relative border-ios border-b bg-[var(--secondaryBackground)] px-2 py-2 text-left font-semibold text-ios-label"
 										key={header.id}
 										colSpan={header.colSpan}
 										scope="col"
@@ -560,20 +524,14 @@ export function DataTable<TData>({
 										style={{
 											width: header.getSize(),
 										}}
-										data-column-resizing={
-											header.column.getIsResizing() ? 'true' : undefined
-										}
+										data-column-resizing={header.column.getIsResizing() ? 'true' : undefined}
 									>
 										{header.isPlaceholder
 											? null
-											: flexRender(
-													header.column.columnDef.header,
-													header.getContext(),
-												)}
-										{tableConfig.enableColumnResizing &&
-											header.column.getCanResize() && (
-												<DataTableResizer header={header} />
-											)}
+											: flexRender(header.column.columnDef.header, header.getContext())}
+										{tableConfig.enableColumnResizing && header.column.getCanResize() && (
+											<DataTableResizer header={header} />
+										)}
 									</TableHead>
 								))}
 							</TableRow>
@@ -592,7 +550,7 @@ export function DataTable<TData>({
 											return (
 												<TableCell
 													key={cellKey}
-													className="px-4 py-2 truncate max-w-0 text-left text-ios-label border-b border-ios"
+													className="max-w-0 truncate border-ios border-b px-4 py-2 text-left text-ios-label"
 													tabIndex={-1}
 												>
 													<Skeleton className="h-6 w-full" />
@@ -614,21 +572,17 @@ export function DataTable<TData>({
 										data-state={row.getIsSelected() ? 'selected' : undefined}
 										tabIndex={0}
 										aria-selected={row.getIsSelected()}
-										className={`hover:bg-[var(--control-ghost-bg)] transition-colors duration-[var(--motion-short)] ${
+										className={`transition-colors duration-[var(--motion-short)] hover:bg-[var(--control-ghost-bg)] ${
 											row.getIsSelected()
 												? 'bg-[color-mix(in_srgb,var(--system-blue)_10%,transparent)]'
 												: ''
 										}`}
 										onClick={
-											tableConfig.enableClickRowSelect
-												? () => row.toggleSelected()
-												: undefined
+											tableConfig.enableClickRowSelect ? () => row.toggleSelected() : undefined
 										}
-										onFocus={(e) => {
+										onFocus={e => {
 											// Add a data attribute to the currently focused row
-											for (const el of document.querySelectorAll(
-												'[data-focused="true"]',
-											)) {
+											for (const el of document.querySelectorAll('[data-focused="true"]')) {
 												el.removeAttribute('data-focused');
 											}
 											e.currentTarget.setAttribute('data-focused', 'true');
@@ -636,15 +590,12 @@ export function DataTable<TData>({
 									>
 										{row.getVisibleCells().map((cell, cellIndex) => (
 											<TableCell
-												className="px-4 py-2 truncate max-w-0 text-left text-ios-label border-b border-ios hover:bg-[var(--control-ghost-bg)] transition-colors duration-[var(--motion-short)]"
+												className="max-w-0 truncate border-ios border-b px-4 py-2 text-left text-ios-label transition-colors duration-[var(--motion-short)] hover:bg-[var(--control-ghost-bg)]"
 												key={cell.id}
 												id={`cell-${rowIndex}-${cellIndex}`}
 												data-cell-index={cellIndex}
 											>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext(),
-												)}
+												{flexRender(cell.column.columnDef.cell, cell.getContext())}
 											</TableCell>
 										))}
 									</TableRow>
@@ -654,7 +605,7 @@ export function DataTable<TData>({
 							<TableRow>
 								<TableCell
 									colSpan={columns.length}
-									className="h-24 text-left truncate text-ios-muted"
+									className="h-24 truncate text-left text-ios-muted"
 								>
 									No results.
 								</TableCell>

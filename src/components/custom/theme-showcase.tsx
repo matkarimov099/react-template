@@ -1,20 +1,14 @@
-import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { CheckIcon, XIcon, InfoIcon, AlertTriangleIcon } from 'lucide-react';
+import { AlertTriangleIcon, CheckIcon, InfoIcon, XIcon } from 'lucide-react';
 
 export function ThemeShowcase() {
 	return (
-		<div className="p-6 space-y-8 bg-ios-background text-ios-label">
-			<div className="text-center space-y-2">
-				<h1 className="text-3xl font-bold text-ios-label font-[var(--font-sans)]">
+		<div className="space-y-8 bg-ios-background p-6 text-ios-label">
+			<div className="space-y-2 text-center">
+				<h1 className="font-[var(--font-sans)] font-bold text-3xl text-ios-label">
 					iOS Design System Showcase
 				</h1>
 				<p className="text-ios-muted">
@@ -23,7 +17,7 @@ export function ThemeShowcase() {
 			</div>
 
 			{/* iOS Color Palette */}
-			<Card className="hover-lift bg-ios-card border-ios shadow-ios-md">
+			<Card className="hover-lift border-ios bg-ios-card shadow-ios-md">
 				<CardHeader>
 					<CardTitle className="text-ios-label">iOS System Colors</CardTitle>
 					<CardDescription className="text-ios-muted">
@@ -31,31 +25,29 @@ export function ThemeShowcase() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+					<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-blue)] rounded-ios-md shadow-ios-sm" />
-							<p className="text-sm font-medium text-ios-label">System Blue</p>
+							<div className="h-16 rounded-ios-md bg-[var(--system-blue)] shadow-ios-sm" />
+							<p className="font-medium text-ios-label text-sm">System Blue</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-green)] rounded-ios-md shadow-ios-sm" />
-							<p className="text-sm font-medium text-ios-label">System Green</p>
+							<div className="h-16 rounded-ios-md bg-[var(--system-green)] shadow-ios-sm" />
+							<p className="font-medium text-ios-label text-sm">System Green</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-red)] rounded-ios-md shadow-ios-sm" />
-							<p className="text-sm font-medium text-ios-label">System Red</p>
+							<div className="h-16 rounded-ios-md bg-[var(--system-red)] shadow-ios-sm" />
+							<p className="font-medium text-ios-label text-sm">System Red</p>
 						</div>
 						<div className="space-y-2">
-							<div className="h-16 bg-[var(--system-yellow)] rounded-ios-md shadow-ios-sm" />
-							<p className="text-sm font-medium text-ios-label">
-								System Yellow
-							</p>
+							<div className="h-16 rounded-ios-md bg-[var(--system-yellow)] shadow-ios-sm" />
+							<p className="font-medium text-ios-label text-sm">System Yellow</p>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
 
 			{/* Status Colors */}
-			<Card className="hover-lift bg-ios-card border-ios shadow-ios-md">
+			<Card className="hover-lift border-ios bg-ios-card shadow-ios-md">
 				<CardHeader>
 					<CardTitle className="text-ios-label">Status Indicators</CardTitle>
 					<CardDescription className="text-ios-muted">
@@ -63,37 +55,29 @@ export function ThemeShowcase() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-						<div className="flex items-center space-x-2 p-3 rounded-ios-md bg-[color-mix(in_srgb,var(--system-green)_14%,var(--secondaryBackground)_86%)]">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+						<div className="flex items-center space-x-2 rounded-ios-md bg-[color-mix(in_srgb,var(--system-green)_14%,var(--secondaryBackground)_86%)] p-3">
 							<CheckIcon className="h-5 w-5 text-[var(--system-green)]" />
-							<span className="text-[var(--system-green)] font-medium">
-								Success
-							</span>
+							<span className="font-medium text-[var(--system-green)]">Success</span>
 						</div>
-						<div className="flex items-center space-x-2 p-3 rounded-ios-md bg-[color-mix(in_srgb,var(--system-yellow)_14%,var(--secondaryBackground)_86%)]">
+						<div className="flex items-center space-x-2 rounded-ios-md bg-[color-mix(in_srgb,var(--system-yellow)_14%,var(--secondaryBackground)_86%)] p-3">
 							<AlertTriangleIcon className="h-5 w-5 text-[var(--system-yellow)]" />
-							<span className="text-[var(--system-yellow)] font-medium">
-								Warning
-							</span>
+							<span className="font-medium text-[var(--system-yellow)]">Warning</span>
 						</div>
-						<div className="flex items-center space-x-2 p-3 rounded-ios-md bg-[color-mix(in_srgb,var(--system-red)_14%,var(--secondaryBackground)_86%)]">
+						<div className="flex items-center space-x-2 rounded-ios-md bg-[color-mix(in_srgb,var(--system-red)_14%,var(--secondaryBackground)_86%)] p-3">
 							<XIcon className="h-5 w-5 text-[var(--system-red)]" />
-							<span className="text-[var(--system-red)] font-medium">
-								Error
-							</span>
+							<span className="font-medium text-[var(--system-red)]">Error</span>
 						</div>
-						<div className="flex items-center space-x-2 p-3 rounded-ios-md bg-[color-mix(in_srgb,var(--system-cyan)_14%,var(--secondaryBackground)_86%)]">
+						<div className="flex items-center space-x-2 rounded-ios-md bg-[color-mix(in_srgb,var(--system-cyan)_14%,var(--secondaryBackground)_86%)] p-3">
 							<InfoIcon className="h-5 w-5 text-[var(--system-cyan)]" />
-							<span className="text-[var(--system-cyan)] font-medium">
-								Info
-							</span>
+							<span className="font-medium text-[var(--system-cyan)]">Info</span>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
 
 			{/* iOS Buttons */}
-			<Card className="hover-lift bg-ios-card border-ios shadow-ios-md">
+			<Card className="hover-lift border-ios bg-ios-card shadow-ios-md">
 				<CardHeader>
 					<CardTitle className="text-ios-label">iOS Button Styles</CardTitle>
 					<CardDescription className="text-ios-muted">
@@ -116,7 +100,7 @@ export function ThemeShowcase() {
 							Destructive
 						</Button>
 					</div>
-					<Separator className="bg-ios border-ios" />
+					<Separator className="border-ios bg-ios" />
 					<div className="flex flex-wrap gap-3">
 						<Button size="xs" className="hover-lift">
 							Extra Small
@@ -138,7 +122,7 @@ export function ThemeShowcase() {
 			</Card>
 
 			{/* iOS Vibrancy Effects */}
-			<Card className="hover-lift bg-ios-card border-ios shadow-ios-md">
+			<Card className="hover-lift border-ios bg-ios-card shadow-ios-md">
 				<CardHeader>
 					<CardTitle className="text-ios-label">iOS Vibrancy Effects</CardTitle>
 					<CardDescription className="text-ios-muted">
@@ -146,21 +130,19 @@ export function ThemeShowcase() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-						<div className="h-24 bg-ios-card rounded-ios-lg flex items-center justify-center backdrop-blur-[10px] saturate-[150%] border-ios">
-							<span className="text-ios-label font-medium">Card Vibrancy</span>
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+						<div className="flex h-24 items-center justify-center rounded-ios-lg border-ios bg-ios-card saturate-[150%] backdrop-blur-[10px]">
+							<span className="font-medium text-ios-label">Card Vibrancy</span>
 						</div>
-						<div className="h-24 bg-ios-popover rounded-ios-lg flex items-center justify-center backdrop-blur-[10px] saturate-[150%] border-ios">
-							<span className="text-ios-label font-medium">
-								Popover Vibrancy
-							</span>
+						<div className="flex h-24 items-center justify-center rounded-ios-lg border-ios bg-ios-popover saturate-[150%] backdrop-blur-[10px]">
+							<span className="font-medium text-ios-label">Popover Vibrancy</span>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
 
 			{/* iOS Glass Effect */}
-			<Card className="bg-ios-popover border-ios shadow-ios-lg backdrop-blur-[10px] saturate-[150%] hover-lift">
+			<Card className="hover-lift border-ios bg-ios-popover shadow-ios-lg saturate-[150%] backdrop-blur-[10px]">
 				<CardHeader>
 					<CardTitle className="text-ios-label">iOS Glass Effect</CardTitle>
 					<CardDescription className="text-ios-muted">
@@ -171,14 +153,13 @@ export function ThemeShowcase() {
 					<div className="space-y-3">
 						<Badge
 							variant="secondary"
-							className="bg-[var(--secondaryBackground)] text-ios-label border-ios"
+							className="border-ios bg-[var(--secondaryBackground)] text-ios-label"
 						>
 							iOS Glass
 						</Badge>
-						<p className="text-sm text-ios-muted leading-[1.35]">
-							This card demonstrates iOS-style vibrancy with backdrop blur and
-							subtle transparency effects, following Apple's Human Interface
-							Guidelines.
+						<p className="text-ios-muted text-sm leading-[1.35]">
+							This card demonstrates iOS-style vibrancy with backdrop blur and subtle transparency
+							effects, following Apple's Human Interface Guidelines.
 						</p>
 					</div>
 				</CardContent>

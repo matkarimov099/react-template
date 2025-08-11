@@ -28,9 +28,7 @@ const ToolbarOptions = ({
 
 	// Determine which IDs to use for operations - prefer all selected IDs if available
 	const selectedIds =
-		allSelectedUserIds.length > 0
-			? allSelectedUserIds
-			: selectedUsers.map((user) => user.id);
+		allSelectedUserIds.length > 0 ? allSelectedUserIds : selectedUsers.map(user => user.id);
 
 	return (
 		<div className="flex items-center gap-2">
@@ -38,11 +36,7 @@ const ToolbarOptions = ({
 
 			{selectionCount > 0 && (
 				<>
-					<Button
-						variant="outline"
-						size="default"
-						onClick={() => setDeleteDialogOpen(true)}
-					>
+					<Button variant="outline" size="default" onClick={() => setDeleteDialogOpen(true)}>
 						<TrashIcon className="mr-2 size-4" aria-hidden="true" />
 						Delete ({selectionCount})
 					</Button>

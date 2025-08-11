@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
 	{
 		path: '/:locale',
 		// Combine locale validation and authentication in one loader
-		loader: async (args) => {
+		loader: async args => {
 			// First validate the locale
 			const localeResult = localeLoader(args);
 			if (localeResult) return localeResult;

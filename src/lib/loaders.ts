@@ -22,9 +22,7 @@ export function authLoader({ request, params }: LoaderFunctionArgs) {
 		}
 
 		// Redirect to login page with correct locale
-		const targetLocale = isValidLocale(locale as string)
-			? locale
-			: getPreferredLocale();
+		const targetLocale = isValidLocale(locale as string) ? locale : getPreferredLocale();
 
 		return redirect(`/${targetLocale}/auth/login`);
 	}

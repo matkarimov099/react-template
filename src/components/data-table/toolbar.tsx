@@ -3,15 +3,11 @@ import { Search, Settings, Undo2, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover';
-import type { TableConfig } from './utils/table-config';
-import { DataTableViewOptions } from './view-options';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { ReactNode } from 'react';
 import { DataTableExport } from './data-export';
+import type { TableConfig } from './utils/table-config';
+import { DataTableViewOptions } from './view-options';
 
 // Helper functions for component sizing
 const getButtonSizeClass = (size: 'sm' | 'default' | 'lg') => {
@@ -57,22 +53,19 @@ export function DataTableToolbar<TData>({
 	customToolbarComponent,
 	searchValue,
 	onSearchChange,
-}: Omit<
-	DataTableToolbarProps<TData>,
-	'totalSelectedItems' | 'deleteSelection'
->) {
+}: Omit<DataTableToolbarProps<TData>, 'totalSelectedItems' | 'deleteSelection'>) {
 	const isFiltered =
 		table.getState().columnFilters.length > 0 ||
 		table.getState().globalFilter ||
 		(config.manualSearching && searchValue);
 
 	return (
-		<div className="flex flex-wrap items-center justify-between bg-ios-card/90 border border-border/50 rounded-ios-md p-4 shadow-sm backdrop-blur-md saturate-[150%]">
+		<div className="flex flex-wrap items-center justify-between rounded-ios-md border border-border/50 bg-ios-card/90 p-4 shadow-sm saturate-[150%] backdrop-blur-md">
 			<div className="flex flex-1 flex-wrap items-center gap-2">
 				{/* Search input */}
 				{config.enableSearch && (
 					<div className="relative">
-						<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+						<Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
 						<Input
 							placeholder="Search..."
 							value={
@@ -80,14 +73,14 @@ export function DataTableToolbar<TData>({
 									? (searchValue ?? '')
 									: ((table.getState().globalFilter as string) ?? '')
 							}
-							onChange={(event) => {
+							onChange={event => {
 								if (config.manualSearching && onSearchChange) {
 									onSearchChange(event.target.value);
 								} else {
 									table.setGlobalFilter(event.target.value);
 								}
 							}}
-							className="pl-8 w-[250px] lg:w-[300px] bg-background/80 border border-border/50 rounded-md text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0"
+							className="w-[250px] rounded-md border border-border/50 bg-background/80 pl-8 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 lg:w-[300px]"
 						/>
 						{((config.manualSearching && searchValue) ||
 							(!config.manualSearching && table.getState().globalFilter)) && (
@@ -100,7 +93,7 @@ export function DataTableToolbar<TData>({
 										table.setGlobalFilter('');
 									}
 								}}
-								className="absolute right-0 top-0 h-full px-3 py-0 hover:bg-transparent"
+								className="absolute top-0 right-0 h-full px-3 py-0 hover:bg-transparent"
 							>
 								<X className="h-4 w-4" />
 							</Button>
@@ -146,9 +139,7 @@ export function DataTableToolbar<TData>({
 				)}
 
 				{/* Column visibility */}
-				{config.enableColumnVisibility && (
-					<DataTableViewOptions table={table} size={config.size} />
-				)}
+				{config.enableColumnVisibility && <DataTableViewOptions table={table} size={config.size} />}
 
 				{/* Table settings */}
 				<Popover>
@@ -156,9 +147,7 @@ export function DataTableToolbar<TData>({
 						<Button
 							variant="outline"
 							size={config.size === 'sm' ? 'sm' : 'default'}
-							className={`ml-auto hidden lg:flex ${getButtonSizeClass(
-								config.size,
-							)}`}
+							className={`ml-auto hidden lg:flex ${getButtonSizeClass(config.size)}`}
 						>
 							<Settings className="mr-2 h-4 w-4" />
 							Settings
@@ -168,7 +157,7 @@ export function DataTableToolbar<TData>({
 						<div className="grid gap-4">
 							<div className="space-y-2">
 								<h4 className="font-medium leading-none">Table Settings</h4>
-								<p className="text-sm text-muted-foreground">
+								<p className="text-muted-foreground text-sm">
 									Customize your table appearance and behavior
 								</p>
 							</div>

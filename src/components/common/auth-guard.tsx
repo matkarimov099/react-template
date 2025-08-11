@@ -1,8 +1,8 @@
+import { Spinner } from '@/components/ui/spinner';
+import { useAuthContext } from '@/hooks/use-auth-context';
+import { useI18n } from '@/hooks/use-i18n';
 import type { PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router';
-import { useAuthContext } from '@/hooks/use-auth-context';
-import { Spinner } from '@/components/ui/spinner';
-import { useI18n } from '@/hooks/use-i18n';
 
 export function AuthGuard({ children }: PropsWithChildren) {
 	const { currentUser, isLoading, isLoggedIn } = useAuthContext();

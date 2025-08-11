@@ -1,11 +1,5 @@
 import { I18nContext, type Locale } from '@/context/i18n-context';
-import {
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-	type ReactNode,
-} from 'react';
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 // Import translation files
 import enMessages from '@/messages/en.json';
@@ -71,7 +65,7 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 
 			return typeof value === 'string' ? value : `Missing translation: ${key}`;
 		},
-		[locale],
+		[locale]
 	);
 
 	// Update document language attribute
@@ -85,7 +79,7 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 			setLocale,
 			t,
 		}),
-		[locale, setLocale, t],
+		[locale, setLocale, t]
 	);
 
 	return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

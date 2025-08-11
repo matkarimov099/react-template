@@ -1,14 +1,9 @@
 import { cn } from '@/lib/utils';
-import {
-	AnimatePresence,
-	motion,
-	useMotionValueEvent,
-	useScroll,
-} from 'motion/react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 
+import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import { MenuIcon, XIcon } from 'lucide-react';
 import React, { type ReactNode, useRef, useState } from 'react';
-import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 
 interface NavbarProps {
 	children: React.ReactNode;
@@ -56,7 +51,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
 	});
 	const [visible, setVisible] = useState<boolean>(false);
 
-	useMotionValueEvent(scrollY, 'change', (latest) => {
+	useMotionValueEvent(scrollY, 'change', latest => {
 		if (latest > 100) {
 			setVisible(true);
 		} else {
@@ -70,13 +65,10 @@ export const Navbar = ({ children, className }: NavbarProps) => {
 			// IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
 			className={cn('sticky inset-x-0 top-20 z-40 w-full', className)}
 		>
-			{React.Children.map(children, (child) =>
+			{React.Children.map(children, child =>
 				React.isValidElement(child)
-					? React.cloneElement(
-							child as React.ReactElement<{ visible?: boolean }>,
-							{ visible },
-						)
-					: child,
+					? React.cloneElement(child as React.ReactElement<{ visible?: boolean }>, { visible })
+					: child
 			)}
 		</motion.div>
 	);
@@ -100,9 +92,9 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 				minWidth: '800px',
 			}}
 			className={cn(
-				'relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-ios-lg bg-transparent px-4 py-2 lg:flex border-ios',
+				'relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-ios-lg border-ios bg-transparent px-4 py-2 lg:flex',
 				visible && 'bg-ios-card',
-				className,
+				className
 			)}
 		>
 			{children}
@@ -117,15 +109,15 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
 		<motion.div
 			onMouseLeave={() => setHovered(null)}
 			className={cn(
-				'absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-ios-muted transition-all duration-[var(--motion-short)] hover:text-ios-label lg:flex lg:space-x-2',
-				className,
+				'absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 font-medium text-ios-muted text-sm transition-all duration-[var(--motion-short)] hover:text-ios-label lg:flex lg:space-x-2',
+				className
 			)}
 		>
 			{items.map((item, idx) => (
 				<LocalizedNavLink
 					onMouseEnter={() => setHovered(idx)}
 					onClick={onItemClick}
-					className="relative px-4 py-2 text-ios-muted hover:text-ios-label transition-colors duration-[var(--motion-short)]"
+					className="relative px-4 py-2 text-ios-muted transition-colors duration-[var(--motion-short)] hover:text-ios-label"
 					key={item.name}
 					to={item.link}
 				>
@@ -135,9 +127,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
 							className="absolute inset-0 h-full w-full rounded-ios-lg bg-[var(--control-ghost-bg)]"
 						/>
 					)}
-					<span className="relative z-20 font-[var(--font-sans)]">
-						{item.name}
-					</span>
+					<span className="relative z-20 font-[var(--font-sans)]">{item.name}</span>
 				</LocalizedNavLink>
 			))}
 		</motion.div>
@@ -166,7 +156,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
 			className={cn(
 				'relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden',
 				visible && 'bg-white/80 dark:bg-neutral-950/80',
-				className,
+				className
 			)}
 		>
 			{children}
@@ -174,17 +164,9 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
 	);
 };
 
-export const MobileNavHeader = ({
-	children,
-	className,
-}: MobileNavHeaderProps) => {
+export const MobileNavHeader = ({ children, className }: MobileNavHeaderProps) => {
 	return (
-		<div
-			className={cn(
-				'flex w-full flex-row items-center justify-between',
-				className,
-			)}
-		>
+		<div className={cn('flex w-full flex-row items-center justify-between', className)}>
 			{children}
 		</div>
 	);
@@ -205,7 +187,7 @@ MobileNavMenuProps) => {
 					exit={{ opacity: 0 }}
 					className={cn(
 						'absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950',
-						className,
+						className
 					)}
 				>
 					{children}
@@ -240,8 +222,8 @@ export const NavbarLogo = ({
 		<LocalizedNavLink
 			to={'/'}
 			className={cn(
-				'flex items-center gap-2 text-lg font-bold text-black dark:text-white',
-				className,
+				'flex items-center gap-2 font-bold text-black text-lg dark:text-white',
+				className
 			)}
 		>
 			{children}
@@ -262,10 +244,7 @@ export const NavbarButton = ({
 	children: React.ReactNode;
 	className?: string;
 	variant?: 'primary' | 'secondary' | 'dark' | 'gradient';
-} & (
-	| React.ComponentPropsWithoutRef<'a'>
-	| React.ComponentPropsWithoutRef<'button'>
-)) => {
+} & (React.ComponentPropsWithoutRef<'a'> | React.ComponentPropsWithoutRef<'button'>)) => {
 	const baseStyles =
 		'px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center';
 

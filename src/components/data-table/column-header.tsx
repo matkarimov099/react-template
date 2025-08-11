@@ -8,15 +8,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import type { Column } from '@tanstack/react-table';
-import {
-	ArrowDownIcon,
-	ArrowUpIcon,
-	ChevronsUpDownIcon,
-	EyeOffIcon,
-} from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, EyeOffIcon } from 'lucide-react';
 
-interface DataTableColumnHeaderProps<TData, TValue>
-	extends React.HTMLAttributes<HTMLDivElement> {
+interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
 	column: Column<TData, TValue>;
 	title: string;
 }
@@ -53,7 +47,7 @@ export function DataTableColumnHeader<TData, TValue>({
 					<Button
 						variant="ghost"
 						size="sm"
-						className="data-[state=open]:bg-[var(--control-ghost-bg)] h-8 focus-visible:ring-ios text-ios-label hover:bg-[var(--control-ghost-bg)] transition-colors duration-[var(--motion-short)]"
+						className="h-8 text-ios-label transition-colors duration-[var(--motion-short)] hover:bg-[var(--control-ghost-bg)] focus-visible:ring-ios data-[state=open]:bg-[var(--control-ghost-bg)]"
 					>
 						<span>{title}</span>
 						{currentDirection === 'desc' ? (

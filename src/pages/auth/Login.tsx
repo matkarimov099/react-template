@@ -1,3 +1,4 @@
+import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import {
 	CustomCard,
 	CustomCardDescription,
@@ -5,9 +6,8 @@ import {
 } from '@/components/custom/custom-card.tsx';
 import { LoginForm } from '@/features/auth/components/LoginForm.tsx';
 import { useI18n } from '@/hooks/use-i18n';
-import { LocalizedNavLink } from '@/components/common/localized-nav-link';
-import { motion } from 'motion/react';
 import { KeyRound } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const Login = () => {
 	const { t } = useI18n();
@@ -23,36 +23,30 @@ const Login = () => {
 			className="w-full"
 		>
 			{/* Brand header */}
-			<div className="text-center mb-8">
+			<div className="mb-8 text-center">
 				<motion.div
 					initial={{ scale: 0.8, rotate: -10 }}
 					animate={{ scale: 1, rotate: 0 }}
 					transition={{ delay: 0.2, duration: 0.5, ease: 'backOut' }}
-					className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/80 rounded-2xl shadow-lg"
+					className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/80 shadow-lg"
 				>
-					<KeyRound className="w-8 h-8 text-white" />
+					<KeyRound className="h-8 w-8 text-white" />
 				</motion.div>
-				<h1 className="text-2xl font-bold text-[var(--label)] mb-2">
-					Welcome Back
-				</h1>
-				<p className="text-[var(--secondaryLabel)] text-sm">
-					Sign in to continue to your account
-				</p>
+				<h1 className="mb-2 font-bold text-2xl text-[var(--label)]">Welcome Back</h1>
+				<p className="text-[var(--secondaryLabel)] text-sm">Sign in to continue to your account</p>
 			</div>
 
-			<CustomCard className="md:max-w-md backdrop-blur-xl bg-[var(--card-bg)]/80 border border-[var(--border)]/50 shadow-2xl">
-				<CustomCardTitle className="text-center text-xl font-semibold text-[var(--label)] mb-6">
+			<CustomCard className="border border-[var(--border)]/50 bg-[var(--card-bg)]/80 shadow-2xl backdrop-blur-xl md:max-w-md">
+				<CustomCardTitle className="mb-6 text-center font-semibold text-[var(--label)] text-xl">
 					{t('auth.loginTitle')}
 				</CustomCardTitle>
 				<LoginForm />
 				<CustomCardDescription>
-					<div className="text-center text-sm mt-6 pt-6 border-t border-[var(--border)]/30">
-						<span className="text-[var(--secondaryLabel)]">
-							{t('auth.dontHaveAccount')}{' '}
-						</span>
+					<div className="mt-6 border-[var(--border)]/30 border-t pt-6 text-center text-sm">
+						<span className="text-[var(--secondaryLabel)]">{t('auth.dontHaveAccount')} </span>
 						<LocalizedNavLink
 							to="/register"
-							className="font-medium text-[var(--system-blue)] hover:text-[var(--system-blue)]/80 transition-colors duration-200"
+							className="font-medium text-[var(--system-blue)] transition-colors duration-200 hover:text-[var(--system-blue)]/80"
 						>
 							{t('auth.register')}
 						</LocalizedNavLink>

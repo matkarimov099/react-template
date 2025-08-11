@@ -1,8 +1,8 @@
+import { LazyComponent } from '@/components/common/lazy-component.tsx';
 import { PageTitle } from '@/components/common/page-title.tsx';
+import { lazy } from 'react';
 import { Navigate } from 'react-router';
 import type { RouteObject } from 'react-router';
-import { lazy } from 'react';
-import { LazyComponent } from '@/components/common/lazy-component.tsx';
 
 // Lazy load all main components for better code splitting
 const Users = lazy(() => import('@/pages/users/Users.tsx'));
@@ -11,9 +11,7 @@ const Calendar = lazy(() => import('@/pages/dashboard/Calendar.tsx'));
 const Documents = lazy(() => import('@/pages/dashboard/Documents.tsx'));
 const Settings = lazy(() => import('@/pages/dashboard/Settings.tsx'));
 const Help = lazy(() => import('@/pages/dashboard/Help.tsx'));
-const Ecommerce = lazy(
-	() => import('@/pages/dashboard/projects/Ecommerce.tsx'),
-);
+const Ecommerce = lazy(() => import('@/pages/dashboard/projects/Ecommerce.tsx'));
 const Social = lazy(() => import('@/pages/dashboard/projects/Social.tsx'));
 const Security = lazy(() => import('@/pages/dashboard/projects/Security.tsx'));
 const ThemeDemo = lazy(() => import('@/pages/dashboard/ThemeDemo.tsx'));

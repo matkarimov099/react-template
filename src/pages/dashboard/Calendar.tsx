@@ -5,8 +5,8 @@ const Calendar = () => {
 
 	return (
 		<div>
-			<h1 className="text-xl font-bold mb-4">{t('calendar.title')}</h1>
-			<div className="p-4 border rounded-lg">
+			<h1 className="mb-4 font-bold text-xl">{t('calendar.title')}</h1>
+			<div className="rounded-lg border p-4">
 				<p className="text-muted-foreground">Calendar feature coming soon...</p>
 			</div>
 		</div>

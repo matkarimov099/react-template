@@ -14,14 +14,12 @@ const HoveredInput = React.forwardRef<HTMLInputElement, InputProps>(
 		const mouseY = useMotionValue(0);
 
 		const handleMouseMove = useCallback(
-			function handleMouseMove(
-				event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-			) {
+			function handleMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 				const { left, top } = event.currentTarget.getBoundingClientRect();
 				mouseX.set(event.clientX - left);
 				mouseY.set(event.clientY - top);
 			},
-			[mouseX, mouseY],
+			[mouseX, mouseY]
 		);
 		return (
 			<motion.div
@@ -42,15 +40,15 @@ const HoveredInput = React.forwardRef<HTMLInputElement, InputProps>(
 				<input
 					type={type}
 					className={cn(
-						'flex h-10 w-full rounded-ios-md border-ios bg-[var(--control-bg)] px-3 py-2 text-sm text-ios-label transition-all duration-[var(--motion-short)] group-hover/input:shadow-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-ios-muted focus-visible:ring-ios focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 font-[var(--font-sans)] backdrop-blur-[10px]',
-						className,
+						'flex h-10 w-full rounded-ios-md border-ios bg-[var(--control-bg)] px-3 py-2 font-[var(--font-sans)] text-ios-label text-sm backdrop-blur-[10px] transition-all duration-[var(--motion-short)] file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-ios-muted focus-visible:outline-none focus-visible:ring-ios disabled:cursor-not-allowed disabled:opacity-50 group-hover/input:shadow-none',
+						className
 					)}
 					ref={ref}
 					{...props}
 				/>
 			</motion.div>
 		);
-	},
+	}
 );
 HoveredInput.displayName = 'HoveredInput';
 

@@ -1,7 +1,7 @@
 import { useGetUsers } from '@/features/users/hooks/use-users';
 import { useDebounce } from '@/hooks/use-debounce.tsx';
-import { useState } from 'react';
 import type { PaginationState, SortingState } from '@tanstack/react-table';
+import { useState } from 'react';
 
 export function useUsersData() {
 	const [pagination, setPagination] = useState<PaginationState>({
@@ -19,31 +19,29 @@ export function useUsersData() {
 
 	// Handlers for pagination changes
 	const handlePageChange = (page: number) => {
-		setPagination((prev) => ({ ...prev, pageIndex: page - 1 }));
+		setPagination(prev => ({ ...prev, pageIndex: page - 1 }));
 	};
 
 	const handlePageSizeChange = (size: number) => {
-		setPagination((prev) => ({ ...prev, pageSize: size, pageIndex: 0 }));
+		setPagination(prev => ({ ...prev, pageSize: size, pageIndex: 0 }));
 	};
 
 	// Handler for sorting changes
 	const handleSortingChange = (
-		updaterOrValue: SortingState | ((prev: SortingState) => SortingState),
+		updaterOrValue: SortingState | ((prev: SortingState) => SortingState)
 	) => {
 		const newSorting =
-			typeof updaterOrValue === 'function'
-				? updaterOrValue(sorting)
-				: updaterOrValue;
+			typeof updaterOrValue === 'function' ? updaterOrValue(sorting) : updaterOrValue;
 		setSorting(newSorting);
 		// Reset to first page when sorting changes
-		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+		setPagination(prev => ({ ...prev, pageIndex: 0 }));
 	};
 
 	// Handler for search changes
 	const handleSearchChange = (searchValue: string) => {
 		setSearch(searchValue);
 		// Reset to first page when search changes
-		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+		setPagination(prev => ({ ...prev, pageIndex: 0 }));
 	};
 
 	const {

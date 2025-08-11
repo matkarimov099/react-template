@@ -9,9 +9,7 @@ import axiosClient from '@/plugins/axios.ts';
 import type { PaginatedResponse, ServerError } from '@/types/common.ts';
 import type { AxiosResponse } from 'axios';
 
-export async function createUser(
-	data: UserCreate,
-): Promise<UserCreateResponse> {
+export async function createUser(data: UserCreate): Promise<UserCreateResponse> {
 	const response = await axiosClient.post<
 		UserCreateResponse,
 		AxiosResponse<UserCreateResponse, ServerError>
@@ -33,7 +31,7 @@ export async function deleteUser(id: string) {
 
 export async function bulkDeleteUsers(ids: (string | number)[]) {
 	return await axiosClient.post('/users/bulk-delete', {
-		ids: ids.map((id) => String(id)),
+		ids: ids.map(id => String(id)),
 	});
 }
 

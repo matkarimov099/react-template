@@ -51,10 +51,7 @@ export function AuthNavbar() {
 					/>
 				</MobileNavHeader>
 
-				<MobileNavMenu
-					isOpen={isMobileMenuOpen}
-					onClose={() => setIsMobileMenuOpen(false)}
-				>
+				<MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
 					{navItems.map((item, idx) => (
 						<a
 							key={`${item.name}-${idx}`}

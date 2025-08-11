@@ -2,12 +2,12 @@ import {
 	BarChart3Icon,
 	CalendarIcon,
 	FileTextIcon,
+	LayoutDashboardIcon,
 	MessageSquareIcon,
 	PaletteIcon,
 	SettingsIcon,
 	ShieldIcon,
 	TruckIcon,
-	LayoutDashboardIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 

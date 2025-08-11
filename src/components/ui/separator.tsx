@@ -1,5 +1,5 @@
-import type * as React from 'react';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
+import type * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -15,10 +15,10 @@ function Separator({
 			decorative={decorative}
 			orientation={orientation}
 			className={cn(
-				'bg-[var(--border)] shrink-0 rounded-full',
+				'shrink-0 rounded-full bg-[var(--border)]',
 				'data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full',
 				'data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px',
-				className,
+				className
 			)}
 			{...props}
 		/>

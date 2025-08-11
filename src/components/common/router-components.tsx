@@ -1,12 +1,12 @@
-import { changeLanguage, type Locale } from '@/lib/i18n';
 import { AuthLayout } from '@/layout/AuthLayout.tsx';
 import { DefaultLayout } from '@/layout/DefaultLayout.tsx';
+import { type Locale, changeLanguage } from '@/lib/i18n';
 import { getLocaleFromPath } from '@/plugins/i18n-routing.ts';
 import AuthContextProvider from '@/provider/auth-context-provider.tsx';
 // import { AuthGuard } from '@/components/common/auth-guard.tsx';
 import type { ReactNode } from 'react';
-import { Navigate } from 'react-router';
 import { useEffect } from 'react';
+import { Navigate } from 'react-router';
 
 /**
  * LocaleWrapper component that provides I18n context
@@ -56,7 +56,6 @@ export function AuthLayoutWrapper() {
  * RootRedirect component to handle locale redirect
  */
 export function RootRedirect() {
-	const preferredLocale =
-		(localStorage.getItem('app-locale') as Locale) || 'uz';
+	const preferredLocale = (localStorage.getItem('app-locale') as Locale) || 'uz';
 	return <Navigate to={`/${preferredLocale}/reports`} replace />;
 }

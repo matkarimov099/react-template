@@ -6,8 +6,8 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
 import { useTheme } from '@/hooks/use-theme.ts';
-import { MonitorIcon, MoonIcon, SunIcon, CheckIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CheckIcon, MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 const themeOptions = [
 	{
@@ -40,7 +40,7 @@ export function ModeToggle() {
 	const { theme, setTheme } = useTheme();
 
 	// Actual theme'ni aniqlash
-	const currentTheme = themeOptions.find((option) => option.value === theme);
+	const currentTheme = themeOptions.find(option => option.value === theme);
 	const CurrentIcon = currentTheme?.icon || SunIcon;
 
 	return (
@@ -50,15 +50,15 @@ export function ModeToggle() {
 					<Button
 						variant="ghost"
 						size="sm"
-						className="group relative mr-2 h-9 w-9 p-0 bg-[var(--card-bg)] hover:bg-[var(--control-ghost-bg)] hover:border-[var(--system-blue)]/30 transition-all duration-200 backdrop-blur-md saturate-150 overflow-hidden"
+						className="group relative mr-2 h-9 w-9 overflow-hidden bg-[var(--card-bg)] p-0 saturate-150 backdrop-blur-md transition-all duration-200 hover:border-[var(--system-blue)]/30 hover:bg-[var(--control-ghost-bg)]"
 					>
-						<div className="relative flex items-center justify-center w-full h-full">
+						<div className="relative flex h-full w-full items-center justify-center">
 							{/* Icon with rotation animation */}
 							<CurrentIcon
 								className={cn(
 									'!h-5 !w-5 transition-all duration-300 group-hover:scale-110',
 									currentTheme?.iconColor,
-									theme === 'system' && 'animate-pulse',
+									theme === 'system' && 'animate-pulse'
 								)}
 							/>
 						</div>
@@ -66,41 +66,36 @@ export function ModeToggle() {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-64">
-					<div className="px-3 py-2 text-xs font-medium text-[var(--secondaryLabel)] border-b border-[var(--border)]/50">
+					<div className="border-[var(--border)]/50 border-b px-3 py-2 font-medium text-[var(--secondaryLabel)] text-xs">
 						Appearance Settings
 					</div>
-					{themeOptions.map((option) => {
+					{themeOptions.map(option => {
 						const Icon = option.icon;
 						const isSelected = theme === option.value;
 
 						return (
 							<DropdownMenuItem
 								key={option.value}
-								onClick={() =>
-									setTheme(option.value as 'light' | 'dark' | 'system')
-								}
+								onClick={() => setTheme(option.value as 'light' | 'dark' | 'system')}
 								className={cn(
-									'group relative flex items-center gap-3 px-3 py-3 cursor-pointer rounded-[var(--radius-sm)] mx-1 my-0.5',
-									isSelected &&
-										'bg-[var(--system-blue)]/10 text-[var(--system-blue)]',
+									'group relative mx-1 my-0.5 flex cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-3 py-3',
+									isSelected && 'bg-[var(--system-blue)]/10 text-[var(--system-blue)]'
 								)}
 							>
-								<div className="flex items-center gap-3 flex-1">
-									<div className="relative w-8 h-8 rounded-lg bg-[var(--card-bg)] border border-[var(--border)] flex items-center justify-center overflow-hidden">
+								<div className="flex flex-1 items-center gap-3">
+									<div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card-bg)]">
 										{/* Theme preview background */}
 										<div
 											className={cn(
-												'absolute inset-0 opacity-20 bg-gradient-to-br',
-												option.gradient,
+												'absolute inset-0 bg-gradient-to-br opacity-20',
+												option.gradient
 											)}
 										/>
-										<Icon
-											className={cn('h-6 w-6 relative z-10', option.iconColor)}
-										/>
+										<Icon className={cn('relative z-10 h-6 w-6', option.iconColor)} />
 									</div>
 									<div className="flex flex-col">
-										<span className="text-sm font-medium">{option.label}</span>
-										<span className="text-xs text-[var(--secondaryLabel)]">
+										<span className="font-medium text-sm">{option.label}</span>
+										<span className="text-[var(--secondaryLabel)] text-xs">
 											{option.description}
 										</span>
 									</div>

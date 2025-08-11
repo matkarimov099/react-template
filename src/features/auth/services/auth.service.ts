@@ -4,10 +4,7 @@ import type { AxiosResponse } from 'axios';
 import type { CurrentUser, LoginCredentials } from '../types.ts';
 
 export async function login<T>(data: LoginCredentials) {
-	return await publicAxiosClient.post<T, AxiosResponse<T, ServerError>>(
-		'/auth/login',
-		data,
-	);
+	return await publicAxiosClient.post<T, AxiosResponse<T, ServerError>>('/auth/login', data);
 }
 
 export async function logout() {

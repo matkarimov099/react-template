@@ -1,9 +1,9 @@
 import type {
-	SortingState,
 	ColumnFiltersState,
-	VisibilityState,
-	PaginationState,
 	ColumnSizingState,
+	PaginationState,
+	SortingState,
+	VisibilityState,
 } from '@tanstack/react-table';
 
 type SortingUpdater = (prev: SortingState) => SortingState;
@@ -16,15 +16,12 @@ type SetStateFunction<T> = (value: T | ((prev: T) => T)) => StatePromise;
  */
 export function createSortingHandler(
 	setSortBy: SetStateFunction<string>,
-	setSortOrder: SetStateFunction<'asc' | 'desc'>,
+	setSortOrder: SetStateFunction<'asc' | 'desc'>
 	// defaultSortBy = "created_at"
 ) {
 	return (updaterOrValue: SortingState | SortingUpdater): void => {
 		// Handle both direct values and updater functions
-		const newSorting =
-			typeof updaterOrValue === 'function'
-				? updaterOrValue([])
-				: updaterOrValue;
+		const newSorting = typeof updaterOrValue === 'function' ? updaterOrValue([]) : updaterOrValue;
 
 		// Only update if there's a valid sorting instruction
 		if (newSorting.length > 0) {
@@ -54,13 +51,9 @@ export function createSortingHandler(
 /**
  * Handler for column filters changes in a data table
  */
-export function createColumnFiltersHandler(
-	setColumnFilters: SetStateFunction<ColumnFiltersState>,
-) {
+export function createColumnFiltersHandler(setColumnFilters: SetStateFunction<ColumnFiltersState>) {
 	return (
-		updaterOrValue:
-			| ColumnFiltersState
-			| ((prev: ColumnFiltersState) => ColumnFiltersState),
+		updaterOrValue: ColumnFiltersState | ((prev: ColumnFiltersState) => ColumnFiltersState)
 	) => {
 		// Pass through to setColumnFilters (which handles updater functions)
 		setColumnFilters(updaterOrValue);
@@ -71,13 +64,9 @@ export function createColumnFiltersHandler(
  * Handler for column visibility changes in a data table
  */
 export function createColumnVisibilityHandler(
-	setColumnVisibility: SetStateFunction<VisibilityState>,
+	setColumnVisibility: SetStateFunction<VisibilityState>
 ) {
-	return (
-		updaterOrValue:
-			| VisibilityState
-			| ((prev: VisibilityState) => VisibilityState),
-	) => {
+	return (updaterOrValue: VisibilityState | ((prev: VisibilityState) => VisibilityState)) => {
 		// Pass through to setColumnVisibility (which handles updater functions)
 		setColumnVisibility(updaterOrValue);
 	};
@@ -90,13 +79,9 @@ export function createPaginationHandler(
 	setPage: SetStateFunction<number>,
 	setPageSize: SetStateFunction<number>,
 	currentPage: number,
-	currentPageSize: number,
+	currentPageSize: number
 ) {
-	return (
-		updaterOrValue:
-			| PaginationState
-			| ((prev: PaginationState) => PaginationState),
-	) => {
+	return (updaterOrValue: PaginationState | ((prev: PaginationState) => PaginationState)) => {
 		// Handle both direct values and updater functions
 		const newPagination =
 			typeof updaterOrValue === 'function'
@@ -116,18 +101,12 @@ export function createPaginationHandler(
  */
 export function createColumnSizingHandler(
 	setColumnSizing: SetStateFunction<ColumnSizingState>,
-	columnSizing: ColumnSizingState,
+	columnSizing: ColumnSizingState
 ) {
-	return (
-		updaterOrValue:
-			| ColumnSizingState
-			| ((prev: ColumnSizingState) => ColumnSizingState),
-	) => {
+	return (updaterOrValue: ColumnSizingState | ((prev: ColumnSizingState) => ColumnSizingState)) => {
 		// Handle both direct values and updater functions
 		const newSizing =
-			typeof updaterOrValue === 'function'
-				? updaterOrValue(columnSizing)
-				: updaterOrValue;
+			typeof updaterOrValue === 'function' ? updaterOrValue(columnSizing) : updaterOrValue;
 		setColumnSizing(newSizing);
 	};
 }
@@ -135,11 +114,6 @@ export function createColumnSizingHandler(
 /**
  * Convert URL sorting parameters to TanStack Table SortingState
  */
-export function createSortingState(
-	sortBy?: string,
-	sortOrder?: 'asc' | 'desc',
-): SortingState {
-	return sortBy && sortOrder
-		? [{ id: sortBy, desc: sortOrder === 'desc' }]
-		: [];
+export function createSortingState(sortBy?: string, sortOrder?: 'asc' | 'desc'): SortingState {
+	return sortBy && sortOrder ? [{ id: sortBy, desc: sortOrder === 'desc' }] : [];
 }

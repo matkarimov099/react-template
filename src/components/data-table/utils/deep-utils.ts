@@ -75,7 +75,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
 			const sortedA = [...a].sort();
 			const sortedB = [...b].sort();
 
-			// First do a quick comparison of primitives
+			// First, do a quick comparison of primitives
 			for (let i = 0; i < sortedA.length; i++) {
 				const itemA = sortedA[i];
 				const itemB = sortedB[i];
@@ -105,11 +105,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
 			if (!(b instanceof Map) || a.size !== b.size) return false;
 
 			for (const [key, val] of a.entries()) {
-				if (
-					!b.has(key) ||
-					!compare(val as Comparable, b.get(key) as Comparable)
-				)
-					return false;
+				if (!b.has(key) || !compare(val as Comparable, b.get(key) as Comparable)) return false;
 			}
 
 			return true;
@@ -117,10 +113,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
 
 		// Handle typed arrays
 		if (ArrayBuffer.isView(a)) {
-			if (
-				!ArrayBuffer.isView(b) ||
-				(a as TypedArray).length !== (b as TypedArray).length
-			)
+			if (!ArrayBuffer.isView(b) || (a as TypedArray).length !== (b as TypedArray).length)
 				return false;
 
 			// Use fast native comparison for TypedArrays
@@ -164,7 +157,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
 				if (
 					!compare(
 						(a as Record<string, unknown>)[key] as Comparable,
-						(b as Record<string, unknown>)[key] as Comparable,
+						(b as Record<string, unknown>)[key] as Comparable
 					)
 				)
 					return false;
@@ -188,7 +181,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
 			if (
 				!compare(
 					(a as Record<string, unknown>)[key] as Comparable,
-					(b as Record<string, unknown>)[key] as Comparable,
+					(b as Record<string, unknown>)[key] as Comparable
 				)
 			)
 				return false;
@@ -202,9 +195,7 @@ export function isDeepEqual(a: Comparable, b: Comparable): boolean {
  * Memoizes the result of a function based on its arguments
  * This helps prevent redundant expensive operations
  */
-export function memoize<T>(
-	fn: (...args: unknown[]) => T,
-): (...args: unknown[]) => T {
+export function memoize<T>(fn: (...args: unknown[]) => T): (...args: unknown[]) => T {
 	const cache = new Map<string, T>();
 
 	return (...args: unknown[]): T => {
@@ -229,7 +220,7 @@ export function memoize<T>(
  */
 export function debounce<T extends (...args: unknown[]) => unknown>(
 	func: T,
-	wait: number,
+	wait: number
 ): (...args: Parameters<T>) => void {
 	let timeout: NodeJS.Timeout | null = null;
 
@@ -249,9 +240,6 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
  * @param router Next.js router instance
  * @param pathname Current pathname
  */
-export function resetUrlState(
-	router: { replace: (path: string) => void },
-	pathname: string,
-): void {
+export function resetUrlState(router: { replace: (path: string) => void }, pathname: string): void {
 	router.replace(pathname);
 }

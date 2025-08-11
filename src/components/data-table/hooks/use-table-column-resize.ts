@@ -44,14 +44,9 @@ export function useTableColumnResize(tableId: string, enableResizing = false) {
 
 	// Custom setter that marks user changes
 	const handleSetColumnSizing = useCallback(
-		(
-			newSizing:
-				| ColumnSizingState
-				| ((prev: ColumnSizingState) => ColumnSizingState),
-		) => {
-			setColumnSizing((prev) => {
-				const nextState =
-					typeof newSizing === 'function' ? newSizing(prev) : newSizing;
+		(newSizing: ColumnSizingState | ((prev: ColumnSizingState) => ColumnSizingState)) => {
+			setColumnSizing(prev => {
+				const nextState = typeof newSizing === 'function' ? newSizing(prev) : newSizing;
 
 				// Check if this is a real user change and not just the initial load
 				if (
@@ -65,26 +60,21 @@ export function useTableColumnResize(tableId: string, enableResizing = false) {
 				return nextState;
 			});
 		},
-		[],
+		[]
 	);
 
 	// Load saved column sizes from localStorage on mount
 	useEffect(() => {
 		if (enableResizing && !initialLoadComplete.current) {
 			try {
-				const savedSizing = localStorage.getItem(
-					`table-column-sizing-${tableId}`,
-				);
+				const savedSizing = localStorage.getItem(`table-column-sizing-${tableId}`);
 				if (savedSizing) {
 					const parsed = JSON.parse(savedSizing);
 					setColumnSizing(parsed);
 					prevSizingRef.current = parsed;
 				}
 			} catch (error) {
-				console.warn(
-					'Failed to load saved column sizing from localStorage:',
-					error,
-				);
+				console.warn('Failed to load saved column sizing from localStorage:', error);
 			} finally {
 				initialLoadComplete.current = true;
 			}
@@ -93,15 +83,11 @@ export function useTableColumnResize(tableId: string, enableResizing = false) {
 
 	// Save column sizes to localStorage when they change (debounced)
 	useEffect(() => {
-		if (
-			enableResizing &&
-			initialLoadComplete.current &&
-			userChangedSizes.current
-		) {
+		if (enableResizing && initialLoadComplete.current && userChangedSizes.current) {
 			try {
 				localStorage.setItem(
 					`table-column-sizing-${tableId}`,
-					JSON.stringify(debouncedColumnSizing),
+					JSON.stringify(debouncedColumnSizing)
 				);
 			} catch (error) {
 				console.warn('Failed to save column sizing to localStorage:', error);
@@ -119,10 +105,7 @@ export function useTableColumnResize(tableId: string, enableResizing = false) {
 			try {
 				localStorage.removeItem(`table-column-sizing-${tableId}`);
 			} catch (error) {
-				console.warn(
-					'Failed to remove column sizing from localStorage:',
-					error,
-				);
+				console.warn('Failed to remove column sizing from localStorage:', error);
 			}
 		}
 	}, [enableResizing, tableId]);

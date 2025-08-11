@@ -1,3 +1,4 @@
+import { LocalizedNavLink } from '@/components/common/localized-nav-link';
 import { Button } from '@/components/ui/button.tsx';
 import {
 	Form,
@@ -9,21 +10,17 @@ import {
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input.tsx';
-import {
-	type LoginSchema,
-	loginSchema,
-} from '@/features/auth/schema/auth.schema';
+import { type LoginSchema, loginSchema } from '@/features/auth/schema/auth.schema';
+import { useI18n } from '@/hooks/use-i18n';
 import { getUserFromToken } from '@/lib/auth';
 import type { ServerError } from '@/types/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronRightIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router';
-import { LocalizedNavLink } from '@/components/common/localized-nav-link';
+import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { useLogin } from '../hooks/use-auth';
-import { useI18n } from '@/hooks/use-i18n';
 
 export const LoginForm = () => {
 	const { mutate: login, isPending } = useLogin();
@@ -39,7 +36,7 @@ export const LoginForm = () => {
 		login(
 			{ ...values, phone: values.phone.replace(/([() -])/g, '') },
 			{
-				onSuccess: (data) => {
+				onSuccess: data => {
 					localStorage.setItem('accessToken', data?.data.accessToken);
 					localStorage.setItem('refreshToken', data?.data.refreshToken);
 					const user = getUserFromToken() ?? null;
@@ -51,14 +48,14 @@ export const LoginForm = () => {
 						navigate(`/${locale}/auth/login`);
 					}
 				},
-				onError: (error) => {
+				onError: error => {
 					if (isAxiosError<ServerError>(error)) {
 						toast.error(error.response?.data?.message);
 					} else {
 						toast.error('Profilga kirishda xatolik yuz berdi!');
 					}
 				},
-			},
+			}
 		);
 	}
 
@@ -68,12 +65,8 @@ export const LoginForm = () => {
 				<form onSubmit={form.handleSubmit(onFormSubmit)} className="px-4 py-6">
 					<div className="flex flex-col gap-6">
 						<div className="flex flex-col items-center text-center">
-							<h1 className="text-xl font-bold text-blue-700 dark:text-white">
-								Project name
-							</h1>
-							<p className="text-balance text-muted-foreground">
-								project description
-							</p>
+							<h1 className="font-bold text-blue-700 text-xl dark:text-white">Project name</h1>
+							<p className="text-balance text-muted-foreground">project description</p>
 						</div>
 						<div className="grid gap-2">
 							<FormField
@@ -106,19 +99,17 @@ export const LoginForm = () => {
 								render={({ field }) => (
 									<FormItem>
 										<div className="flex items-center">
-											<FormLabel className="text-neutral-400 dark:text-white">
-												Parol
-											</FormLabel>
+											<FormLabel className="text-neutral-400 dark:text-white">Parol</FormLabel>
 											<LocalizedNavLink
 												to="/forgot-password"
-												className="text-neutral-400 dark:text-white ml-auto text-sm underline-offset-2 hover:underline"
+												className="ml-auto text-neutral-400 text-sm underline-offset-2 hover:underline dark:text-white"
 											>
 												Parolingiz esdan chiqdimi?
 											</LocalizedNavLink>
 										</div>
 										<FormControl>
 											<PasswordInput
-												className="dark:border-neutral-600 text-neutral-400 dark:text-white"
+												className="text-neutral-400 dark:border-neutral-600 dark:text-white"
 												inputSize="xl"
 												placeholder="Parolingizni kiriting"
 												{...field}
@@ -135,7 +126,7 @@ export const LoginForm = () => {
 							loading={isPending}
 							type="submit"
 							size="xl"
-							className="cursor-pointer group/btn relative block px-6 py-2 bg-black text-white dark:hover:bg-black rounded-lg font-bold transform hover:-translate-y-0.5 transition duration-300"
+							className="group/btn hover:-translate-y-0.5 relative block transform cursor-pointer rounded-lg bg-black px-6 py-2 font-bold text-white transition duration-300 dark:hover:bg-black"
 						>
 							Kirish
 							<BottomGradient />
@@ -150,8 +141,8 @@ export const LoginForm = () => {
 const BottomGradient = () => {
 	return (
 		<>
-			<span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-			<span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
+			<span className="-bottom-px absolute inset-x-0 block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
+			<span className="-bottom-px absolute inset-x-10 mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
 		</>
 	);
 };

@@ -1,7 +1,7 @@
-import type * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import { type VariantProps, cva } from 'class-variance-authority';
 import { CheckIcon } from 'lucide-react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import type * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -37,7 +37,7 @@ const checkboxVariants = cva(
 			variant: 'default',
 			size: 'sm',
 		},
-	},
+	}
 );
 
 const checkboxIndicatorVariants = cva(
@@ -55,7 +55,7 @@ const checkboxIndicatorVariants = cva(
 		defaultVariants: {
 			size: 'sm',
 		},
-	},
+	}
 );
 
 function Checkbox({
@@ -63,8 +63,7 @@ function Checkbox({
 	variant,
 	size,
 	...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root> &
-	VariantProps<typeof checkboxVariants>) {
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & VariantProps<typeof checkboxVariants>) {
 	return (
 		<CheckboxPrimitive.Root
 			data-slot="checkbox"

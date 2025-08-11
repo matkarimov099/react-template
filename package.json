@@ -7,8 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "format": "bun x @biomejs/biome format --write ./src",
-    "lint": "bun x @biomejs/biome lint --write ./src"
+    "format": "bunx @biomejs/biome format --write src/",
+    "lint": "bunx @biomejs/biome lint --write src/",
+    "fix": "bunx @biomejs/biome check --write src/ && tsc --noEmit",
+    "check": "bunx @biomejs/biome ci src/ && tsc --noEmit",
+    "mega-fix": "bunx @biomejs/biome format --write src/ && bunx @biomejs/biome lint --write --unsafe src/ && bunx @biomejs/biome check --write --unsafe src/"
   },
   "author": {
     "name": "Matkarim Matkarimov",

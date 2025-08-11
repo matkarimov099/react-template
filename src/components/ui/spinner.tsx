@@ -92,12 +92,7 @@ const SwirlingSpinner = ({ size, className }: SwirlingSpinnerProps) => {
 	);
 };
 
-export function Spinner({
-	size,
-	show,
-	children,
-	className,
-}: SpinnerContentProps) {
+export function Spinner({ size, show, children, className }: SpinnerContentProps) {
 	return (
 		<span className={spinnerVariants({ show })}>
 			<SwirlingSpinner size={size} className={className} />

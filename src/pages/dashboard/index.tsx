@@ -5,21 +5,19 @@ export default function DashboardPage() {
 		<div className="container py-4">
 			<PageTitle title="Dashboard Overview" />
 
-			<div className="grid gap-6 mt-6">
-				<div className="p-6 bg-card rounded-lg border shadow-sm">
-					<h2 className="text-xl font-semibold mb-4">Dashboard Overview</h2>
+			<div className="mt-6 grid gap-6">
+				<div className="rounded-lg border bg-card p-6 shadow-sm">
+					<h2 className="mb-4 font-semibold text-xl">Dashboard Overview</h2>
 					<p className="text-muted-foreground">
-						This is the main dashboard overview page. It shows a summary of your
-						most important data.
+						This is the main dashboard overview page. It shows a summary of your most important
+						data.
 					</p>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-						{[1, 2, 3].map((i) => (
-							<div key={i} className="p-4 bg-card border rounded-md">
+					<div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+						{[1, 2, 3].map(i => (
+							<div key={i} className="rounded-md border bg-card p-4">
 								<h3 className="font-semibold">Metric {i}</h3>
-								<div className="text-2xl font-bold mt-2">
-									{Math.floor(Math.random() * 1000)}
-								</div>
-								<p className="text-xs text-muted-foreground mt-1">
+								<div className="mt-2 font-bold text-2xl">{Math.floor(Math.random() * 1000)}</div>
+								<p className="mt-1 text-muted-foreground text-xs">
 									+{Math.floor(Math.random() * 10)}% from last period
 								</p>
 							</div>

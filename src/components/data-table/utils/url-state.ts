@@ -1,6 +1,6 @@
-import { useLocation, useNavigate, useSearchParams } from 'react-router';
-import { useCallback, useState, useEffect, useRef, useMemo } from 'react';
-import { isDeepEqual } from './deep-utils';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useLocation, useNavigate, useSearchParams} from 'react-router';
+import {isDeepEqual} from './deep-utils';
 
 // Flag to track if we're currently in a batch update
 let isInBatchUpdate = false;
@@ -30,7 +30,7 @@ export function useUrlState<T>(
 	options: {
 		serialize?: (value: T) => string;
 		deserialize?: (value: string) => T;
-	} = {},
+	} = {}
 ) {
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -47,9 +47,8 @@ export function useUrlState<T>(
 	const serialize = useMemo(
 		() =>
 			options.serialize ||
-			((value: T) =>
-				typeof value === 'object' ? JSON.stringify(value) : String(value)),
-		[options.serialize],
+			((value: T) => (typeof value === 'object' ? JSON.stringify(value) : String(value))),
+		[options.serialize]
 	);
 
 	const deserialize = useMemo(
@@ -88,9 +87,7 @@ export function useUrlState<T>(
 							}
 							return defaultValue;
 						} catch (e) {
-							console.warn(
-								`Error parsing JSON from URL parameter ${key}: ${e}`,
-							);
+							console.warn(`Error parsing JSON from URL parameter ${key}: ${e}`);
 							return defaultValue;
 						}
 					}
@@ -101,7 +98,7 @@ export function useUrlState<T>(
 					return defaultValue;
 				}
 			}),
-		[options.deserialize, defaultValue, key],
+		[options.deserialize, defaultValue, key]
 	);
 
 	// Get the initial value from URL or use default
@@ -166,18 +163,14 @@ export function useUrlState<T>(
 		}
 
 		// Update the previous search params ref
-		const newParams = new URLSearchParams(searchParamsString);
-		prevSearchParamsRef.current = newParams;
+        prevSearchParamsRef.current = new URLSearchParams(searchParamsString);
 
 		// Get the new value and update if different
 		const newValue = getValueFromUrl();
 
 		// Check if this is a value we just set ourselves
 		// Using refs to track state without creating dependencies
-		if (
-			!areEqual(lastSetValue.current, newValue) &&
-			!areEqual(currentValueRef.current, newValue)
-		) {
+		if (!areEqual(lastSetValue.current, newValue) && !areEqual(currentValueRef.current, newValue)) {
 			// Prevent immediate re-triggering of this effect due to state update
 			lastSetValue.current = newValue;
 			setValue(newValue);
@@ -193,16 +186,14 @@ export function useUrlState<T>(
 	// Synchronously update URL now instead of waiting
 	const updateUrlNow = useCallback(
 		(params: URLSearchParams) => {
-			const now = Date.now();
-			lastUrlUpdate.timestamp = now;
+            lastUrlUpdate.timestamp = Date.now();
 			lastUrlUpdate.params = params;
 
 			// Update the URL immediately
 			const newParamsString = params.toString();
-			navigate(
-				`${location.pathname}${newParamsString ? `?${newParamsString}` : ''}`,
-				{ replace: true },
-			);
+			navigate(`${location.pathname}${newParamsString ? `?${newParamsString}` : ''}`, {
+				replace: true,
+			});
 
 			// Clear the updating flag after URL update
 			isUpdatingUrl.current = false;
@@ -210,16 +201,14 @@ export function useUrlState<T>(
 			// Return the params for Promise chaining
 			return Promise.resolve(params);
 		},
-		[navigate, location.pathname],
+		[navigate, location.pathname]
 	);
 
 	// Update the URL when the state changes
 	const updateValue = useCallback(
 		(newValue: T | ((prevValue: T) => T)) => {
 			const resolvedValue =
-				typeof newValue === 'function'
-					? (newValue as (prev: T) => T)(value)
-					: newValue;
+				typeof newValue === 'function' ? (newValue as (prev: T) => T)(value) : newValue;
 
 			// Skip update if value is the same (deep comparison for objects)
 			if (areEqual(value, resolvedValue)) {
@@ -250,7 +239,7 @@ export function useUrlState<T>(
 				// For now, assume standard defaults for "page" if it's not already managed by its own useUrlState.
 				// A more robust solution might involve a shared registry or context for URL state configurations.
 				const pageEntry: PendingUpdateEntry<number> = (pendingUpdates.get(
-					'page',
+					'page'
 				) as PendingUpdateEntry<number>) || {
 					value: 1,
 					defaultValue: 1, // Assuming default page is 1
@@ -272,7 +261,7 @@ export function useUrlState<T>(
 			isInBatchUpdate = true;
 
 			// Use microtask to batch all URL changes in the current event loop
-			return new Promise<URLSearchParams>((resolve) => {
+			return new Promise<URLSearchParams>(resolve => {
 				queueMicrotask(() => {
 					// Start with the current search params as a base
 					const params = new URLSearchParams(searchParams.toString());
@@ -309,8 +298,7 @@ export function useUrlState<T>(
 							// If sortOrder isn't being updated in this batch, ensure it's included
 							if (!sortOrderInBatch) {
 								// Get current sortOrder value from URL or use default
-								const currentSortOrder =
-									params.get('sortOrder') || defaultSortOrder;
+								const currentSortOrder = params.get('sortOrder') || defaultSortOrder;
 								params.set('sortOrder', currentSortOrder);
 							}
 						} else if (updateKey === 'sortOrder') {
@@ -356,7 +344,7 @@ export function useUrlState<T>(
 				});
 			});
 		},
-		[searchParams, key, serialize, value, defaultValue, updateUrlNow, areEqual],
+		[searchParams, key, serialize, value, defaultValue, updateUrlNow, areEqual]
 	);
 
 	return [value, updateValue] as const;

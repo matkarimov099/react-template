@@ -13,11 +13,11 @@ import {
 	useQueryClient,
 } from '@tanstack/react-query';
 import {
+	bulkDeleteUsers,
 	createUser,
 	deleteUser,
 	getUsers,
 	updateUser,
-	bulkDeleteUsers,
 } from '../services/users.service.ts';
 
 export function useCreateUser() {
@@ -29,8 +29,7 @@ export function useCreateUser() {
 export function useUpdateUser() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({ id, data }: { id: string; data: UserUpdate }) =>
-			updateUser(id, data),
+		mutationFn: ({ id, data }: { id: string; data: UserUpdate }) => updateUser(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['users'] }).then();
 		},

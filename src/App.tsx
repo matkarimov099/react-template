@@ -17,7 +17,7 @@ function App() {
 						refetchOnWindowFocus: false,
 					},
 				},
-			}),
+			})
 	);
 	const [loading, setLoading] = useState<boolean>(true);
 	const isMobile = useMediaQuery('(max-width: 767px)');
@@ -25,10 +25,7 @@ function App() {
 		setTimeout(() => setLoading(false), 500);
 	}, []);
 	return loading ? (
-		<Spinner
-			size="large"
-			className="flex h-screen items-center justify-center"
-		/>
+		<Spinner size="large" className="flex h-screen items-center justify-center" />
 	) : (
 		<>
 			<QueryClientProvider client={queryClient}>

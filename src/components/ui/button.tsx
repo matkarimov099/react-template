@@ -1,6 +1,6 @@
 import { buttonVariants } from '@/components/ui/button-variants';
-import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
+import { cn } from '@/lib/utils';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import type { VariantProps } from 'class-variance-authority';
 import * as React from 'react';
@@ -35,7 +35,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			children,
 			...props
 		},
-		ref,
+		ref
 	) => {
 		const prefersReducedMotion = useReducedMotion();
 		const buttonId = React.useId();
@@ -45,7 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			(event: React.MouseEvent<HTMLButtonElement>) => {
 				onClick?.(event);
 			},
-			[onClick],
+			[onClick]
 		);
 
 		const Comp = asChild ? Slot : 'button';
@@ -82,18 +82,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 					{loading ? (
 						<div className="flex items-center justify-center">
 							<Spinner
-								className={cn(
-									'!size-4',
-									prefersReducedMotion ? '' : 'animate-spin',
-								)}
+								className={cn('!size-4', prefersReducedMotion ? '' : 'animate-spin')}
 								aria-hidden="true"
 							/>
 							{(loadingText || children) && (
-								<span
-									className="ml-2 opacity-70"
-									id={loadingId}
-									aria-live="polite"
-								>
+								<span className="ml-2 opacity-70" id={loadingId} aria-live="polite">
 									{loadingText || children}
 								</span>
 							)}
@@ -116,7 +109,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				</Comp>
 			)
 		);
-	},
+	}
 );
 Button.displayName = 'Button';
 

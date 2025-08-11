@@ -1,5 +1,5 @@
+import { type Locale, changeLanguage, getCurrentLanguage } from '@/lib/i18n';
 import { useTranslation } from 'react-i18next';
-import { changeLanguage, getCurrentLanguage, type Locale } from '@/lib/i18n';
 
 /**
  * Custom hook that wraps react-i18next's useTranslation

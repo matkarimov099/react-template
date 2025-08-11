@@ -44,18 +44,16 @@ export function DataTablePagination<TData>({
 	const selectSize = size === 'lg' ? 'default' : size;
 
 	return (
-		<div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-4 py-3 bg-background/90 border border-border/50 rounded-md shadow-sm backdrop-blur-md saturate-[150%] sm:flex-row sm:gap-8">
-			<div className="flex-1 text-sm text-muted-foreground">
+		<div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto rounded-md border border-border/50 bg-background/90 px-4 py-3 shadow-sm saturate-[150%] backdrop-blur-md sm:flex-row sm:gap-8">
+			<div className="flex-1 text-muted-foreground text-sm">
 				{totalSelectedItems} of {totalItems} row(s) selected.
 			</div>
 			<div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
 				<div className="flex items-center space-x-2">
-					<p className="whitespace-nowrap text-sm font-medium text-foreground">
-						Rows per page
-					</p>
+					<p className="whitespace-nowrap font-medium text-foreground text-sm">Rows per page</p>
 					<Select
 						value={`${table.getState().pagination.pageSize}`}
-						onValueChange={(value) => {
+						onValueChange={value => {
 							// Force URL update via direct window manipulation first
 							// This ensures the URL gets updated before the table state changes
 							const url = new URL(window.location.href);
@@ -72,35 +70,28 @@ export function DataTablePagination<TData>({
 						}}
 					>
 						<SelectTrigger
-							className="cursor-pointer w-[70px]"
+							className="w-[70px] cursor-pointer"
 							size={selectSize === 'sm' ? 'sm' : 'md'}
 						>
 							<SelectValue placeholder={table.getState().pagination.pageSize} />
 						</SelectTrigger>
 						<SelectContent side="top" className="cursor-pointer">
-							{pageSizeOptions.map((pageSize) => (
-								<SelectItem
-									key={pageSize}
-									value={`${pageSize}`}
-									className="cursor-pointer"
-								>
+							{pageSizeOptions.map(pageSize => (
+								<SelectItem key={pageSize} value={`${pageSize}`} className="cursor-pointer">
 									{pageSize}
 								</SelectItem>
 							))}
 						</SelectContent>
 					</Select>
 				</div>
-				<div className="flex items-center justify-center text-sm font-medium text-foreground">
-					Page {table.getState().pagination.pageIndex + 1} of{' '}
-					{table.getPageCount() || 1}
+				<div className="flex items-center justify-center font-medium text-foreground text-sm">
+					Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount() || 1}
 				</div>
 				<div className="flex items-center space-x-2">
 					<Button
 						aria-label="Go to first page"
 						variant="outline"
-						className={`${getButtonSizeClass(
-							size,
-						)} hidden lg:flex cursor-pointer`}
+						className={`${getButtonSizeClass(size)} hidden cursor-pointer lg:flex`}
 						onClick={() =>
 							table.setPagination({
 								pageIndex: 0,
@@ -142,9 +133,7 @@ export function DataTablePagination<TData>({
 					<Button
 						aria-label="Go to last page"
 						variant="outline"
-						className={`${getButtonSizeClass(
-							size,
-						)} hidden lg:flex cursor-pointer`}
+						className={`${getButtonSizeClass(size)} hidden cursor-pointer lg:flex`}
 						onClick={() =>
 							table.setPagination({
 								pageIndex: table.getPageCount() - 1,

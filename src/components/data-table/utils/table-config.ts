@@ -86,9 +86,7 @@ const defaultConfig: TableConfig = {
  * Hook to provide table configuration
  * Allows overriding default configuration
  */
-export function useTableConfig(
-	overrideConfig?: Partial<TableConfig>,
-): TableConfig {
+export function useTableConfig(overrideConfig?: Partial<TableConfig>): TableConfig {
 	// Merge default config with any overrides
 	return { ...defaultConfig, ...overrideConfig };
 }

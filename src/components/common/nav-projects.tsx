@@ -10,8 +10,8 @@ import { useI18n } from '@/hooks/use-i18n';
 import { useSidebar } from '@/hooks/use-sidebar';
 import { projectItems } from '@/lib/sidebar-menu.tsx';
 import { cn } from '@/lib/utils';
-import { useLocation } from 'react-router';
 import { removeLocaleFromPath } from '@/plugins/i18n-routing.ts';
+import { useLocation } from 'react-router';
 
 export function NavProjects() {
 	const location = useLocation();
@@ -23,47 +23,37 @@ export function NavProjects() {
 		<SidebarGroup className={cn('group-data-[collapsible=icon]:hidden')}>
 			<SidebarGroupLabel
 				className={cn(
-					'px-2 text-xs font-semibold text-[var(--secondaryLabel)] uppercase tracking-wider transition-opacity duration-200',
-					isCollapsed && 'opacity-0 h-0 overflow-hidden',
+					'px-2 font-semibold text-[var(--secondaryLabel)] text-xs uppercase tracking-wider transition-opacity duration-200',
+					isCollapsed && 'h-0 overflow-hidden opacity-0'
 				)}
 			>
 				{t('navigation.projects')}
 			</SidebarGroupLabel>
 
 			<SidebarMenu className="space-y-1">
-				{projectItems.map((item) => {
+				{projectItems.map(item => {
 					const currentPath = removeLocaleFromPath(location.pathname);
 					const isActive = item.url === currentPath;
 					return (
 						<SidebarMenuItem key={item.title}>
 							<LocalizedNavLink to={item.url} className="block">
 								<SidebarMenuButton
-									tooltip={
-										isCollapsed ? t(item.titleKey || item.title) : undefined
-									}
+									tooltip={isCollapsed ? t(item.titleKey || item.title) : undefined}
 									className={cn(
-										'relative h-9 px-2 rounded-lg transition-all duration-200 w-full',
-										'text-[var(--sidebar-foreground)] hover:!bg-blue-500 hover:!text-white',
-										isActive &&
-											'!text-blue-500 !font-semibold hover:!bg-blue-600',
-										isCollapsed && 'w-9 p-0 justify-center',
+										'relative h-9 w-full rounded-lg px-2 transition-all duration-200',
+										'hover:!bg-blue-500 hover:!text-white text-[var(--sidebar-foreground)]',
+										isActive && '!text-blue-500 !font-semibold hover:!bg-blue-600',
+										isCollapsed && 'w-9 justify-center p-0'
 									)}
 								>
-									<div
-										className={cn(
-											'flex items-center gap-2',
-											isCollapsed && 'justify-center',
-										)}
-									>
+									<div className={cn('flex items-center gap-2', isCollapsed && 'justify-center')}>
 										{item.icon}
 										{!isCollapsed && (
-											<span className="font-medium">
-												{t(item.titleKey || item.title)}
-											</span>
+											<span className="font-medium">{t(item.titleKey || item.title)}</span>
 										)}
 										{/* Active indicator dot for projects */}
 										{!isCollapsed && isActive && (
-											<div className="ml-auto w-2 h-2 bg-blue-500 rounded-full" />
+											<div className="ml-auto h-2 w-2 rounded-full bg-blue-500" />
 										)}
 									</div>
 								</SidebarMenuButton>

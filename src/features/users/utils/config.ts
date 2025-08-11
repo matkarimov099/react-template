@@ -34,16 +34,7 @@ export function useExportConfig() {
 
 	// Headers for CSV export
 	const headers = useMemo(() => {
-		return [
-			'id',
-			'name',
-			'email',
-			'phone',
-			'age',
-			'created_at',
-			'expense_count',
-			'total_expenses',
-		];
+		return ['id', 'name', 'email', 'phone', 'age', 'created_at', 'expense_count', 'total_expenses'];
 	}, []);
 
 	return {

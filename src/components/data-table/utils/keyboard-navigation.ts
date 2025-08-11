@@ -10,15 +10,13 @@ import type { KeyboardEvent } from 'react';
  */
 export function createKeyboardNavigationHandler<TData>(
 	table: Table<TData>,
-	onRowActivate?: (row: TData, rowIndex: number) => void,
+	onRowActivate?: (row: TData, rowIndex: number) => void
 ) {
 	return (e: KeyboardEvent) => {
 		// If the key is Space or Enter and we're not in an input/button, handle row selection/activation
 		if (
 			(e.key === ' ' || e.key === 'Enter') &&
-			!(e.target as HTMLElement).matches(
-				'input, button, [role="button"], [contenteditable="true"]',
-			)
+			!(e.target as HTMLElement).matches('input, button, [role="button"], [contenteditable="true"]')
 		) {
 			// Prevent default behavior
 			e.preventDefault();
@@ -38,8 +36,7 @@ export function createKeyboardNavigationHandler<TData>(
 
 				if (rowElement) {
 					// Get the row index from the data-row-index attribute or the row id
-					const rowId =
-						rowElement.getAttribute('data-row-index') || rowElement.id;
+					const rowId = rowElement.getAttribute('data-row-index') || rowElement.id;
 					if (rowId) {
 						// Find the row by index and toggle its selection
 						const rowIndex = Number.parseInt(rowId.replace(/^row-/, ''), 10);

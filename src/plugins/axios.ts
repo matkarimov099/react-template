@@ -21,23 +21,23 @@ axiosClient.defaults.headers = {
 } as Headers & HeadersDefaults;
 
 axiosClient.interceptors.request.use(
-	(config) => {
+	config => {
 		const token = localStorage.getItem('accessToken');
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
 		return config;
 	},
-	(error) => {
+	error => {
 		return Promise.reject(error);
-	},
+	}
 );
 
 axiosClient.interceptors.response.use(
-	(res) => {
+	res => {
 		return res;
 	},
-	async (err) => {
+	async err => {
 		const config = err.config;
 
 		if (config.url !== '/auth/login' && err.response) {
@@ -55,7 +55,7 @@ axiosClient.interceptors.response.use(
 			}
 		}
 		return Promise.reject(err);
-	},
+	}
 );
 
 export default axiosClient;

@@ -28,8 +28,6 @@ export async function refreshToken() {
 	}
 }
 
-function isAxiosError(
-	error: unknown,
-): error is { response: { status: number } } {
+function isAxiosError(error: unknown): error is { response: { status: number } } {
 	return typeof error === 'object' && error !== null && 'response' in error;
 }

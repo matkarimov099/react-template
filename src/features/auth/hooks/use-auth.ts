@@ -1,8 +1,4 @@
-import {
-	currentUser,
-	login,
-	logout,
-} from '@/features/auth/services/auth.service.ts';
+import { currentUser, login, logout } from '@/features/auth/services/auth.service.ts';
 import type { AuthToken, LoginCredentials } from '@/features/auth/types.ts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
