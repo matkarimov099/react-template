@@ -4,6 +4,7 @@ import { Search, Settings, Undo2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useI18n } from '@/hooks/use-i18n';
 import type { ReactNode } from 'react';
 import { DataTableExport } from './data-export';
 import type { TableConfig } from './utils/table-config';
@@ -54,6 +55,7 @@ export function DataTableToolbar<TData>({
 	searchValue,
 	onSearchChange,
 }: Omit<DataTableToolbarProps<TData>, 'totalSelectedItems' | 'deleteSelection'>) {
+	const { t } = useI18n();
 	const isFiltered =
 		table.getState().columnFilters.length > 0 ||
 		table.getState().globalFilter ||
@@ -67,7 +69,7 @@ export function DataTableToolbar<TData>({
 					<div className="relative">
 						<Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
 						<Input
-							placeholder="Search..."
+							placeholder={t('dataTable.searchPlaceholder')}
 							value={
 								config.manualSearching
 									? (searchValue ?? '')
@@ -114,7 +116,7 @@ export function DataTableToolbar<TData>({
 						}}
 						className="h-8 px-2 lg:px-3"
 					>
-						Reset
+						{t('dataTable.reset')}
 						<X className="ml-2 h-4 w-4" />
 					</Button>
 				)}
@@ -150,15 +152,15 @@ export function DataTableToolbar<TData>({
 							className={`ml-auto hidden lg:flex ${getButtonSizeClass(config.size)}`}
 						>
 							<Settings className="mr-2 h-4 w-4" />
-							Settings
+							{t('dataTable.settings')}
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent align="end" className="w-64">
 						<div className="grid gap-4">
 							<div className="space-y-2">
-								<h4 className="font-medium leading-none">Table Settings</h4>
+								<h4 className="font-medium leading-none">{t('dataTable.tableSettings')}</h4>
 								<p className="text-muted-foreground text-sm">
-									Customize your table appearance and behavior
+									{t('dataTable.tableSettingsDescription')}
 								</p>
 							</div>
 							<div className="grid gap-2">
@@ -170,7 +172,7 @@ export function DataTableToolbar<TData>({
 										className="justify-start"
 									>
 										<Undo2 className="mr-2 h-4 w-4" />
-										Reset column sizes
+										{t('dataTable.resetColumnSizes')}
 									</Button>
 								)}
 								{resetColumnOrder && (
@@ -181,7 +183,7 @@ export function DataTableToolbar<TData>({
 										className="justify-start"
 									>
 										<Undo2 className="mr-2 h-4 w-4" />
-										Reset column order
+										{t('dataTable.resetColumnOrder')}
 									</Button>
 								)}
 							</div>

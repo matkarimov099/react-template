@@ -21,6 +21,17 @@
 		"goBack": "Go Back",
 		"home": "Home"
 	},
+	"errors": {
+		"notFound": "Page Not Found",
+		"notFoundDescription": "The page you are looking for does not exist.",
+		"noAccess": "Access Denied",
+		"noAccessDescription": "You don't have permission to access this page.",
+		"goHome": "Go to Home",
+		"tryAgain": "Try Again",
+		"somethingWentWrong": "Something Went Wrong",
+		"errorDescription": "An unexpected error occurred. Please try again or come back later.",
+		"persistentError": "If the problem persists, please contact technical support."
+	},
 	"navigation": {
 		"menu": "MENU",
 		"dashboard": "Dashboard",
@@ -115,15 +126,55 @@
 			}
 		}
 	},
-	"errors": {
-		"notFound": "Page Not Found",
-		"notFoundDescription": "The page you are looking for does not exist.",
-		"noAccess": "Access Denied",
-		"noAccessDescription": "You don't have permission to access this page.",
-		"goHome": "Go to Home",
-		"tryAgain": "Try Again",
-		"somethingWentWrong": "Something Went Wrong",
-		"errorDescription": "An unexpected error occurred. Please try again or come back later.",
-		"persistentError": "If the problem persists, please contact technical support."
+	"dataTable": {
+		"search": "Search...",
+		"searchPlaceholder": "Search...",
+		"reset": "Reset",
+		"clearSearch": "Clear search",
+		"settings": "Settings",
+		"tableSettings": "Table Settings",
+		"tableSettingsDescription": "Customize your table appearance and behavior",
+		"resetColumnSizes": "Reset column sizes",
+		"resetColumnOrder": "Reset column order",
+		"view": "View",
+		"searchColumns": "Search columns...",
+		"noColumnsFound": "No columns found.",
+		"resetColumnOrderAction": "Reset Column Order",
+		"export": "Export",
+		"exporting": "Exporting...",
+		"exportSelected": "Export Selected",
+		"exportSelectedCSV": "Export Selected as CSV",
+		"exportSelectedExcel": "Export Selected as XLS",
+		"exportCurrentPageCSV": "Export Current Page as CSV",
+		"exportCurrentPageExcel": "Export Current Page as XLS",
+		"exportAllPagesCSV": "Export All Pages as CSV",
+		"exportAllPagesExcel": "Export All Pages as XLS",
+		"pagination": {
+			"rowsPerPage": "Rows per page",
+			"page": "Page",
+			"of": "of",
+			"goToFirstPage": "Go to first page",
+			"goToPreviousPage": "Go to previous page",
+			"goToNextPage": "Go to next page",
+			"goToLastPage": "Go to last page",
+			"rowsSelected": "of {total} row(s) selected"
+		},
+		"noResults": "No results.",
+		"loading": "Loading...",
+		"toast": {
+			"preparingExport": "Preparing export...",
+			"fetchingData": "Fetching complete data for selected {entity}.",
+			"fetchingAllData": "Fetching all {entity}...",
+			"processingData": "Processing data...",
+			"generatingFile": "Generating export file...",
+			"exportSuccess": "Export successful",
+			"exportSuccessDescription": "Exported {count} {entity} to {format}.",
+			"exportAllSuccess": "Exported all {count} {entity} to {format}.",
+			"exportFailed": "Export failed",
+			"exportFailedDescription": "There was a problem exporting. Please try again.",
+			"noDataToExport": "No data available to export.",
+			"failedToRetrieveData": "Failed to retrieve complete data for selected {entity}",
+			"noDataAvailable": "No {entity} available to export"
+		}
 	}
 }

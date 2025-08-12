@@ -6,6 +6,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { useI18n } from '@/hooks/use-i18n';
 import type { Table } from '@tanstack/react-table';
 import {
 	ChevronLeftIcon,
@@ -40,17 +41,21 @@ export function DataTablePagination<TData>({
 	pageSizeOptions = [10, 20, 30, 40, 50], // Default options if none provided
 	size = 'default',
 }: DataTablePaginationProps<TData>) {
+	const { t } = useI18n();
 	// Convert 'lg' size to 'default' for SelectTrigger since it only accepts 'sm' | 'default'
 	const selectSize = size === 'lg' ? 'default' : size;
 
 	return (
 		<div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto rounded-md border border-border/50 bg-background/90 px-4 py-3 shadow-sm saturate-[150%] backdrop-blur-md sm:flex-row sm:gap-8">
 			<div className="flex-1 text-muted-foreground text-sm">
-				{totalSelectedItems} of {totalItems} row(s) selected.
+				{totalSelectedItems}{' '}
+				{t('dataTable.pagination.rowsSelected').replace('{total}', totalItems.toString())}
 			</div>
 			<div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
 				<div className="flex items-center space-x-2">
-					<p className="whitespace-nowrap font-medium text-foreground text-sm">Rows per page</p>
+					<p className="whitespace-nowrap font-medium text-foreground text-sm">
+						{t('dataTable.pagination.rowsPerPage')}
+					</p>
 					<Select
 						value={`${table.getState().pagination.pageSize}`}
 						onValueChange={value => {
@@ -85,11 +90,12 @@ export function DataTablePagination<TData>({
 					</Select>
 				</div>
 				<div className="flex items-center justify-center font-medium text-foreground text-sm">
-					Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount() || 1}
+					{t('dataTable.pagination.page')} {table.getState().pagination.pageIndex + 1}{' '}
+					{t('dataTable.pagination.of')} {table.getPageCount() || 1}
 				</div>
 				<div className="flex items-center space-x-2">
 					<Button
-						aria-label="Go to first page"
+						aria-label={t('dataTable.pagination.goToFirstPage')}
 						variant="outline"
 						className={`${getButtonSizeClass(size)} hidden cursor-pointer lg:flex`}
 						onClick={() =>
@@ -103,7 +109,7 @@ export function DataTablePagination<TData>({
 						<ChevronsLeftIcon className="h-4 w-4" aria-hidden="true" />
 					</Button>
 					<Button
-						aria-label="Go to previous page"
+						aria-label={t('dataTable.pagination.goToPreviousPage')}
 						variant="outline"
 						className={`${getButtonSizeClass(size)} cursor-pointer`}
 						onClick={() =>
@@ -117,7 +123,7 @@ export function DataTablePagination<TData>({
 						<ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
 					</Button>
 					<Button
-						aria-label="Go to next page"
+						aria-label={t('dataTable.pagination.goToNextPage')}
 						variant="outline"
 						className={`${getButtonSizeClass(size)} cursor-pointer`}
 						onClick={() =>
@@ -131,7 +137,7 @@ export function DataTablePagination<TData>({
 						<ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
 					</Button>
 					<Button
-						aria-label="Go to last page"
+						aria-label={t('dataTable.pagination.goToLastPage')}
 						variant="outline"
 						className={`${getButtonSizeClass(size)} hidden cursor-pointer lg:flex`}
 						onClick={() =>

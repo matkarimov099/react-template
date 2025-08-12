@@ -1,3 +1,4 @@
+import { Typography } from '@/components/ui/typography.tsx';
 import { useI18n } from '@/hooks/use-i18n';
 
 const Calendar = () => {
@@ -5,7 +6,7 @@ const Calendar = () => {
 
 	return (
 		<div>
-			<h1 className="mb-4 font-bold text-xl">{t('calendar.title')}</h1>
+			<Typography variant="h5">{t('calendar.title')}</Typography>
 			<div className="rounded-lg border p-4">
 				<p className="text-muted-foreground">Calendar feature coming soon...</p>
 			</div>

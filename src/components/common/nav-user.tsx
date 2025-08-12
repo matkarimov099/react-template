@@ -49,7 +49,7 @@ export function NavUser({ user, logout }: NavUserProps) {
 								<div className="relative">
 									<Avatar
 										className={cn(
-											'rounded-lg border border-[var(--border)]/30 transition-all duration-200',
+											'rounded-full border border-[var(--border)]/30 transition-all duration-200',
 											isCollapsed ? 'h-8 w-8' : 'h-8 w-8'
 										)}
 									>
@@ -88,7 +88,7 @@ export function NavUser({ user, logout }: NavUserProps) {
 						>
 							<DropdownMenuLabel className="p-0 font-normal">
 								<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-									<Avatar className="h-8 w-8 rounded-lg">
+									<Avatar className="h-8 w-8 rounded-full">
 										<AvatarImage src={user?.firstname} alt={user?.lastname} />
 										<AvatarFallback className="rounded-lg">
 											{`${user?.firstname?.[0] ?? ''}${user?.lastname?.[0] ?? ''}`.toUpperCase()}

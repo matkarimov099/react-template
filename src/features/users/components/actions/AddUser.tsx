@@ -82,7 +82,7 @@ export function AddUser() {
 								<FormItem>
 									<FormLabel required>Full Name</FormLabel>
 									<FormControl>
-										<Input showFocusRing inputSize="md" placeholder="John Doe" {...field} />
+										<Input inputSize="md" placeholder="John Doe" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 export function useUsersData() {
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
-		pageSize: 25,
+		pageSize: 15,
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([]);

@@ -167,7 +167,8 @@
 		font-size: calc(1rem * var(--scale-factor));
 	}
 
-	html, body {
+	html,
+	body {
 		height: 100%;
 		overflow: hidden;
 		margin: 0;
@@ -380,7 +381,7 @@
 
 	/* ---------- iOS Font Family ---------- */
 	.ios-font {
-        font-family: var(--font-sans), serif;
+		font-family: var(--font-sans), serif;
 	}
 
 	/* ---------- iOS Shadows ---------- */

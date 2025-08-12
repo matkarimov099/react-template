@@ -14,6 +14,8 @@ import {
 import type * as React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useI18n } from '@/hooks/use-i18n';
+
 import {
 	Table,
 	TableBody,
@@ -109,6 +111,7 @@ export function DataTable<TData>({
 	searchValue: externalSearchValue = '',
 	onSearchChange,
 }: DataTableProps<TData>) {
+	const { t } = useI18n();
 	// Load table configuration with any overrides
 	const tableConfig = useTableConfig(config);
 
@@ -605,9 +608,9 @@ export function DataTable<TData>({
 							<TableRow>
 								<TableCell
 									colSpan={columns.length}
-									className="h-24 truncate text-left text-ios-muted"
+									className="h-24 truncate text-center text-ios-muted"
 								>
-									No results.
+									{t('dataTable.noResults')}
 								</TableCell>
 							</TableRow>
 						)}

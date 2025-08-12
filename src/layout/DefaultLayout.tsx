@@ -13,17 +13,13 @@ import {
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Spinner } from '@/components/ui/spinner.tsx';
 import { useBreadcrumb } from '@/hooks/use-breadcrumb.ts';
-import { usePageTitle } from '@/hooks/use-page-title.ts';
 import { AnimatePresence, motion } from 'motion/react';
-import { Suspense } from 'react';
+import { Suspense, useId } from 'react';
 import { Outlet } from 'react-router';
 
 export const DefaultLayout = () => {
-	const { title } = usePageTitle();
 	const { breadcrumbItems } = useBreadcrumb();
 
-	// Get the current page title from breadcrumb for an animation key
-	const currentPageTitle = breadcrumbItems.find(item => item.isActive)?.title || title;
 	return (
 		<div className="h-screen overflow-hidden ios-bg-primary">
 			<SidebarProvider>
@@ -82,9 +78,9 @@ export const DefaultLayout = () => {
 							<div className="absolute inset-0 bg-gradient-to-r from-[var(--card-bg)]/30 via-transparent to-[var(--card-bg)]/30 ios-rounded-lg pointer-events-none" />
 						</header>
 					</div>
-					
+
 					{/* Scrollable main content */}
-					<div className="flex flex-1 flex-col gap-4 px-2 pb-4 overflow-y-auto max-h-[calc(100vh-5.5rem)] ios-bg-primary">
+					<div className="flex flex-1 flex-col gap-4 px-2">
 						<Suspense
 							fallback={
 								<div className="flex h-full items-center justify-center ios-bg-primary">
@@ -94,16 +90,16 @@ export const DefaultLayout = () => {
 						>
 							<AnimatePresence mode="wait">
 								<motion.div
-									key={currentPageTitle}
+									key={useId()}
 									initial={{ opacity: 0, y: 8, scale: 0.98 }}
 									animate={{ opacity: 1, y: 0, scale: 1 }}
 									exit={{ opacity: 0, y: -4, scale: 1.02 }}
 									transition={{
-										duration: 0.2,
+										duration: 0.1,
 										ease: [0.2, 0.9, 0.25, 1], // iOS cubic-bezier
 									}}
 								>
-									<main className="h-fit overflow-y-auto ios-glass p-4 ios-shadow-sm ios-rounded-lg">
+									<main className="flex flex-1 flex-col overflow-y-auto max-h-[calc(100vh-5rem)] p-4 ios-shadow-md ios-rounded-lg ios-bg-content">
 										<Outlet />
 									</main>
 								</motion.div>

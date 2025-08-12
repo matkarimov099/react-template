@@ -5,6 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useI18n } from '@/hooks/use-i18n';
 import type { Table } from '@tanstack/react-table';
 import { DownloadIcon, Loader2 } from 'lucide-react';
 import { type JSX, useState } from 'react';
@@ -36,6 +37,7 @@ export function DataTableExport<TData>({
 	// headers,
 	size = 'default',
 }: DataTableExportProps<TData>): JSX.Element {
+	const { t } = useI18n();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleExport = async (type: 'csv' | 'excel') => {
@@ -45,11 +47,11 @@ export function DataTableExport<TData>({
 		const fetchExportData = async (): Promise<TData[]> => {
 			// If we have selected items and a function to get their complete data
 			if (getSelectedItems && selectedData && selectedData.length > 0) {
-				// Check if data is on current page or needs to be fetched
+				// Check if data is on the current page or needs to be fetched
 				if (selectedData.some(item => Object.keys(item as object).length === 0)) {
 					// We have placeholder data, need to fetch complete data
-					toast.loading('Preparing export...', {
-						description: `Fetching complete data for selected ${entityName}.`,
+					toast.loading(t('dataTable.toast.preparingExport'), {
+						description: t('dataTable.toast.fetchingData').replace('{entity}', entityName),
 						id: 'export-data-toast',
 					});
 				}
@@ -58,7 +60,9 @@ export function DataTableExport<TData>({
 				const selectedItems = await getSelectedItems();
 
 				if (selectedItems.length === 0) {
-					throw new Error(`Failed to retrieve complete data for selected ${entityName}`);
+					throw new Error(
+						t('dataTable.toast.failedToRetrieveData').replace('{entity}', entityName)
+					);
 				}
 
 				// Order the items according to the current sorting in the table
@@ -91,8 +95,8 @@ export function DataTableExport<TData>({
 
 			if (getAllItems && !selectedData?.length) {
 				// If we're exporting all data and have a method to get it with proper ordering
-				toast.loading('Preparing export...', {
-					description: `Fetching all ${entityName} with current sorting...`,
+				toast.loading(t('dataTable.toast.preparingExport'), {
+					description: t('dataTable.toast.fetchingAllData').replace('{entity}', entityName),
 					id: 'export-data-toast',
 				});
 
@@ -100,7 +104,7 @@ export function DataTableExport<TData>({
 				const allItems = await getAllItems();
 
 				if (allItems.length === 0) {
-					throw new Error(`No ${entityName} available to export`);
+					throw new Error(t('dataTable.toast.noDataAvailable').replace('{entity}', entityName));
 				}
 
 				return allItems;
@@ -108,7 +112,7 @@ export function DataTableExport<TData>({
 
 			// Otherwise use the provided data (current page data)
 			if (!data || data.length === 0) {
-				throw new Error('No data available for export');
+				throw new Error(t('dataTable.toast.noDataToExport'));
 			}
 			return selectedData && selectedData.length > 0 ? selectedData : data;
 		};
@@ -182,8 +186,8 @@ export function DataTableExport<TData>({
 			);
 		} catch (error) {
 			console.error('Error exporting data:', error);
-			toast.error('Export failed', {
-				description: 'There was a problem exporting. Please try again.',
+			toast.error(t('dataTable.toast.exportFailed'), {
+				description: t('dataTable.toast.exportFailedDescription'),
 				id: 'export-data-toast',
 			});
 			setIsLoading(false);
@@ -196,8 +200,8 @@ export function DataTableExport<TData>({
 
 		try {
 			// Show toast for long operations
-			toast.loading('Preparing export...', {
-				description: `Fetching all ${entityName}...`,
+			toast.loading(t('dataTable.toast.preparingExport'), {
+				description: t('dataTable.toast.fetchingAllData').replace('{entity}', entityName),
 				id: 'export-data-toast',
 			});
 
@@ -205,8 +209,8 @@ export function DataTableExport<TData>({
 			const allData = await getAllItems();
 
 			if (allData.length === 0) {
-				toast.error('Export failed', {
-					description: 'No data available to export.',
+				toast.error(t('dataTable.toast.exportFailed'), {
+					description: t('dataTable.toast.noDataToExport'),
 					id: 'export-data-toast',
 				});
 				return;
@@ -243,8 +247,8 @@ export function DataTableExport<TData>({
 				: visibleColumns.map(() => ({ wch: 15 }));
 
 			// Update toast for processing
-			toast.loading('Processing data...', {
-				description: 'Generating export file...',
+			toast.loading(t('dataTable.toast.processingData'), {
+				description: t('dataTable.toast.generatingFile'),
 				id: 'export-data-toast',
 			});
 
@@ -267,15 +271,18 @@ export function DataTableExport<TData>({
 			}
 
 			if (success) {
-				toast.success('Export successful', {
-					description: `Exported all ${allData.length} ${entityName} to ${type.toUpperCase()}.`,
+				toast.success(t('dataTable.toast.exportSuccess'), {
+					description: t('dataTable.toast.exportAllSuccess')
+						.replace('{count}', allData.length.toString())
+						.replace('{entity}', entityName)
+						.replace('{format}', type.toUpperCase()),
 					id: 'export-data-toast',
 				});
 			}
 		} catch (error) {
 			console.error('Error exporting all pages:', error);
-			toast.error('Export failed', {
-				description: 'There was a problem exporting all pages. Please try again.',
+			toast.error(t('dataTable.toast.exportFailed'), {
+				description: t('dataTable.toast.exportFailedDescription'),
 				id: 'export-data-toast',
 			});
 		} finally {
@@ -293,12 +300,12 @@ export function DataTableExport<TData>({
 					{isLoading ? (
 						<>
 							<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-							Exporting...
+							{t('dataTable.exporting')}
 						</>
 					) : (
 						<>
 							<DownloadIcon className="mr-2 h-4 w-4" />
-							Export
+							{t('dataTable.export')}
 							{hasSelection && <span className="ml-1">({selectedData?.length})</span>}
 						</>
 					)}
@@ -308,27 +315,27 @@ export function DataTableExport<TData>({
 				{hasSelection ? (
 					<>
 						<DropdownMenuItem onClick={() => handleExport('csv')} disabled={isLoading}>
-							Export Selected as CSV
+							{t('dataTable.exportSelectedCSV')}
 						</DropdownMenuItem>
 						<DropdownMenuItem onClick={() => handleExport('excel')} disabled={isLoading}>
-							Export Selected as XLS
+							{t('dataTable.exportSelectedExcel')}
 						</DropdownMenuItem>
 					</>
 				) : (
 					<>
 						<DropdownMenuItem onClick={() => handleExport('csv')} disabled={isLoading}>
-							Export Current Page as CSV
+							{t('dataTable.exportCurrentPageCSV')}
 						</DropdownMenuItem>
 						<DropdownMenuItem onClick={() => handleExport('excel')} disabled={isLoading}>
-							Export Current Page as XLS
+							{t('dataTable.exportCurrentPageExcel')}
 						</DropdownMenuItem>
 						{getAllItems && (
 							<>
 								<DropdownMenuItem onClick={() => exportAllPages('csv')} disabled={isLoading}>
-									Export All Pages as CSV
+									{t('dataTable.exportAllPagesCSV')}
 								</DropdownMenuItem>
 								<DropdownMenuItem onClick={() => exportAllPages('excel')} disabled={isLoading}>
-									Export All Pages as XLS
+									{t('dataTable.exportAllPagesExcel')}
 								</DropdownMenuItem>
 							</>
 						)}

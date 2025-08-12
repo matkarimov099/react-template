@@ -4,6 +4,7 @@ import {
 	CustomCardDescription,
 	CustomCardTitle,
 } from '@/components/custom/custom-card.tsx';
+import { Typography } from '@/components/ui/typography.tsx';
 import { LoginForm } from '@/features/auth/components/LoginForm.tsx';
 import { useI18n } from '@/hooks/use-i18n';
 import { KeyRound } from 'lucide-react';
@@ -32,8 +33,8 @@ const Login = () => {
 				>
 					<KeyRound className="h-8 w-8 text-white" />
 				</motion.div>
-				<h1 className="mb-2 font-bold text-2xl text-[var(--label)]">Welcome Back</h1>
-				<p className="text-[var(--secondaryLabel)] text-sm">Sign in to continue to your account</p>
+				<Typography variant="large">Welcome Back</Typography>
+				<Typography variant="p">Sign in to continue to your account</Typography>
 			</div>
 
 			<CustomCard className="border border-[var(--border)]/50 bg-[var(--card-bg)]/80 shadow-2xl backdrop-blur-xl md:max-w-md">

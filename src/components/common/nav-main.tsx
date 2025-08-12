@@ -1,23 +1,23 @@
-import {LocalizedNavLink} from '@/components/common/localized-nav-link';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import { LocalizedNavLink } from '@/components/common/localized-nav-link';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
-    SidebarGroup,
-    SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
+	SidebarGroup,
+	SidebarGroupLabel,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem,
 } from '@/components/ui/sidebar.tsx';
-import {useI18n} from '@/hooks/use-i18n';
-import {useSidebar} from '@/hooks/use-sidebar';
-import {mainMenuItems} from '@/lib/sidebar-menu.tsx';
-import {cn} from '@/lib/utils';
-import {removeLocaleFromPath} from '@/plugins/i18n-routing.ts';
-import {ChevronDown, ChevronRightIcon} from 'lucide-react';
-import {useEffect, useState} from 'react';
-import {useLocation} from 'react-router';
+import { useI18n } from '@/hooks/use-i18n';
+import { useSidebar } from '@/hooks/use-sidebar';
+import { mainMenuItems } from '@/lib/sidebar-menu.tsx';
+import { cn } from '@/lib/utils';
+import { removeLocaleFromPath } from '@/plugins/i18n-routing.ts';
+import { ChevronDown, ChevronRightIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 
 export function NavMain() {
 	const location = useLocation();
@@ -43,7 +43,7 @@ export function NavMain() {
 		// Only update if there's a difference
 		if (shouldBeOpen.length > 0) {
 			setOpenItems(prev => {
-                return [...new Set([...prev, ...shouldBeOpen])];
+				return [...new Set([...prev, ...shouldBeOpen])];
 			});
 		}
 	}, [location.pathname]);
