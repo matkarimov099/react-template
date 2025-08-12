@@ -1,0 +1,23 @@
+{
+	"login": "Login",
+	"register": "Register",
+	"forgotPassword": "Forgot Password?",
+	"rememberMe": "Remember me",
+	"dontHaveAccount": "Don't have an account?",
+	"alreadyHaveAccount": "Already have an account?",
+	"signIn": "Sign in",
+	"signUp": "Sign up",
+	"phone": "Phone",
+	"password": "Password",
+	"confirmPassword": "Confirm Password",
+	"firstName": "First Name",
+	"lastName": "Last Name",
+	"loginTitle": "Sign In",
+	"registerTitle": "Create Account",
+	"validations": {
+		"phoneRequired": "Please enter your phone number",
+		"phoneInvalid": "Please enter a valid phone number! (+998 XX XXX-XX-XX)",
+		"passwordRequired": "Please enter password!",
+		"passwordMin": "Password must be at least 8 characters"
+	}
+}

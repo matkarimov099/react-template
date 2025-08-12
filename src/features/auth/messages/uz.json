@@ -1,0 +1,23 @@
+{
+	"login": "Kirish",
+	"register": "Ro'yxatdan o'tish",
+	"forgotPassword": "Parolni unutdingizmi?",
+	"rememberMe": "Eslab qolish",
+	"dontHaveAccount": "Akkauntingiz yo'qmi?",
+	"alreadyHaveAccount": "Akkauntingiz bormi?",
+	"signIn": "Kirish",
+	"signUp": "Ro'yxatdan o'tish",
+	"phone": "Telefon",
+	"password": "Parol",
+	"confirmPassword": "Parolni tasdiqlang",
+	"firstName": "Ism",
+	"lastName": "Familiya",
+	"loginTitle": "Tizimga kirish",
+	"registerTitle": "Akkount yaratish",
+	"validations": {
+		"phoneRequired": "Telefon raqamingizni kiriting",
+		"phoneInvalid": "Telefon raqamingizni to'g'ri kiriting! (+998 XX XXX-XX-XX)",
+		"passwordRequired": "Parolni kiriting!",
+		"passwordMin": "Kamida 8 belgidan iborat bo'lishi kerak"
+	}
+}

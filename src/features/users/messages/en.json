@@ -1,0 +1,26 @@
+{
+	"title": "Users List",
+	"name": "Name",
+	"email": "Email",
+	"phone": "Phone",
+	"age": "Age",
+	"createdAt": "Created At",
+	"expenseCount": "Expense Count",
+	"totalExpenses": "Total Expenses",
+	"actions": "Actions",
+	"addUser": "Add User",
+	"editUser": "Edit User",
+	"deleteUser": "Delete User",
+	"searchUsers": "Search users...",
+	"noUsersFound": "No users found",
+	"userCreated": "User created successfully",
+	"userUpdated": "User updated successfully",
+	"userDeleted": "User deleted successfully",
+	"validations": {
+		"enterName": "Name must be at least 2 characters",
+		"emailInvalid": "Please enter a valid email address",
+		"phoneMin": "Phone number must be at least 10 characters",
+		"ageMin": "Age must be at least 16",
+		"ageMax": "Age must be less than 120"
+	}
+}

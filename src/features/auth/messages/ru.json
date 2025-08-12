@@ -1,0 +1,23 @@
+{
+	"login": "Вход",
+	"register": "Регистрация",
+	"forgotPassword": "Забыли пароль?",
+	"rememberMe": "Запомнить меня",
+	"dontHaveAccount": "Нет аккаунта?",
+	"alreadyHaveAccount": "Уже есть аккаунт?",
+	"signIn": "Войти",
+	"signUp": "Зарегистрироваться",
+	"phone": "Телефон",
+	"password": "Пароль",
+	"confirmPassword": "Подтвердите пароль",
+	"firstName": "Имя",
+	"lastName": "Фамилия",
+	"loginTitle": "Вход в систему",
+	"registerTitle": "Создать аккаунт",
+	"validations": {
+		"phoneRequired": "Пожалуйста, введите номер телефона",
+		"phoneInvalid": "Пожалуйста, введите правильный номер телефона! (+998 XX XXX-XX-XX)",
+		"passwordRequired": "Пожалуйста, введите пароль!",
+		"passwordMin": "Пароль должен содержать не менее 8 символов"
+	}
+}

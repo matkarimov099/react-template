@@ -1,69 +1,90 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// Import existing translation files
-import enMessages from '@/messages/en.json';
-import ruMessages from '@/messages/ru.json';
-import uzMessages from '@/messages/uz.json';
-
 export type Locale = 'uz' | 'ru' | 'en';
 
-// Available languages
 export const SUPPORTED_LOCALES: Locale[] = ['uz', 'ru', 'en'];
 
-// Get locale from localStorage or URL
-const getStoredLocale = (): Locale => {
-	const stored = localStorage.getItem('app-locale') as Locale;
-	if (stored && SUPPORTED_LOCALES.includes(stored)) {
-		return stored;
+// Translation resource types
+interface TranslationResource {
+	[key: string]: string | TranslationResource;
+}
+
+type LocaleResources = Record<Locale, { translation: TranslationResource }>;
+
+// Load all translation resources dynamically
+const loadResources = async (): Promise<LocaleResources> => {
+	const resources: LocaleResources = {
+		en: { translation: {} },
+		ru: { translation: {} },
+		uz: { translation: {} },
+	};
+
+	// Load global messages
+	const globalModules = {
+		en: () => import('@/messages/en.json'),
+		ru: () => import('@/messages/ru.json'),
+		uz: () => import('@/messages/uz.json'),
+	} as const;
+
+	for (const locale of SUPPORTED_LOCALES) {
+		const module = await globalModules[locale]();
+		resources[locale].translation = { ...module.default };
 	}
-	return 'uz'; // default locale
+
+	// Auto-discover and load feature messages
+	const featureModules = import.meta.glob<{ default: TranslationResource }>(
+		'@/features/*/messages/*.json'
+	);
+
+	for (const [path, loader] of Object.entries(featureModules)) {
+		const matches = path.match(/\/features\/([^/]+)\/messages\/([^/]+)\.json$/);
+		if (matches) {
+			const [, featureName, locale] = matches;
+			if (SUPPORTED_LOCALES.includes(locale as Locale)) {
+				const module = await loader();
+				resources[locale as Locale].translation[featureName] = module.default;
+			}
+		}
+	}
+
+	return resources;
 };
 
-// Initialize i18next
-i18n
-	.use(initReactI18next) // passes i18n down to react-i18next
-	.init({
-		// Resources (translations)
-		resources: {
-			en: { translation: enMessages },
-			ru: { translation: ruMessages },
-			uz: { translation: uzMessages },
-		},
+// Get stored locale or default
+const getStoredLocale = (): Locale => {
+	const stored = localStorage.getItem('app-locale') as Locale;
+	return stored && SUPPORTED_LOCALES.includes(stored) ? stored : 'uz';
+};
 
-		// Language settings
+// Initialize i18n
+const initializeI18n = async () => {
+	const resources = await loadResources();
+
+	await i18n.use(initReactI18next).init({
+		resources,
 		lng: getStoredLocale(),
 		fallbackLng: 'en',
-
-		// Interpolation settings
 		interpolation: {
-			escapeValue: false, // React already escapes values
+			escapeValue: false,
 		},
-
-		// Key separator (for nested keys like "user.name")
 		keySeparator: '.',
-
-		// Debug mode (only in development)
 		debug: import.meta.env.DEV,
+	});
 
-		// Save language preference
-		detection: {
-			order: ['localStorage', 'navigator'],
-			caches: ['localStorage'],
-		},
-	})
-	.then();
+	return i18n;
+};
 
-// Helper function to change language and save to localStorage
+// Export initialization promise
+export const i18nReady = initializeI18n();
+
+// Helper functions
 export const changeLanguage = (locale: Locale) => {
 	i18n.changeLanguage(locale).then();
 	localStorage.setItem('app-locale', locale);
 	document.documentElement.lang = locale;
 };
 
-// Helper function to get current language
 export const getCurrentLanguage = (): Locale => {
-	return i18n.language as Locale;
+	return (i18n.language as Locale) || 'uz';
 };
-
-export default i18n;

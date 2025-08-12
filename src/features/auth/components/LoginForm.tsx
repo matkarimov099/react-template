@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input.tsx';
-import { type LoginSchema, loginSchema } from '@/features/auth/schema/auth.schema';
+import { type LoginSchema, createLoginSchema } from '@/features/auth/schema/auth.schema';
 import { useI18n } from '@/hooks/use-i18n';
 import { getUserFromToken } from '@/lib/auth';
 import type { ServerError } from '@/types/common';
@@ -26,10 +26,10 @@ export const LoginForm = () => {
 	const { mutate: login, isPending } = useLogin();
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { locale } = useI18n();
+	const { t, locale } = useI18n('auth');
 
 	const form = useForm<LoginSchema>({
-		resolver: zodResolver(loginSchema),
+		resolver: zodResolver(createLoginSchema(t)),
 	});
 
 	function onFormSubmit(values: LoginSchema) {

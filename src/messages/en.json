@@ -54,46 +54,10 @@
 		"upgrade": "Upgrade to Pro",
 		"home": "Home"
 	},
-	"auth": {
-		"login": "Login",
-		"register": "Register",
-		"forgotPassword": "Forgot Password?",
-		"rememberMe": "Remember me",
-		"dontHaveAccount": "Don't have an account?",
-		"alreadyHaveAccount": "Already have an account?",
-		"signIn": "Sign in",
-		"signUp": "Sign up",
-		"phone": "Phone",
-		"password": "Password",
-		"confirmPassword": "Confirm Password",
-		"firstName": "First Name",
-		"lastName": "Last Name",
-		"loginTitle": "Sign In",
-		"registerTitle": "Create Account"
-	},
 	"pages": {
 		"reports": {
 			"title": "Reports",
 			"description": "View and generate reports here."
-		},
-		"users": {
-			"title": "Users List",
-			"name": "Name",
-			"email": "Email",
-			"phone": "Phone",
-			"age": "Age",
-			"createdAt": "Created At",
-			"expenseCount": "Expense Count",
-			"totalExpenses": "Total Expenses",
-			"actions": "Actions",
-			"addUser": "Add User",
-			"editUser": "Edit User",
-			"deleteUser": "Delete User",
-			"searchUsers": "Search users...",
-			"noUsersFound": "No users found",
-			"userCreated": "User created successfully",
-			"userUpdated": "User updated successfully",
-			"userDeleted": "User deleted successfully"
 		},
 		"calendar": {
 			"title": "Calendar",

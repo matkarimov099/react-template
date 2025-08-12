@@ -1,6 +1,7 @@
 import { Toaster } from '@/components/ui/sonner.tsx';
 import { Spinner } from '@/components/ui/spinner.tsx';
 import { useMediaQuery } from '@/hooks/use-media-query.ts';
+import { i18nReady } from '@/lib/i18n';
 import { router } from '@/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -19,12 +20,13 @@ function App() {
 				},
 			})
 	);
-	const [loading, setLoading] = useState<boolean>(true);
+	const [i18nLoaded, setI18nLoaded] = useState<boolean>(false);
 	const isMobile = useMediaQuery('(max-width: 767px)');
+
 	useEffect(() => {
-		setTimeout(() => setLoading(false), 500);
+		i18nReady.then(() => setI18nLoaded(true)).catch(console.error);
 	}, []);
-	return loading ? (
+	return !i18nLoaded ? (
 		<Spinner size="large" className="flex h-screen items-center justify-center" />
 	) : (
 		<>

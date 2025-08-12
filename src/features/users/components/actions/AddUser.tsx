@@ -18,8 +18,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useCreateUser } from '@/features/users/hooks/use-users';
-import { userCreateSchema } from '@/features/users/schema/users.schema.ts';
+import { type UserCreateSchema, userCreateSchema } from '@/features/users/schema/users.schema.ts';
 import type { UserCreate } from '@/features/users/types';
+import { useI18n } from '@/hooks/use-i18n.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -27,10 +28,11 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export function AddUser() {
+	const { t } = useI18n('users');
 	const [open, setOpen] = useState(false);
 
-	const form = useForm<UserCreate>({
-		resolver: zodResolver(userCreateSchema),
+	const form = useForm<UserCreateSchema>({
+		resolver: zodResolver(userCreateSchema(t)),
 		defaultValues: {
 			name: '',
 			email: '',

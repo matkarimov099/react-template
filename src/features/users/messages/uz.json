@@ -1,0 +1,26 @@
+{
+	"title": "Foydalanuvchilar ro'yxati",
+	"name": "Ism",
+	"email": "Email",
+	"phone": "Telefon",
+	"age": "Yosh",
+	"createdAt": "Yaratilgan sana",
+	"expenseCount": "Xarajatlar soni",
+	"totalExpenses": "Jami xarajatlar",
+	"actions": "Amallar",
+	"addUser": "Foydalanuvchi qo'shish",
+	"editUser": "Foydalanuvchini tahrirlash",
+	"deleteUser": "Foydalanuvchini o'chirish",
+	"searchUsers": "Foydalanuvchilarni qidirish...",
+	"noUsersFound": "Foydalanuvchilar topilmadi",
+	"userCreated": "Foydalanuvchi muvaffaqiyatli yaratildi",
+	"userUpdated": "Foydalanuvchi muvaffaqiyatli yangilandi",
+	"userDeleted": "Foydalanuvchi muvaffaqiyatli o'chirildi",
+	"validations": {
+		"enterName": "Ism kamida 2 ta belgidan iborat bo'lishi kerak",
+		"emailInvalid": "To'g'ri email manzilini kiriting",
+		"phoneMin": "Telefon raqami kamida 10 ta belgidan iborat bo'lishi kerak",
+		"ageMin": "Yosh kamida 16 bo'lishi kerak",
+		"ageMax": "Yosh 120 dan kam bo'lishi kerak"
+	}
+}

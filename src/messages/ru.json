@@ -43,42 +43,6 @@
 		"notifications": "Уведомления",
 		"upgrade": "Обновить до Pro"
 	},
-	"auth": {
-		"login": "Вход",
-		"register": "Регистрация",
-		"forgotPassword": "Забыли пароль?",
-		"rememberMe": "Запомнить меня",
-		"dontHaveAccount": "Нет аккаунта?",
-		"alreadyHaveAccount": "Уже есть аккаунт?",
-		"signIn": "Войти",
-		"signUp": "Зарегистрироваться",
-		"phone": "Телефон",
-		"password": "Пароль",
-		"confirmPassword": "Подтвердить пароль",
-		"firstName": "Имя",
-		"lastName": "Фамилия",
-		"loginTitle": "Вход",
-		"registerTitle": "Создать аккаунт"
-	},
-	"users": {
-		"title": "Список пользователей",
-		"name": "Имя",
-		"email": "Email",
-		"phone": "Телефон",
-		"age": "Возраст",
-		"createdAt": "Дата создания",
-		"expenseCount": "Количество расходов",
-		"totalExpenses": "Общие расходы",
-		"actions": "Действия",
-		"addUser": "Добавить пользователя",
-		"editUser": "Редактировать пользователя",
-		"deleteUser": "Удалить пользователя",
-		"searchUsers": "Поиск пользователей...",
-		"noUsersFound": "Пользователи не найдены",
-		"userCreated": "Пользователь успешно создан",
-		"userUpdated": "Пользователь успешно обновлен",
-		"userDeleted": "Пользователь успешно удален"
-	},
 	"pages": {
 		"reports": {
 			"title": "Отчеты",
