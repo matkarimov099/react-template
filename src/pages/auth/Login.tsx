@@ -23,27 +23,24 @@ const Login = () => {
 			}}
 			className="w-full"
 		>
-			{/* Brand header */}
-			<div className="mb-8 text-center">
-				<motion.div
-					initial={{ scale: 0.8, rotate: -10 }}
-					animate={{ scale: 1, rotate: 0 }}
-					transition={{ delay: 0.2, duration: 0.5, ease: 'backOut' }}
-					className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/80 shadow-lg"
-				>
-					<KeyRound className="h-8 w-8 text-white" />
-				</motion.div>
-				<Typography variant="large">Welcome Back</Typography>
-				<Typography variant="p">Sign in to continue to your account</Typography>
-			</div>
-
 			<CustomCard className="border border-[var(--border)]/50 bg-[var(--card-bg)]/80 shadow-2xl backdrop-blur-xl md:max-w-md">
-				<CustomCardTitle className="mb-6 text-center font-semibold text-[var(--label)] text-xl">
+				<div className="text-center">
+					<motion.div
+						initial={{ scale: 0.8, rotate: -10 }}
+						animate={{ scale: 1, rotate: 0 }}
+						transition={{ delay: 0.2, duration: 0.5, ease: 'backOut' }}
+						className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-blue)]/80 shadow-lg"
+					>
+						<KeyRound className="h-8 w-8 text-white" />
+					</motion.div>
+					<Typography variant="large">Welcome Back</Typography>
+				</div>
+				<CustomCardTitle className="mb-2 text-center font-semibold text-[var(--label)] text-xl">
 					{t('auth.loginTitle')}
 				</CustomCardTitle>
 				<LoginForm />
 				<CustomCardDescription>
-					<div className="mt-6 border-[var(--border)]/30 border-t pt-6 text-center text-sm">
+					<div className="mt-2 border-[var(--border)]/30 border-t pt-4 text-center text-sm">
 						<span className="text-[var(--secondaryLabel)]">{t('auth.dontHaveAccount')} </span>
 						<LocalizedNavLink
 							to="/register"

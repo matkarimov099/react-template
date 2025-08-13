@@ -41,8 +41,8 @@ export const LoginForm = () => {
 					localStorage.setItem('refreshToken', data?.data.refreshToken);
 					const user = getUserFromToken() ?? null;
 					if (user) {
-						// location.state?.from sahifasiga qaytish yoki default "/reports" ga yo'naltirish
-						const from = location.state?.from?.pathname || `/${locale}/reports`;
+						// location.state?.from sahifasiga qaytish yoki default dashboard ga yo'naltirish
+						const from = location.state?.from?.pathname || `/${locale}/dashboard`;
 						navigate(from, { replace: true });
 					} else {
 						navigate(`/${locale}/auth/login`);
@@ -62,87 +62,70 @@ export const LoginForm = () => {
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onFormSubmit)} className="px-4 py-6">
-					<div className="flex flex-col gap-6">
-						<div className="flex flex-col items-center text-center">
-							<h1 className="font-bold text-blue-700 text-xl dark:text-white">Project name</h1>
-							<p className="text-balance text-muted-foreground">project description</p>
-						</div>
-						<div className="grid gap-2">
-							<FormField
-								control={form.control}
-								name="phone"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-neutral-400 dark:text-white">
-											Telefon raqam
+				<form onSubmit={form.handleSubmit(onFormSubmit)} className="px-2 py-6">
+					<div className="grid gap-6">
+						<FormField
+							control={form.control}
+							name="phone"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="text-foreground/70 dark:text-foreground/80">
+										Telefon raqam
+									</FormLabel>
+									<FormControl>
+										<PhoneInput
+											inputClassName="border-border bg-background text-foreground dark:border-border dark:bg-background dark:text-foreground"
+											inputSize="xl"
+											defaultCountry="UZ"
+											placeholder="90 123 45 67"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<div className="flex items-center">
+										<FormLabel className="text-foreground/70 dark:text-foreground/80">
+											Parol
 										</FormLabel>
-										<FormControl>
-											<PhoneInput
-												inputClassName="dark:border-neutral-600 text-neutral-400 dark:text-white"
-												className="text-neutral-400 dark:text-white"
-												inputSize="xl"
-												defaultCountry="UZ"
-												placeholder="90 123 45 67"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-						<div className="grid gap-2">
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<div className="flex items-center">
-											<FormLabel className="text-neutral-400 dark:text-white">Parol</FormLabel>
-											<LocalizedNavLink
-												to="/forgot-password"
-												className="ml-auto text-neutral-400 text-sm underline-offset-2 hover:underline dark:text-white"
-											>
-												Parolingiz esdan chiqdimi?
-											</LocalizedNavLink>
-										</div>
-										<FormControl>
-											<PasswordInput
-												className="text-neutral-400 dark:border-neutral-600 dark:text-white"
-												inputSize="xl"
-												placeholder="Parolingizni kiriting"
-												{...field}
-												value={field.value ?? ''}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
+										<LocalizedNavLink
+											to="/forgot-password"
+											className="ml-auto text-muted-foreground text-sm underline-offset-2 hover:underline hover:text-foreground"
+										>
+											Parolingiz esdan chiqdimi?
+										</LocalizedNavLink>
+									</div>
+									<FormControl>
+										<PasswordInput
+											className="border-border bg-background text-foreground dark:border-border dark:bg-background dark:text-foreground"
+											inputSize="xl"
+											placeholder="Parolingizni kiriting"
+											{...field}
+											value={field.value ?? ''}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 						<Button
 							rightIcon={<ChevronRightIcon />}
 							loading={isPending}
 							type="submit"
 							size="xl"
-							className="group/btn hover:-translate-y-0.5 relative block transform cursor-pointer rounded-lg bg-black px-6 py-2 font-bold text-white transition duration-300 dark:hover:bg-black"
+							className="w-full bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90"
 						>
 							Kirish
-							<BottomGradient />
 						</Button>
 					</div>
 				</form>
 			</Form>
-		</>
-	);
-};
-
-const BottomGradient = () => {
-	return (
-		<>
-			<span className="-bottom-px absolute inset-x-0 block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-			<span className="-bottom-px absolute inset-x-10 mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
 		</>
 	);
 };

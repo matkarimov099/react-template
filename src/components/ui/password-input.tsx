@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Input, type InputProps } from '@/components/ui/input';
 
 import { cn } from '@/lib/utils.ts';
@@ -17,31 +16,19 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(({ className, ...
 				ref={ref}
 				{...props}
 			/>
-			<Button
+			<button
 				type="button"
-				variant="ghost"
-				size="sm"
-				className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+				className="absolute top-0 right-0 h-full px-3 py-2 flex items-center justify-center cursor-pointer"
 				onClick={() => setShowPassword(prev => !prev)}
 				disabled={disabled}
 			>
 				{showPassword && !disabled ? (
-					<EyeIcon className="h-4 w-4 dark:text-gray-400" aria-hidden="true" />
+					<EyeIcon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
 				) : (
-					<EyeOffIcon className="h-4 w-4 dark:text-gray-400" aria-hidden="true" />
+					<EyeOffIcon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
 				)}
 				<span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
-			</Button>
-
-			{/* hides browser password toggles */}
-			<style>{`
-					.hide-password-toggle::-ms-reveal,
-					.hide-password-toggle::-ms-clear {
-						visibility: hidden;
-						pointer-events: none;
-						display: none;
-					}
-				`}</style>
+			</button>
 		</div>
 	);
 });
